@@ -6,8 +6,7 @@ using System;
 public class MissileControl : MonoBehaviour {
     // Start is called before the first frame update
     [SerializeField]
-    private float speed;
-    private bool move;
+    public float speed;
     private int count;
     private Vector2 vel;
     Rigidbody2D rb;
@@ -26,7 +25,6 @@ public class MissileControl : MonoBehaviour {
 
     void Start() {
         fitness = 0f;
-        move = true;
         current = 0;
         count = 0;
         finished = false;
@@ -35,6 +33,7 @@ public class MissileControl : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Rocket") {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), GetComponent<CapsuleCollider2D>());
         }
     }
 
@@ -48,15 +47,27 @@ public class MissileControl : MonoBehaviour {
             }
             count++;
         }
-        if (current > 50) {
+        if (current >= 50 && current <= 200) {
+            current++;
+        }
+        if (current >= 200) {
             finished = true;
         }
-        calcuteFitness();
+        if (!finished) {
+            calcuteFitness();
+        }
     }
 
     void calcuteFitness() {
-        double currentFitness = Math.Sqrt(Math.Pow((double)(transform.position.x * goalTransform.position.x), 2) + 
-            Math.Pow((double)(transform.position.y * goalTransform.position.y), 2));
+        double dist = Math.Sqrt(Math.Pow((double)(transform.position.x - goalTransform.position.x), 2) +
+            Math.Pow((double)(transform.position.y - goalTransform.position.y), 2));
+        double currentFitness = 11 - dist;
+        if (transform.position.y > 4.66) {
+            currentFitness *= 1.5;
+        }
+        if (dist < 1) {
+            currentFitness *= 1.5;
+        }
         if (currentFitness > fitness) {
             fitness = currentFitness;
         }

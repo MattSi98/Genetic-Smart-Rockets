@@ -170,8 +170,8 @@ GameObject:
   - component: {fileID: 1570513542651375416}
   - component: {fileID: 7602287322615200247}
   m_Layer: 0
-  m_Name: CruiseMissile
-  m_TagString: Untagged
+  m_Name: Rocket
+  m_TagString: Rocket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,6 +277,9 @@ MonoBehaviour:
   isReady: 0
   forcesX: []
   forcesY: []
+  goalTransform: {fileID: 0}
+  fitness: 0
+  finished: 0
 --- !u!1 &3118277593064832974
 GameObject:
   m_ObjectHideFlags: 0
