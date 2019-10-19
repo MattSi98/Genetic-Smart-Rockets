@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Fire
+  - Rocket1
+  - Rocket
+  - Goal
+  - Barrier
   layers:
   - Default
   - TransparentFX
@@ -13,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Player
   - 
   - 
   - 
@@ -40,4 +45,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 647817503
+    locked: 0
+  - name: Player
+    uniqueID: 4053273059
+    locked: 0
+  - name: Foreground
+    uniqueID: 1226857369
     locked: 0
