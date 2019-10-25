@@ -30,6 +30,7 @@ public class Main : MonoBehaviour {
                 goalTransform = child;
             }
         }
+        //todo fix labels
         float[] rocket1ForcesX = new float[50];
         float[] rocket2ForcesX = new float[50];
         float[] rocket3ForcesX = new float[50];
@@ -206,7 +207,7 @@ public class Main : MonoBehaviour {
                 childY[i] = parent2[1][i];
             }
         }
-        return new float[][] { mutate(childX, true), mutate(childY, true) };
+        return new float[][] { mutate(childX, true), mutate(childY, false) };
     }
 
 }

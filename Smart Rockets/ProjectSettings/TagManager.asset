@@ -9,6 +9,7 @@ TagManager:
   - Rocket
   - Goal
   - Barrier
+  - wall
   layers:
   - Default
   - TransparentFX

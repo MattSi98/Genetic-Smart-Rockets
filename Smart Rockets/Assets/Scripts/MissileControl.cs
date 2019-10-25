@@ -18,6 +18,7 @@ public class MissileControl : MonoBehaviour {
     public Transform goalTransform;
     public double fitness;
     public bool finished;
+    private bool crashed;
 
     void Awake() {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -35,11 +36,16 @@ public class MissileControl : MonoBehaviour {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), GetComponent<CapsuleCollider2D>());
         }
+        if(collision.gameObject.tag == "wall")
+        {
+            fitness *= .25;
+            crashed = true;
+        }
     }
 
     // Update is called once per frame
     void Update() {
-        if(isReady) {
+        if(isReady && !crashed) {
             if (current < 50 && count % 10 == 0) {
                 rb.AddForce(forcesY[current] * new Vector2(speed, 0));
                 rb.AddForce(forcesX[current] * new Vector2(0, speed));
@@ -50,7 +56,7 @@ public class MissileControl : MonoBehaviour {
         if (current >= 50 && current <= 200) {
             current++;
         }
-        if (current >= 200) {
+        if (current >= 200 || crashed) {
             finished = true;
         }
         if (!finished) {
@@ -59,9 +65,10 @@ public class MissileControl : MonoBehaviour {
     }
 
     void calcuteFitness() {
+        double maxDis = 10;
         double dist = Math.Sqrt(Math.Pow((double)(transform.position.x - goalTransform.position.x), 2) +
             Math.Pow((double)(transform.position.y - goalTransform.position.y), 2));
-        double currentFitness = 11 - dist;
+        double currentFitness = maxDis - dist;
         if (transform.position.y > 4.66) {
             currentFitness *= 1.5;
         }
@@ -71,5 +78,6 @@ public class MissileControl : MonoBehaviour {
         if (currentFitness > fitness) {
             fitness = currentFitness;
         }
+        
     }
 }

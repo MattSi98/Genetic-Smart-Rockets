@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 147592406}
   m_Layer: 0
   m_Name: PlatformWhiteSprite (2)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 178347457}
   m_Layer: 0
   m_Name: PlatformWhiteSprite (3)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1450,7 +1450,7 @@ GameObject:
   - component: {fileID: 1931062777}
   m_Layer: 0
   m_Name: PlatformWhiteSprite (1)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
