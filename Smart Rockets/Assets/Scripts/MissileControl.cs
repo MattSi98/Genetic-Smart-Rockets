@@ -38,7 +38,7 @@ public class MissileControl : MonoBehaviour {
         }
         if(collision.gameObject.tag == "wall")
         {
-            fitness *= .25;
+            fitness *= .50;
             crashed = true;
         }
     }
@@ -46,12 +46,14 @@ public class MissileControl : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if(isReady && !crashed) {
-            if (current < 50 && count % 10 == 0) {
-                rb.AddForce(forcesY[current] * new Vector2(speed, 0));
-                rb.AddForce(forcesX[current] * new Vector2(0, speed));
-                current++;
+            if (current < 50 && count % 10 == 0) { //change range of forces applied on rockets || remove count %10? 
+                rb.AddForce(forcesX[current] * new Vector2(speed, 0)); //change scalar perhaps? As we improve, we want to be able to adjust the magnitude of  the vectors
+                rb.AddForce(forcesY[current] * new Vector2(0, speed)); //mating function, incorperate longest lasting rocket by definition of it taking a long time to crash
+                current++;  //this runs 50 times in total
             }
             count++;
+
+        
         }
         if (current >= 50 && current <= 200) {
             current++;
@@ -81,3 +83,17 @@ public class MissileControl : MonoBehaviour {
         
     }
 }
+
+
+
+/* Fitness function
+ * How will we determine if something is a good fitness?
+ * Combine multiple ways to compute fitness:
+ * 1) time alive
+ * 2) distance from goal
+ * 3) ???
+ * Add them all up can multiple by some scalar to determine whcich aspects are more important
+ * 
+ * 
+ * 
+ */
