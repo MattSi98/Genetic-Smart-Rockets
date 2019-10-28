@@ -9,14 +9,10 @@ public class Main : MonoBehaviour {
     public GameObject[] rockets = new GameObject[50];
     public MissileControl[] rocketsControl = new MissileControl[50];
     public float speed;
-    public Transform barrierTransform;
     public Transform goalTransform;
 
     void Start() {
         foreach (Transform child in transform) {
-            if (child.tag == "Barrier") {
-                barrierTransform = child;
-            }
             if (child.tag == "Goal") {
                 goalTransform = child;
             }
@@ -55,10 +51,10 @@ public class Main : MonoBehaviour {
             }
             //normalize rocket fitness and get a fraction of 60
             for (int i = 0; i < rocketsControl.Length; i++) {
-                rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 60);
+                rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 200);
             }
             List<float[][]> matingpool = new List<float[][]>();
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 50; i++) {
                 for (int j = 0; j < rocketsControl[i].fitness; j++) {
                     matingpool.Add(new float[][] {rocketsControl[i].forcesX, rocketsControl[i].forcesY});
                 }
@@ -68,7 +64,6 @@ public class Main : MonoBehaviour {
     }
     bool finished(MissileControl[] rc) {
         bool finished = true;
-        Debug.Log(rc.Length);
         for (int i = 0; i < 50; i++) {
             finished = finished && rc[i].finished;
             if (!finished) {
@@ -80,6 +75,7 @@ public class Main : MonoBehaviour {
     void destroyAndCreate(List<float[][]> matingpool) {
         Vector3 position = new Vector3(0f, -1f, 43.97672f);
         Quaternion rotation = new Quaternion(-1, 0, 0, 1);
+        Debug.Log(matingpool.Count);
         for (int i = 0; i < 50; i++) {
             int parent1 = UnityEngine.Random.Range(0, matingpool.Count);
             int parent2 = UnityEngine.Random.Range(0, matingpool.Count);
@@ -87,7 +83,6 @@ public class Main : MonoBehaviour {
             Destroy(rockets[i]);
             rockets[i] = Instantiate(rocketPrefab, position, rotation) as GameObject;
             rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControl>();
-            rocketsControl[i].isReady = true;
             rocketsControl[i].forcesX = forces[0];
             rocketsControl[i].forcesY = forces[1];
             rocketsControl[i].goalTransform = goalTransform;
@@ -113,7 +108,7 @@ public class Main : MonoBehaviour {
         float[] childX = new float[50];
         float[] childY = new float[50];
         for (int i = 0; i < 50; i++) {
-            if (i < 25) {
+            if (i % 2 == 0) {
                 childX[i] = parent1[0][i];
                 childY[i] = parent1[1][i];
             } else {
