@@ -14,7 +14,6 @@ public class MissileControl : MonoBehaviour {
     public float[] forcesX;
     public float[] forcesY;
     private int current;
-    //private Transform barrierTransform;
     public Transform goalTransform;
     public double fitness;
     public bool finished;
@@ -27,6 +26,8 @@ public class MissileControl : MonoBehaviour {
     }
 
     void Start() {
+        //rb.mass = .5f;
+        //Debug.Log(rb.mass);
         fitness = 0f;
         current = 0;
         count = 0;
@@ -40,7 +41,7 @@ public class MissileControl : MonoBehaviour {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), GetComponent<CapsuleCollider2D>());
         }
-        if(collision.gameObject.tag == "wall" && !reachedGoal) {
+        if(collision.gameObject.tag == "wall" && !reachedGoal && current < 50) { //prevents it from updating fitness after it has finished the stage
             fitness *= .50;
             crashed = true;
         }

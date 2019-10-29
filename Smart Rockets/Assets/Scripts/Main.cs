@@ -75,7 +75,7 @@ public class Main : MonoBehaviour {
     void destroyAndCreate(List<float[][]> matingpool) {
         Vector3 position = new Vector3(0f, -1f, 43.97672f);
         Quaternion rotation = new Quaternion(-1, 0, 0, 1);
-        Debug.Log(matingpool.Count);
+        //assign random mass?
         for (int i = 0; i < 50; i++) {
             int parent1 = UnityEngine.Random.Range(0, matingpool.Count);
             int parent2 = UnityEngine.Random.Range(0, matingpool.Count);
