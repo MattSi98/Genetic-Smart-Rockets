@@ -20,6 +20,7 @@ public class MissileControl : MonoBehaviour {
     private bool crashed;
     private bool reachedGoal;
     private double maxDist;
+    private int endFrame;
 
     void Awake() {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -44,11 +45,13 @@ public class MissileControl : MonoBehaviour {
         if(collision.gameObject.tag == "wall" && !reachedGoal && current < 50) { //prevents it from updating fitness after it has finished the stage
             fitness *= .50;
             crashed = true;
+            endFrame = current;
         }
         if (collision.gameObject.tag == "Goal") {
-            fitness *= 2;
+            fitness *= 4;
             reachedGoal = true;
             crashed = true;
+            endFrame = current;
         }
     }
 
@@ -69,21 +72,30 @@ public class MissileControl : MonoBehaviour {
         }
         if (current >= 200 || crashed) {
             finished = true;
+            
         }
         if (!finished) {
             calcuteFitness();
+           // fitness += fitness * (1 + (endFrame) / 200) * (.5);
+            Debug.Log(fitness);
+            //Debug.Log(maxDist);
         }
     }
-
+    // fitness +=  fitness*(1 + (200-current)/200)*(.75)
     void calcuteFitness() {
         double dist = Math.Sqrt(Math.Pow((double)(transform.position.x - goalTransform.position.x), 2) +
             Math.Pow((double)(transform.position.y - goalTransform.position.y), 2));
+
         double currentFitness = maxDist - dist;
         if (dist < 1) {
             currentFitness *= 1.5;
         }
         if (currentFitness > fitness) {
             fitness = currentFitness;
+        }
+        if (!crashed)
+        {
+            fitness += .05;
         }
         
     }
