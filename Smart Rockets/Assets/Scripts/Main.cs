@@ -11,7 +11,8 @@ public class Main : MonoBehaviour {
     private MissileControl[] rocketsControl = new MissileControl[100];
     public float speed;
     public Transform goalTransform;
-    private int numGenes = 100;
+    private int numGenes = 50;
+    private float geneRange = 50f;
 
     void Start() {
         foreach (Transform child in transform) {
@@ -31,14 +32,14 @@ public class Main : MonoBehaviour {
         }
     }
     float[] createForces(bool X) {
-        float[] forces = new float[50];
+        float[] forces = new float[numGenes];
         if(X) {
-            for (int i = 0; i < 50; i++) {
-                forces[i] = UnityEngine.Random.Range(-50f, 50f);
+            for (int i = 0; i < numGenes; i++) {
+                forces[i] = UnityEngine.Random.Range(-geneRange, geneRange);
             }
         } else {
-            for (int i = 0; i < 50; i++) {
-                forces[i] = UnityEngine.Random.Range(0f, 50f);
+            for (int i = 0; i < numGenes; i++) {
+                forces[i] = UnityEngine.Random.Range(0f, geneRange);
             }
         }
         return forces;
@@ -98,18 +99,18 @@ public class Main : MonoBehaviour {
         if(UnityEngine.Random.Range(0,20) == 10) {
             for (int i = 0; i < UnityEngine.Random.Range(0,5); i++) {
                 if (X) {
-                    gene[UnityEngine.Random.Range(0, 49)] = UnityEngine.Random.Range(-50f, 50f);
+                    gene[UnityEngine.Random.Range(0, 49)] = UnityEngine.Random.Range(-geneRange, geneRange);
                 } else {
-                    gene[UnityEngine.Random.Range(0, 49)] = UnityEngine.Random.Range(0f, 50f);
+                    gene[UnityEngine.Random.Range(0, 49)] = UnityEngine.Random.Range(0f, geneRange);
                 }
             }
         }
         return gene;
     }
     float[][] mate(float[][] parent1, float[][] parent2) {
-        float[] childX = new float[50];
-        float[] childY = new float[50];
-        for (int i = 0; i < 50; i++) {
+        float[] childX = new float[numGenes];
+        float[] childY = new float[numGenes];
+        for (int i = 0; i < numGenes; i++) {
             if (i % 2 == 0) {
                 childX[i] = parent1[0][i];
                 childY[i] = parent1[1][i];
