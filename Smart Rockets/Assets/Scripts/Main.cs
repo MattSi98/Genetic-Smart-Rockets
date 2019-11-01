@@ -5,11 +5,13 @@ using System;
 
 public class Main : MonoBehaviour {
     // Start is called before the first frame update
+    private int numRockets = 100;
     public GameObject rocketPrefab;
-    public GameObject[] rockets = new GameObject[50];
-    public MissileControl[] rocketsControl = new MissileControl[50];
+    private GameObject[] rockets = new GameObject[100];
+    private MissileControl[] rocketsControl = new MissileControl[100];
     public float speed;
     public Transform goalTransform;
+    private int numGenes = 100;
 
     void Start() {
         foreach (Transform child in transform) {
@@ -19,7 +21,7 @@ public class Main : MonoBehaviour {
         }
         Vector3 position = new Vector3(0f, -1f, 43.97672f);
         Quaternion rotation = new Quaternion(-1, 0, 0, 1);
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < numRockets; i++) {
             rockets[i] = Instantiate(rocketPrefab, position, rotation) as GameObject;
             rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControl>();
             rocketsControl[i].isReady = true;
@@ -49,12 +51,12 @@ public class Main : MonoBehaviour {
             for (int i = 0; i < rocketsControl.Length; i++) {
                 totalFitness += rocketsControl[i].fitness;
             }
-            //normalize rocket fitness and get a fraction of 60
+            //normalize rocket fitness and get a fraction of 200
             for (int i = 0; i < rocketsControl.Length; i++) {
                 rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 200);
             }
             List<float[][]> matingpool = new List<float[][]>();
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < numRockets; i++) {
                 for (int j = 0; j < rocketsControl[i].fitness; j++) {
                     matingpool.Add(new float[][] {rocketsControl[i].forcesX, rocketsControl[i].forcesY});
                 }
@@ -64,7 +66,7 @@ public class Main : MonoBehaviour {
     }
     bool finished(MissileControl[] rc) {
         bool finished = true;
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < numRockets; i++) {
             finished = finished && rc[i].finished;
             if (!finished) {
                 return finished;
@@ -76,7 +78,7 @@ public class Main : MonoBehaviour {
         Vector3 position = new Vector3(0f, -1f, 43.97672f);
         Quaternion rotation = new Quaternion(-1, 0, 0, 1);
         //assign random mass?
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < numRockets; i++) {
             int parent1 = UnityEngine.Random.Range(0, matingpool.Count);
             int parent2 = UnityEngine.Random.Range(0, matingpool.Count);
             float[][] forces = mate(matingpool[parent1], matingpool[parent2]);
@@ -88,7 +90,7 @@ public class Main : MonoBehaviour {
             rocketsControl[i].goalTransform = goalTransform;
             rocketsControl[i].speed = speed;
         }
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < numRockets; i++) {
             rocketsControl[i].isReady = true;
         }
     }
