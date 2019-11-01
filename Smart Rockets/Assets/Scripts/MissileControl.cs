@@ -59,8 +59,8 @@ public class MissileControl : MonoBehaviour {
     void Update() {
         if(isReady && !crashed) {
             if (current < 50 && count % 5 == 0) { //change range of forces applied on rockets || remove count %10? 
-                rb.AddForce(forcesX[current] * new Vector2(speed, 0)); //change scalar perhaps? As we improve, we want to be able to adjust the magnitude of  the vectors
-                rb.AddForce(forcesY[current] * new Vector2(0, speed)); //mating function, incorperate longest lasting rocket by definition of it taking a long time to crash
+                rb.AddRelativeForce(forcesX[current] * new Vector2(speed, 0)); //change scalar perhaps? As we improve, we want to be able to adjust the magnitude of  the vectors
+                rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed)); //mating function, incorperate longest lasting rocket by definition of it taking a long time to crash
                 current++;  //this runs 50 times in total
             }
             count++;
