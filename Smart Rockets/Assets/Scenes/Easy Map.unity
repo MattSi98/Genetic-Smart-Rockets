@@ -4698,6 +4698,36 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!1 &918907676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 918907677}
+  m_Layer: 0
+  m_Name: MileStone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &918907677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918907676}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12.32, y: 7.03, z: 3.1816978}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2030492936}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1162473526
 GameObject:
   m_ObjectHideFlags: 0
@@ -4800,7 +4830,7 @@ Transform:
   m_GameObject: {fileID: 1162473526}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 6.2583175, y: 17.090118, z: 8.15826}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 2030492936}
   m_RootOrder: 0
@@ -4828,12 +4858,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445458436}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.7383175, y: -9.5, z: 8.15826}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 2030492936}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1553175415
 GameObject:
@@ -4996,14 +5026,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2030492934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5dbd330c91731489d14fe3a3f8eec0, type: 3}
+  m_Script: {fileID: 11500000, guid: 02bc627de2ab9fc47a3a8ea1bafc09bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocketPrefab: {fileID: 5384471771950676875, guid: 2ccd9982c8c846e4c85c1e8d858ed8b2,
+  rocketPrefab: {fileID: 4236801941267676981, guid: fd606888fd7d49a4d99e40ec7d4adfe2,
     type: 3}
-  speed: 2
+  speed: 3
   goalTransform: {fileID: 1162473529}
   startPos: {fileID: 1445458437}
+  mileStone: {fileID: 918907677}
 --- !u!4 &2030492936
 Transform:
   m_ObjectHideFlags: 0
@@ -5017,6 +5048,8 @@ Transform:
   m_Children:
   - {fileID: 1162473529}
   - {fileID: 1808377778}
+  - {fileID: 918907677}
+  - {fileID: 1445458437}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

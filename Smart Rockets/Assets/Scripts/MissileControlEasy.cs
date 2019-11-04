@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class MissileControl : MonoBehaviour {
+public class MissileControlEasy : MonoBehaviour {
     // Start is called before the first frame update
     [SerializeField]
     public float speed;
@@ -26,7 +26,7 @@ public class MissileControl : MonoBehaviour {
     private int endFrame;
     private bool updateFitnessTime1;
     private bool updateFitnessTime2;
-    public Transform[] mileStones;
+    public Transform mileStone;
 
     void Awake() {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -50,7 +50,7 @@ public class MissileControl : MonoBehaviour {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), GetComponent<CapsuleCollider2D>());
         }
-        if(collision.gameObject.tag == "wall" && !reachedGoal && current < 50) { //prevents it from updating fitness after it has finished the stage
+        if (collision.gameObject.tag == "wall" && !reachedGoal && current < 50) { //prevents it from updating fitness after it has finished the stage
             fitness *= .50;
             crashed = true;
             endFrame = current;
@@ -75,7 +75,7 @@ public class MissileControl : MonoBehaviour {
                 //rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, -speed));
                 //rb.AddRelativeForce(forcesX[current] * new Vector2(speed, speed)); //change scalar perhaps? As we improve, we want to be able to adjust the magnitude of  the vectors4
                 //rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed)); //mating function, incorperate longest lasting rocket by definition of it taking a long time to crash
-                rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, speed * .5f) + 
+                rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, speed * .5f) +
                                     thrusterRightForces[current] * new Vector2(speed * .5f, speed * .5f));
                 rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed));
                 current++;  //this runs 50 times in total
@@ -97,14 +97,13 @@ public class MissileControl : MonoBehaviour {
             updateFitnessTime1 = true;
         }
         if (updateFitnessTime1 && !updateFitnessTime2) {
-            Debug.Log("fitnessTime");
             fitness += fitnessTime;
             updateFitnessTime2 = true;
         }
         if (!finished) {
             calcuteFitness();
-           // fitness += fitness * (1 + (endFrame) / 200) * (.5);
-           // Debug.Log(fitness);
+            // fitness += fitness * (1 + (endFrame) / 200) * (.5);
+            // Debug.Log(fitness);
             //Debug.Log(maxDist);
         }
     }
@@ -117,12 +116,15 @@ public class MissileControl : MonoBehaviour {
         if (dist < 1) {
             currentFitness *= 1.5;
         }
-        
+        if (mileStone.position.y < transform.position.y) {
+            Debug.Log("mileStone");
+            currentFitness *= 1.5;
+        }
         if (!crashed) {
             fitness = currentFitness;
             fitnessTime += .05;
         }
-        
+
     }
 }
 

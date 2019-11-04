@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Main : MonoBehaviour {
+public class MainEasy : MonoBehaviour {
     // Start is called before the first frame update
     private int numRockets = 250;
     public GameObject rocketPrefab;
     private GameObject[] rockets = new GameObject[250];
-    private MissileControl[] rocketsControl = new MissileControl[250];
+    private MissileControlEasy[] rocketsControl = new MissileControlEasy[250];
     public float speed;
     public Transform goalTransform;
     private int numGenes = 50;
     private float geneRange = 25f;
     public Transform startPos;
+    public Transform mileStone;
 
     void Start() {
         foreach (Transform child in transform) {
@@ -24,13 +25,14 @@ public class Main : MonoBehaviour {
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
         for (int i = 0; i < numRockets; i++) {
             rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
-            rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControl>();
+            rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlEasy>();
             rocketsControl[i].isReady = true;
             rocketsControl[i].forcesX = createForces(true);
             rocketsControl[i].forcesY = createForces(false);
             rocketsControl[i].thrusterLeftForces = createForces(false);
             rocketsControl[i].thrusterRightForces = createForces(false);
             rocketsControl[i].goalTransform = goalTransform;
+            rocketsControl[i].mileStone = mileStone;
         }
     }
     float[] createForces(bool X) {
@@ -41,7 +43,7 @@ public class Main : MonoBehaviour {
             }
         } else {
             for (int i = 0; i < numGenes; i++) {
-                forces[i] = UnityEngine.Random.Range(0f, geneRange*1.5f);
+                forces[i] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
             }
         }
         return forces;
@@ -61,13 +63,13 @@ public class Main : MonoBehaviour {
             List<float[][]> matingpool = new List<float[][]>();
             for (int i = 0; i < numRockets; i++) {
                 for (int j = 0; j < rocketsControl[i].fitness; j++) {
-                    matingpool.Add(new float[][] {rocketsControl[i].forcesX, rocketsControl[i].forcesY, rocketsControl[i].thrusterLeftForces, rocketsControl[i].thrusterRightForces });
+                    matingpool.Add(new float[][] { rocketsControl[i].forcesX, rocketsControl[i].forcesY, rocketsControl[i].thrusterLeftForces, rocketsControl[i].thrusterRightForces });
                 }
             }
             destroyAndCreate(matingpool);
         }
     }
-    bool finished(MissileControl[] rc) {
+    bool finished(MissileControlEasy[] rc) {
         bool finished = true;
         for (int i = 0; i < numRockets; i++) {
             finished = finished && rc[i].finished;
@@ -86,21 +88,22 @@ public class Main : MonoBehaviour {
             float[][] forces = mate(matingpool[parent1], matingpool[parent2]);
             Destroy(rockets[i]);
             rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
-            rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControl>();
+            rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlEasy>();
             rocketsControl[i].forcesX = forces[0];
             rocketsControl[i].forcesY = forces[1];
             rocketsControl[i].thrusterLeftForces = forces[2];
             rocketsControl[i].thrusterRightForces = forces[3];
             rocketsControl[i].goalTransform = goalTransform;
             rocketsControl[i].speed = speed;
+            rocketsControl[i].mileStone = mileStone;
         }
         for (int i = 0; i < numRockets; i++) {
             rocketsControl[i].isReady = true;
         }
     }
     float[] mutate(float[] gene, bool X) {
-        if(UnityEngine.Random.Range(0,20) < 5) {
-            for (int i = 0; i < UnityEngine.Random.Range(0,5); i++) {
+        if (UnityEngine.Random.Range(0, 20) < 5) {
+            for (int i = 0; i < UnityEngine.Random.Range(0, 5); i++) {
                 if (X) {
                     gene[UnityEngine.Random.Range(0, 49)] = UnityEngine.Random.Range(-geneRange, geneRange);
                 } else {
