@@ -29,6 +29,8 @@ public class MissileControlHard : MonoBehaviour {
     public Transform[] mileStones;
     public bool[] passedMileStones;
     private int fitnessLevel;
+    public GameObject explosion;
+    private bool exploded;
 
     void Awake() {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -48,8 +50,8 @@ public class MissileControlHard : MonoBehaviour {
         passedMileStones = new bool[13];
         for (int i = 0; i < passedMileStones.Length; i++) {
             passedMileStones[i] = false;
-
         }
+        exploded = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -64,6 +66,16 @@ public class MissileControlHard : MonoBehaviour {
             endFrame = current;
             rb.freezeRotation = true;
             Physics2D.gravity = new Vector2(0, -9.8f);
+            GetComponent<MeshRenderer>().enabled = false;
+            if (!exploded) {
+                exploded = true;
+                ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
+                foreach (ParticleSystem child in ps) {
+                    child.Stop();
+                }
+                GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
+                Destroy(expl, 1);
+            }
         }
         if (collision.gameObject.tag == "Goal" && !crashed) {
             Debug.Log("hit goal?");
@@ -71,6 +83,16 @@ public class MissileControlHard : MonoBehaviour {
             reachedGoal = true;
             crashed = true;
             endFrame = current;
+            GetComponent<MeshRenderer>().enabled = false;
+            if (!exploded) {
+                exploded = true;
+                ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
+                foreach (ParticleSystem child in ps) {
+                    child.Stop();
+                }
+                GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
+                Destroy(expl, 1);
+            }
         }
     }
 
