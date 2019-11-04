@@ -4816,7 +4816,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 670224309865224971, guid: 81ae3d24e2ff74349be723959a77481d, type: 3}
+  - {fileID: 2100000, guid: a24a209a6bd187d49929d1a6d40a92ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4899,6 +4899,8 @@ MonoBehaviour:
   reachedGoal: 0
   mileStones: []
   passedMileStones: 
+  explosion: {fileID: 891618502446105816, guid: 1e58b7268623025468540c68d8f1fcf8,
+    type: 3}
 --- !u!1 &3230416490190768426
 GameObject:
   m_ObjectHideFlags: 0

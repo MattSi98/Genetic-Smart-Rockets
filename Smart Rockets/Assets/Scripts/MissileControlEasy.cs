@@ -27,6 +27,8 @@ public class MissileControlEasy : MonoBehaviour {
     private bool updateFitnessTime1;
     private bool updateFitnessTime2;
     public Transform mileStone;
+    public GameObject explosion;
+    private bool exploded;
 
     void Awake() {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -42,6 +44,7 @@ public class MissileControlEasy : MonoBehaviour {
         Physics2D.gravity = Vector2.zero;
         updateFitnessTime1 = false;
         updateFitnessTime2 = false;
+        exploded = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -56,6 +59,16 @@ public class MissileControlEasy : MonoBehaviour {
             endFrame = current;
             rb.freezeRotation = true;
             Physics2D.gravity = new Vector2(0, -9.8f);
+            GetComponent<MeshRenderer>().enabled = false;
+            if (!exploded) {
+                exploded = true;
+                ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
+                foreach (ParticleSystem child in ps) {
+                    child.Stop();
+                }
+                GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
+                Destroy(expl, 1);
+            }
         }
         if (collision.gameObject.tag == "Goal" && !crashed) {
             Debug.Log("hit goal?");
@@ -63,6 +76,16 @@ public class MissileControlEasy : MonoBehaviour {
             reachedGoal = true;
             crashed = true;
             endFrame = current;
+            GetComponent<MeshRenderer>().enabled = false;
+            if (!exploded) {
+                exploded = true;
+                ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
+                foreach (ParticleSystem child in ps) {
+                    child.Stop();
+                }
+                GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
+                Destroy(expl, 1);
+            }
         }
     }
 
