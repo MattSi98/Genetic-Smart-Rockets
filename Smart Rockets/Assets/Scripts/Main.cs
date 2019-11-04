@@ -13,6 +13,7 @@ public class Main : MonoBehaviour {
     public Transform goalTransform;
     private int numGenes = 50;
     private float geneRange = 25f;
+    public Transform startPos;
 
     void Start() {
         foreach (Transform child in transform) {
@@ -20,10 +21,9 @@ public class Main : MonoBehaviour {
                 goalTransform = child;
             }
         }
-        Vector3 position = new Vector3(0f, -1f, 43.97672f);
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
         for (int i = 0; i < numRockets; i++) {
-            rockets[i] = Instantiate(rocketPrefab, position, rotation) as GameObject;
+            rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
             rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControl>();
             rocketsControl[i].isReady = true;
             rocketsControl[i].forcesX = createForces(true);
@@ -78,7 +78,6 @@ public class Main : MonoBehaviour {
         return finished;
     }
     void destroyAndCreate(List<float[][]> matingpool) {
-        Vector3 position = new Vector3(0f, -1f, 43.97672f);
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
         //assign random mass?
         for (int i = 0; i < numRockets; i++) {
@@ -86,7 +85,7 @@ public class Main : MonoBehaviour {
             int parent2 = UnityEngine.Random.Range(0, matingpool.Count);
             float[][] forces = mate(matingpool[parent1], matingpool[parent2]);
             Destroy(rockets[i]);
-            rockets[i] = Instantiate(rocketPrefab, position, rotation) as GameObject;
+            rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
             rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControl>();
             rocketsControl[i].forcesX = forces[0];
             rocketsControl[i].forcesY = forces[1];

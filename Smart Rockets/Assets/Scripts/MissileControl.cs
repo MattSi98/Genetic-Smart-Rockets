@@ -21,7 +21,7 @@ public class MissileControl : MonoBehaviour {
     public double fitnessTime;
     public bool finished;
     private bool crashed;
-    private bool reachedGoal;
+    public bool reachedGoal;
     private double maxDist;
     private int endFrame;
     private bool updateFitnessTime1;
@@ -56,7 +56,7 @@ public class MissileControl : MonoBehaviour {
             rb.freezeRotation = true;
             Physics2D.gravity = new Vector2(0, -9.8f);
         }
-        if (collision.gameObject.tag == "Goal") {
+        if (collision.gameObject.tag == "Goal" && !crashed) {
             Debug.Log("hit goal?");
             fitness *= 4;
             reachedGoal = true;
