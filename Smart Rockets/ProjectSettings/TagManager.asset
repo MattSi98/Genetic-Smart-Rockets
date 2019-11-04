@@ -10,6 +10,7 @@ TagManager:
   - Goal
   - Barrier
   - wall
+  - thrusters
   layers:
   - Default
   - TransparentFX

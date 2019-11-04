@@ -4993,7 +4993,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851307387}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 517918d441bb5e34b9ff67c0eb1a1a52, type: 3}
   m_Name: 
@@ -5095,7 +5095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5dbd330c91731489d14fe3a3f8eec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocketPrefab: {fileID: 1962653995578485359, guid: fd606888fd7d49a4d99e40ec7d4adfe2,
+  rocketPrefab: {fileID: 5384471771950676875, guid: 2ccd9982c8c846e4c85c1e8d858ed8b2,
     type: 3}
   speed: 3
   goalTransform: {fileID: 799290943}
@@ -5217,7 +5217,7 @@ GameObject:
   - component: {fileID: 1834851796}
   m_Layer: 0
   m_Name: Grid
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
