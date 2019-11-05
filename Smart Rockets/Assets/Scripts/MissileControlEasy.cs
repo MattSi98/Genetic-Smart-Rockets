@@ -15,7 +15,7 @@ public class MissileControlEasy : MonoBehaviour {
     public float[] thrusterLeftForces;
     public float[] thrusterRightForces;
     public float[] forcesY;
-    private int current;
+    public int current;
     public Transform goalTransform;
     public double fitness;
     public double fitnessTime;
@@ -53,7 +53,7 @@ public class MissileControlEasy : MonoBehaviour {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), GetComponent<CapsuleCollider2D>());
         }
-        if (collision.gameObject.tag == "wall" && !reachedGoal && current < 50) { //prevents it from updating fitness after it has finished the stage
+        if (collision.gameObject.tag == "wall" && !reachedGoal) { //prevents it from updating fitness after it has finished the stage
             fitness *= .50;
             crashed = true;
             endFrame = current;
@@ -113,7 +113,7 @@ public class MissileControlEasy : MonoBehaviour {
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
         }
-        if (current >= 50 && current <= 200) {
+        if (current >= 50) {
             current++;
         }
         if (current >= 200 || crashed) {
@@ -146,7 +146,7 @@ public class MissileControlEasy : MonoBehaviour {
         }
         if (!crashed) {
             fitness = currentFitness;
-            fitnessTime += .05;
+           // fitnessTime += .05;
         }
 
     }

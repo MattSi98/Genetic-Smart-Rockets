@@ -107,9 +107,7 @@ public class MainHard : MonoBehaviour {
                 if (X) {
                     gene[UnityEngine.Random.Range(0, 99)] = UnityEngine.Random.Range(-geneRange, geneRange);
                 } else {
-                    int g = UnityEngine.Random.Range(0, 99);
-                    Debug.Log("Gene" + g);
-                    gene[g] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
+                    gene[UnityEngine.Random.Range(0, 99)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
                 }
             }
         }

@@ -61,7 +61,7 @@ public class MissileControlHard : MonoBehaviour {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), GetComponent<CapsuleCollider2D>());
         }
-        if (collision.gameObject.tag == "wall" && !reachedGoal && current < 100) { //prevents it from updating fitness after it has finished the stage
+        if (collision.gameObject.tag == "wall" && !reachedGoal) { //prevents it from updating fitness after it has finished the stage
             fitness *= .50;
             crashed = true;
             endFrame = current;
@@ -235,7 +235,7 @@ public class MissileControlHard : MonoBehaviour {
             && !passedMileStones[10]
             && mileStones[10].position.x > transform.position.x) {
             passedMileStones[10] = true;
-            fitnessLevel = 12;
+            fitnessLevel = 15;
         } else if (passedMileStones[0]
             && passedMileStones[1]
             && passedMileStones[2]
@@ -250,7 +250,7 @@ public class MissileControlHard : MonoBehaviour {
             && !passedMileStones[11]
             && mileStones[11].position.y < transform.position.y) {
             passedMileStones[11] = true;
-            fitnessLevel = 13;
+            fitnessLevel = 18;
         } else if (passedMileStones[0]
             && passedMileStones[1]
             && passedMileStones[2]
@@ -266,7 +266,7 @@ public class MissileControlHard : MonoBehaviour {
             && !passedMileStones[12]
             && mileStones[12].position.y < transform.position.y) {
             passedMileStones[12] = true;
-            fitnessLevel = 14;
+            fitnessLevel = 19;
         } else if (passedMileStones[0]
             && passedMileStones[1]
             && passedMileStones[2]
@@ -283,7 +283,7 @@ public class MissileControlHard : MonoBehaviour {
             && !passedMileStones[13]
             && mileStones[13].position.y < transform.position.y) {
             passedMileStones[13] = true;
-            fitnessLevel = 15;
+            fitnessLevel = 22;
         } else if (passedMileStones[0]
             && passedMileStones[1]
             && passedMileStones[2]
@@ -301,7 +301,7 @@ public class MissileControlHard : MonoBehaviour {
             && !passedMileStones[14]
             && mileStones[14].position.y < transform.position.y) {
             passedMileStones[14] = true;
-            fitnessLevel = 16;
+            fitnessLevel = 23;
         } else if (passedMileStones[0]
             && passedMileStones[1]
             && passedMileStones[2]
@@ -320,8 +320,8 @@ public class MissileControlHard : MonoBehaviour {
             && !passedMileStones[15]
             && mileStones[15].position.x < transform.position.x) {
             passedMileStones[15] = true;
-            fitnessLevel = 17;
-        }
+            fitnessLevel = 24;
+        } 
     }
     void calcuteFitness() {
         //instead of taking the distance to the goal, take distance to milestones
