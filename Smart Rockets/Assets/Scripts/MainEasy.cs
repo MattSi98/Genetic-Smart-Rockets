@@ -118,17 +118,26 @@ public class MainEasy : MonoBehaviour {
         float[] childY = new float[numGenes];
         float[] childThrusterLeft = new float[numGenes];
         float[] childThrusterRight = new float[numGenes];
-        for (int i = 0; i < numGenes; i++) {
-            if (i % 2 == 0) {
-                childX[i] = parent1[0][i];
-                childY[i] = parent1[1][i];
-                childThrusterLeft[i] = parent1[2][i];
-                childThrusterRight[i] = parent1[3][i];
-            } else {
-                childX[i] = parent2[0][i];
-                childY[i] = parent2[1][i];
-                childThrusterLeft[i] = parent2[2][i];
-                childThrusterRight[i] = parent2[3][i];
+        if (UnityEngine.Random.Range(0, 1) == 1) {
+            for (int i = 0; i < numGenes; i++) {
+                if (i % 2 == 0) {
+                    childX[i] = parent1[0][i];
+                    childY[i] = parent1[1][i];
+                    childThrusterLeft[i] = parent1[2][i];
+                    childThrusterRight[i] = parent1[3][i];
+                } else {
+                    childX[i] = parent2[0][i];
+                    childY[i] = parent2[1][i];
+                    childThrusterLeft[i] = parent2[2][i];
+                    childThrusterRight[i] = parent2[3][i];
+                }
+            }
+        } else {
+            for (int i = 0; i < numGenes; i++) {
+                childX[i] = (parent1[0][i] + parent2[0][i]) / 2;
+                childY[i] = (parent1[1][i] + parent2[1][i]) / 2;
+                childThrusterLeft[i] = (parent1[2][i] + parent2[2][i]) / 2;
+                childThrusterRight[i] = (parent1[3][i] + parent2[3][i]) / 2;
             }
         }
         return new float[][] { mutate(childX, true), mutate(childY, false), mutate(childThrusterLeft, false), mutate(childThrusterRight, false) };

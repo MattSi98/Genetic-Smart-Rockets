@@ -15,7 +15,7 @@ public class MissileControlHard : MonoBehaviour {
     public float[] thrusterLeftForces;
     public float[] thrusterRightForces;
     public float[] forcesY;
-    private int current;
+    public int current;
     public Transform goalTransform;
     public double fitness;
     public double fitnessTime;
@@ -43,6 +43,7 @@ public class MissileControlHard : MonoBehaviour {
         finished = false;
         maxDist = Math.Sqrt(Math.Pow((double)(transform.position.x - goalTransform.position.x), 2) +
             Math.Pow((double)(transform.position.y - goalTransform.position.y), 2));
+        maxDist = 200;
         Physics2D.gravity = Vector2.zero;
         updateFitnessTime1 = false;
         updateFitnessTime2 = false;
@@ -60,7 +61,7 @@ public class MissileControlHard : MonoBehaviour {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), GetComponent<CapsuleCollider2D>());
         }
-        if (collision.gameObject.tag == "wall" && !reachedGoal && current < 50) { //prevents it from updating fitness after it has finished the stage
+        if (collision.gameObject.tag == "wall" && !reachedGoal && current < 100) { //prevents it from updating fitness after it has finished the stage
             fitness *= .50;
             crashed = true;
             endFrame = current;
@@ -100,7 +101,7 @@ public class MissileControlHard : MonoBehaviour {
     void Update() {
         if (isReady && !crashed) {
             rb.velocity = transform.up * speed * 2;
-            if (current < 50 && count % 10 == 0) { //change range of forces applied on rockets || remove count %10? 
+            if (current < 100 && count % 10 == 0) { //change range of forces applied on rockets || remove count %10? 
 
                 //rb.AddRelativeForce(thrusterRightForces[current] * new Vector2(speed * .5f, -speed));
                 //rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, -speed));
@@ -113,14 +114,14 @@ public class MissileControlHard : MonoBehaviour {
             }
             count++;
         }
-        if (current < 50) {
+        if (current < 100) {
             float x = thrusterLeftForces[current] * -speed * .5f + thrusterRightForces[current] * speed * .5f;
             float y = thrusterLeftForces[current] * speed * .5f + thrusterRightForces[current] * speed * .5f;
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
         }
-        if (current >= 50 && current <= 200) {
+        if (current >= 100) {
             current++;
         }
         if (current >= 200 || crashed) {
@@ -134,7 +135,6 @@ public class MissileControlHard : MonoBehaviour {
         if (!finished) {
             calcuteFitness();
         }
-        getFitnessLevel();
     }
     void getFitnessLevel() {
         if (!passedMileStones[0] 
@@ -324,17 +324,20 @@ public class MissileControlHard : MonoBehaviour {
         }
     }
     void calcuteFitness() {
+        //instead of taking the distance to the goal, take distance to milestones
         double dist = Math.Sqrt(Math.Pow((double)(transform.position.x - goalTransform.position.x), 2) +
             Math.Pow((double)(transform.position.y - goalTransform.position.y), 2));
-
+        getFitnessLevel();
         double currentFitness = maxDist - dist;
         if (dist < 1) {
+            Debug.Log("here");
             currentFitness *= 1.5;
         }
         if (!crashed) {
-            fitness = currentFitness;
+            //fitness = currentFitness;
             fitnessTime += .05;
-            fitness *= fitnessLevel;
+            fitness +=  fitnessLevel;
+            //fitness *= fitnessLevel;
         }
 
     }

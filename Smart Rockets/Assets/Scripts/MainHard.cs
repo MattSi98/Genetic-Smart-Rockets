@@ -5,13 +5,13 @@ using System;
 
 public class MainHard : MonoBehaviour {
     // Start is called before the first frame update
-    private int numRockets = 250;
+    private int numRockets = 500;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[250];
-    private MissileControlHard[] rocketsControl = new MissileControlHard[250];
+    private GameObject[] rockets = new GameObject[500];
+    private MissileControlHard[] rocketsControl = new MissileControlHard[500];
     public float speed;
     public Transform goalTransform;
-    private int numGenes = 50;
+    private int numGenes = 100;
     private float geneRange = 25f;
     public Transform startPos;
     public Transform[] mileStones = new Transform[16];
@@ -58,12 +58,12 @@ public class MainHard : MonoBehaviour {
             }
             //normalize rocket fitness and get a fraction of 200
             for (int i = 0; i < rocketsControl.Length; i++) {
-                rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 500);
+                rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 1000);
             }
-            List<float[][]> matingpool = new List<float[][]>();
+            List<MissileControlHard> matingpool = new List<MissileControlHard>();
             for (int i = 0; i < numRockets; i++) {
                 for (int j = 0; j < rocketsControl[i].fitness; j++) {
-                    matingpool.Add(new float[][] { rocketsControl[i].forcesX, rocketsControl[i].forcesY, rocketsControl[i].thrusterLeftForces, rocketsControl[i].thrusterRightForces });
+                    matingpool.Add(rocketsControl[i]);
                 }
             }
             destroyAndCreate(matingpool);
@@ -79,7 +79,7 @@ public class MainHard : MonoBehaviour {
         }
         return finished;
     }
-    void destroyAndCreate(List<float[][]> matingpool) {
+    void destroyAndCreate(List<MissileControlHard> matingpool) {
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
         //assign random mass?
         for (int i = 0; i < numRockets; i++) {
@@ -103,32 +103,45 @@ public class MainHard : MonoBehaviour {
     }
     float[] mutate(float[] gene, bool X) {
         if (UnityEngine.Random.Range(0, 20) < 5) {
-            for (int i = 0; i < UnityEngine.Random.Range(0, 5); i++) {
+            for (int i = 0; i < UnityEngine.Random.Range(5, 10); i++) {
                 if (X) {
-                    gene[UnityEngine.Random.Range(0, 49)] = UnityEngine.Random.Range(-geneRange, geneRange);
+                    gene[UnityEngine.Random.Range(0, 99)] = UnityEngine.Random.Range(-geneRange, geneRange);
                 } else {
-                    gene[UnityEngine.Random.Range(0, 49)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
+                    int g = UnityEngine.Random.Range(0, 99);
+                    Debug.Log("Gene" + g);
+                    gene[g] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
                 }
             }
         }
         return gene;
     }
-    float[][] mate(float[][] parent1, float[][] parent2) {
+    float[][] mate(MissileControlHard parent1, MissileControlHard parent2) {
         float[] childX = new float[numGenes];
         float[] childY = new float[numGenes];
         float[] childThrusterLeft = new float[numGenes];
         float[] childThrusterRight = new float[numGenes];
-        for (int i = 0; i < numGenes; i++) {
-            if (i % 2 == 0) {
-                childX[i] = parent1[0][i];
-                childY[i] = parent1[1][i];
-                childThrusterLeft[i] = parent1[2][i];
-                childThrusterRight[i] = parent1[3][i];
-            } else {
-                childX[i] = parent2[0][i];
-                childY[i] = parent2[1][i];
-                childThrusterLeft[i] = parent2[2][i];
-                childThrusterRight[i] = parent2[3][i];
+        if (UnityEngine.Random.Range(0, 1) == 1) {
+            for (int i = 0; i < numGenes; i++) {
+                if (i % 2 == 0) {
+                    childX[i] = parent1.forcesX[i];
+                    childY[i] = parent1.forcesY[i];
+                    childThrusterLeft[i] = parent1.thrusterLeftForces[i];
+                    childThrusterRight[i] = parent1.thrusterRightForces[i];
+                } else {
+                    childX[i] = parent2.forcesX[i];
+                    childY[i] = parent2.forcesY[i];
+                    childThrusterLeft[i] = parent2.thrusterLeftForces[i];
+                    childThrusterRight[i] = parent2.thrusterRightForces[i];
+                }
+            }
+        } else {
+            float parent1Percentage = (float)parent1.fitness / (float)(parent1.fitness + parent2.fitness);
+            float parent2Percentage = (float)parent2.fitness / (float)(parent1.fitness + parent2.fitness);
+            for (int i = 0; i < numGenes; i++) {
+                childX[i] = (parent1.forcesX[i] * parent1Percentage) + (parent2.forcesX[i] * parent2Percentage);
+                childY[i] = (parent1.forcesY[i] * parent1Percentage) + (parent2.forcesY[i] * parent2Percentage);
+                childThrusterLeft[i] = (parent1.thrusterLeftForces[i] * parent1Percentage) + (parent2.thrusterLeftForces[i] * parent2Percentage);
+                childThrusterRight[i] = (parent1.thrusterRightForces[i] * parent1Percentage) + (parent2.thrusterRightForces[i] * parent2Percentage);
             }
         }
         return new float[][] { mutate(childX, true), mutate(childY, false), mutate(childThrusterLeft, false), mutate(childThrusterRight, false) };
