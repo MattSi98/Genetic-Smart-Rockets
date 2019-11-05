@@ -14,7 +14,7 @@ public class MainHard : MonoBehaviour {
     private int numGenes = 50;
     private float geneRange = 25f;
     public Transform startPos;
-    public Transform[] mileStones = new Transform[13];
+    public Transform[] mileStones = new Transform[16];
 
     void Start() {
         foreach (Transform child in transform) {

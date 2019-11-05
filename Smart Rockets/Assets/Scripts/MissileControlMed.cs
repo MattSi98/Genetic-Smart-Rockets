@@ -99,6 +99,7 @@ public class MissileControlMed : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (isReady && !crashed) {
+            rb.velocity = transform.up * speed * 2;
             if (current < 50 && count % 10 == 0) { //change range of forces applied on rockets || remove count %10? 
 
                 //rb.AddRelativeForce(thrusterRightForces[current] * new Vector2(speed * .5f, -speed));
@@ -116,7 +117,7 @@ public class MissileControlMed : MonoBehaviour {
             float x = thrusterLeftForces[current] * -speed * .5f + thrusterRightForces[current] * speed * .5f;
             float y = thrusterLeftForces[current] * speed * .5f + thrusterRightForces[current] * speed * .5f;
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
-            Quaternion target = Quaternion.Euler(0, 0, (float)angle);
+            Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
         }
         if (current >= 50 && current <= 200) {

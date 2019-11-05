@@ -47,7 +47,7 @@ public class MissileControlHard : MonoBehaviour {
         updateFitnessTime1 = false;
         updateFitnessTime2 = false;
         fitnessLevel = 1;
-        passedMileStones = new bool[13];
+        passedMileStones = new bool[16];
         for (int i = 0; i < passedMileStones.Length; i++) {
             passedMileStones[i] = false;
         }
@@ -99,6 +99,7 @@ public class MissileControlHard : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (isReady && !crashed) {
+            rb.velocity = transform.up * speed * 2;
             if (current < 50 && count % 10 == 0) { //change range of forces applied on rockets || remove count %10? 
 
                 //rb.AddRelativeForce(thrusterRightForces[current] * new Vector2(speed * .5f, -speed));
@@ -107,7 +108,7 @@ public class MissileControlHard : MonoBehaviour {
                 //rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed)); //mating function, incorperate longest lasting rocket by definition of it taking a long time to crash
                 rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, speed * .5f) +
                                     thrusterRightForces[current] * new Vector2(speed * .5f, speed * .5f));
-                rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed));
+                //rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed));
                 current++;  //this runs 50 times in total
             }
             count++;
@@ -116,7 +117,7 @@ public class MissileControlHard : MonoBehaviour {
             float x = thrusterLeftForces[current] * -speed * .5f + thrusterRightForces[current] * speed * .5f;
             float y = thrusterLeftForces[current] * speed * .5f + thrusterRightForces[current] * speed * .5f;
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
-            Quaternion target = Quaternion.Euler(0, 0, (float)angle);
+            Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
         }
         if (current >= 50 && current <= 200) {
@@ -148,7 +149,7 @@ public class MissileControlHard : MonoBehaviour {
         } else if (passedMileStones[0] 
             && passedMileStones[1] 
             && !passedMileStones[2] 
-            && mileStones[2].position.x > transform.position.x) {
+            && mileStones[2].position.y < transform.position.y) {
             passedMileStones[2] = true;
             fitnessLevel = 4;
         } else if (passedMileStones[0] 
@@ -163,7 +164,7 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[2]
             && passedMileStones[3]
             && !passedMileStones[4]
-            && mileStones[4].position.y > transform.position.y) {
+            && mileStones[4].position.x > transform.position.x) {
             passedMileStones[4] = true;
             fitnessLevel = 6;
         } else if (passedMileStones[0]
@@ -182,7 +183,7 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[4]
             && passedMileStones[5]
             && !passedMileStones[6]
-            && mileStones[6].position.x > transform.position.x) {
+            && mileStones[6].position.y > transform.position.y) {
             passedMileStones[6] = true;
             fitnessLevel = 8;
         } else if (passedMileStones[0]
@@ -193,7 +194,7 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[5]
             && passedMileStones[6]
             && !passedMileStones[7]
-            && mileStones[7].position.y < transform.position.y) {
+            && mileStones[7].position.y > transform.position.y) {
             passedMileStones[7] = true;
             fitnessLevel = 9;
         } else if (passedMileStones[0]
@@ -205,19 +206,7 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[6]
             && passedMileStones[7]
             && !passedMileStones[8]
-            && mileStones[8].position.y < transform.position.y) {
-            passedMileStones[8] = true;
-            fitnessLevel = 10;
-        } else if (passedMileStones[0]
-            && passedMileStones[1]
-            && passedMileStones[2]
-            && passedMileStones[3]
-            && passedMileStones[4]
-            && passedMileStones[5]
-            && passedMileStones[6]
-            && passedMileStones[7]
-            && !passedMileStones[8]
-            && mileStones[8].position.y < transform.position.y) {
+            && mileStones[8].position.y > transform.position.y) {
             passedMileStones[8] = true;
             fitnessLevel = 10;
         } else if (passedMileStones[0]
@@ -230,7 +219,7 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[7]
             && passedMileStones[8]
             && !passedMileStones[9]
-            && mileStones[9].position.y < transform.position.y) {
+            && mileStones[9].position.x > transform.position.x) {
             passedMileStones[9] = true;
             fitnessLevel = 11;
         } else if (passedMileStones[0]
@@ -244,7 +233,7 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[8]
             && passedMileStones[9]
             && !passedMileStones[10]
-            && mileStones[10].position.x < transform.position.x) {
+            && mileStones[10].position.x > transform.position.x) {
             passedMileStones[10] = true;
             fitnessLevel = 12;
         } else if (passedMileStones[0]
@@ -259,7 +248,7 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[9]
             && passedMileStones[10]
             && !passedMileStones[11]
-            && mileStones[11].position.x < transform.position.x) {
+            && mileStones[11].position.y < transform.position.y) {
             passedMileStones[11] = true;
             fitnessLevel = 13;
         } else if (passedMileStones[0]
@@ -275,9 +264,63 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[10]
             && passedMileStones[11]
             && !passedMileStones[12]
-            && mileStones[12].position.x < transform.position.x) {
+            && mileStones[12].position.y < transform.position.y) {
             passedMileStones[12] = true;
             fitnessLevel = 14;
+        } else if (passedMileStones[0]
+            && passedMileStones[1]
+            && passedMileStones[2]
+            && passedMileStones[3]
+            && passedMileStones[4]
+            && passedMileStones[5]
+            && passedMileStones[6]
+            && passedMileStones[7]
+            && passedMileStones[8]
+            && passedMileStones[9]
+            && passedMileStones[10]
+            && passedMileStones[11]
+            && passedMileStones[12]
+            && !passedMileStones[13]
+            && mileStones[13].position.y < transform.position.y) {
+            passedMileStones[13] = true;
+            fitnessLevel = 15;
+        } else if (passedMileStones[0]
+            && passedMileStones[1]
+            && passedMileStones[2]
+            && passedMileStones[3]
+            && passedMileStones[4]
+            && passedMileStones[5]
+            && passedMileStones[6]
+            && passedMileStones[7]
+            && passedMileStones[8]
+            && passedMileStones[9]
+            && passedMileStones[10]
+            && passedMileStones[11]
+            && passedMileStones[12]
+            && passedMileStones[13]
+            && !passedMileStones[14]
+            && mileStones[14].position.y < transform.position.y) {
+            passedMileStones[14] = true;
+            fitnessLevel = 16;
+        } else if (passedMileStones[0]
+            && passedMileStones[1]
+            && passedMileStones[2]
+            && passedMileStones[3]
+            && passedMileStones[4]
+            && passedMileStones[5]
+            && passedMileStones[6]
+            && passedMileStones[7]
+            && passedMileStones[8]
+            && passedMileStones[9]
+            && passedMileStones[10]
+            && passedMileStones[11]
+            && passedMileStones[12]
+            && passedMileStones[13]
+            && passedMileStones[14]
+            && !passedMileStones[15]
+            && mileStones[15].position.x < transform.position.x) {
+            passedMileStones[15] = true;
+            fitnessLevel = 17;
         }
     }
     void calcuteFitness() {
