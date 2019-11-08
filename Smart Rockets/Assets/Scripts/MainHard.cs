@@ -109,7 +109,7 @@ public class MainHard : MonoBehaviour {
     }
     void mutationRange() {
         int numPassed = 0;
-        int[] ranges = new int[] { 0, 0, 5, 7, 8, 9, 11, 13, 17, 20, 21, 22, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25};
+        int[] ranges = new int[] { 0, 0, 5, 7, 8, 9, 11, 13, 17, 19, 21, 22, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25};
         if (currentMilestoneLevel < numMilestones) {
             if (!passedMilestone[currentMilestoneLevel]) {
                 for (int i = 0; i < rocketsControl.Length; i++) {
