@@ -15,6 +15,11 @@ public class MainMed : MonoBehaviour {
     private float geneRange = 25f;
     public Transform startPos;
     public Transform[] mileStones = new Transform[4];
+    private bool[] passedMilestone = new bool[4];
+    private int currentMilestoneLevel = 0;
+    public int currentGen = 0;
+    public int currentRange = 0;
+    private int numMilestones = 4;
 
     void Start() {
         foreach (Transform child in transform) {
@@ -66,7 +71,9 @@ public class MainMed : MonoBehaviour {
                     matingpool.Add(new float[][] { rocketsControl[i].forcesX, rocketsControl[i].forcesY, rocketsControl[i].thrusterLeftForces, rocketsControl[i].thrusterRightForces });
                 }
             }
+            mutationRange();
             destroyAndCreate(matingpool);
+            currentGen++;
         }
     }
     bool finished(MissileControlMed[] rc) {
@@ -101,13 +108,45 @@ public class MainMed : MonoBehaviour {
             rocketsControl[i].isReady = true;
         }
     }
+    void mutationRange() {
+        int numPassed = 0;
+        int[] ranges = new int[] {4, 9, 15, 20};
+        if(currentMilestoneLevel < numMilestones) {
+            if (!passedMilestone[currentMilestoneLevel]) {
+                for (int i = 0; i < rocketsControl.Length; i++) {
+                    if (rocketsControl[i].passedMileStones[currentMilestoneLevel]) {
+                        numPassed++;
+                    }
+                }
+            }
+        }
+        int numHitGoal = 0;
+        for (int i = 0; i < rocketsControl.Length; i++) {
+            if (rocketsControl[i].reachedGoal) {
+                numHitGoal++;
+            }
+        }
+        if (((float)numPassed / (float)rocketsControl.Length) > .8) {
+            currentMilestoneLevel++;
+            currentRange = ranges[currentMilestoneLevel];
+        }
+        if (((float)numHitGoal / (float)rocketsControl.Length) > .8) {
+            currentRange = 40;
+        } else {
+            if (currentMilestoneLevel < numMilestones) {
+                currentRange = ranges[currentMilestoneLevel];
+            } else {
+                currentRange = ranges[currentMilestoneLevel - 1];
+            }
+        }
+    }
     float[] mutate(float[] gene, bool X) {
         if (UnityEngine.Random.Range(0, 20) < 2) {
             for (int i = 0; i < UnityEngine.Random.Range(0, 5); i++) {
                 if (X) {
-                    gene[UnityEngine.Random.Range(0, numGenes - 1)] = UnityEngine.Random.Range(-geneRange, geneRange);
+                    gene[UnityEngine.Random.Range(currentRange, numGenes - 1)] = UnityEngine.Random.Range(-geneRange, geneRange);
                 } else {
-                    gene[UnityEngine.Random.Range(0, numGenes - 1)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
+                    gene[UnityEngine.Random.Range(currentRange, numGenes - 1)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
                 }
             }
         }

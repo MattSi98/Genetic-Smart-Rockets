@@ -15,6 +15,10 @@ public class MainEasy : MonoBehaviour {
     private float geneRange = 25f;
     public Transform startPos;
     public Transform mileStone;
+    private bool passedMilestone = false;
+    private int currentMilestoneLevel = 0;
+    public int currentGen = 0;
+    public int currentRange = 0;
 
     void Start() {
         foreach (Transform child in transform) {
@@ -66,7 +70,9 @@ public class MainEasy : MonoBehaviour {
                     matingpool.Add(new float[][] { rocketsControl[i].forcesX, rocketsControl[i].forcesY, rocketsControl[i].thrusterLeftForces, rocketsControl[i].thrusterRightForces });
                 }
             }
+            mutationRange();
             destroyAndCreate(matingpool);
+            currentGen++;
         }
     }
     bool finished(MissileControlEasy[] rc) {
@@ -101,13 +107,37 @@ public class MainEasy : MonoBehaviour {
             rocketsControl[i].isReady = true;
         }
     }
+
+    void mutationRange() {
+        int numPassed = 0;
+        if (!passedMilestone) {
+            for (int i = 0; i < rocketsControl.Length; i++) {
+                if (rocketsControl[i].passedMileStone) {
+                    numPassed++;
+                }
+            }
+        }
+        int numHitGoal = 0;
+        for (int i = 0; i < rocketsControl.Length; i++) {
+            if (rocketsControl[i].reachedGoal) {
+                numHitGoal++;
+            }
+        }
+        if (((float)numPassed / (float)rocketsControl.Length) > .8) {
+            currentMilestoneLevel++;
+            currentRange = 7;
+        }
+        if (((float)numHitGoal/ (float)rocketsControl.Length) > .8) {
+            currentRange = 20;
+        }
+    }
     float[] mutate(float[] gene, bool X) {
         if (UnityEngine.Random.Range(0, 20) < 1) {
             for (int i = 0; i < UnityEngine.Random.Range(0, 5); i++) {
                 if (X) {
-                    gene[UnityEngine.Random.Range(0, numGenes - 1)] = UnityEngine.Random.Range(-geneRange, geneRange);
+                    gene[UnityEngine.Random.Range(currentRange, numGenes - 1)] = UnityEngine.Random.Range(-geneRange, geneRange);
                 } else {
-                    gene[UnityEngine.Random.Range(0, numGenes - 1)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
+                    gene[UnityEngine.Random.Range(currentRange, numGenes - 1)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
                 }
             }
         }

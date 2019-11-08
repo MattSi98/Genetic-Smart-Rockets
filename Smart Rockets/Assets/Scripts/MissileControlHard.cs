@@ -67,7 +67,6 @@ public class MissileControlHard : MonoBehaviour {
             crashed = true;
             endFrame = current;
             rb.freezeRotation = true;
-            Physics2D.gravity = new Vector2(0, -9.8f);
             GetComponent<MeshRenderer>().enabled = false;
             if (!exploded) {
                 exploded = true;

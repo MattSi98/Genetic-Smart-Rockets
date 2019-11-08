@@ -15,7 +15,7 @@ public class MissileControlMed : MonoBehaviour {
     public float[] thrusterLeftForces;
     public float[] thrusterRightForces;
     public float[] forcesY;
-    private int current;
+    public int current;
     public Transform goalTransform;
     public double fitness;
     public double fitnessTime;
@@ -101,14 +101,6 @@ public class MissileControlMed : MonoBehaviour {
         if (isReady && !crashed) {
             rb.velocity = transform.up * speed * 2;
             if (current < 50 && count % 10 == 0) { //change range of forces applied on rockets || remove count %10? 
-
-                //rb.AddRelativeForce(thrusterRightForces[current] * new Vector2(speed * .5f, -speed));
-                //rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, -speed));
-                //rb.AddRelativeForce(forcesX[current] * new Vector2(speed, speed)); //change scalar perhaps? As we improve, we want to be able to adjust the magnitude of  the vectors4
-                //rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed)); //mating function, incorperate longest lasting rocket by definition of it taking a long time to crash
-                rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, speed * .5f) +
-                                    thrusterRightForces[current] * new Vector2(speed * .5f, speed * .5f));
-                rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed));
                 current++;  //this runs 50 times in total
             }
             count++;

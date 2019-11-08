@@ -27,6 +27,7 @@ public class MissileControlEasy : MonoBehaviour {
     private bool updateFitnessTime1;
     private bool updateFitnessTime2;
     public Transform mileStone;
+    public bool passedMileStone;
     public GameObject explosion;
     private bool exploded;
 
@@ -45,6 +46,7 @@ public class MissileControlEasy : MonoBehaviour {
         updateFitnessTime1 = false;
         updateFitnessTime2 = false;
         exploded = false;
+        passedMileStone = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -94,14 +96,6 @@ public class MissileControlEasy : MonoBehaviour {
         if (isReady && !crashed) {
             rb.velocity = transform.up * speed * 2;
             if (current < 50 && count % 10 == 0) { //change range of forces applied on rockets || remove count %10? 
-
-                //rb.AddRelativeForce(thrusterRightForces[current] * new Vector2(speed * .5f, -speed));
-                //rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, -speed));
-                //rb.AddRelativeForce(forcesX[current] * new Vector2(speed, speed)); //change scalar perhaps? As we improve, we want to be able to adjust the magnitude of  the vectors4
-                //rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed)); //mating function, incorperate longest lasting rocket by definition of it taking a long time to crash
-       //         rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, speed * .5f) +
-         //                           thrusterRightForces[current] * new Vector2(speed * .5f, speed * .5f));
-                //rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed));
                 current++;  //this runs 50 times in total
             }
             count++;
@@ -141,6 +135,7 @@ public class MissileControlEasy : MonoBehaviour {
             currentFitness *= 1.5;
         }
         if (mileStone.position.y < transform.position.y) {
+            passedMileStone = true;
             currentFitness *= 1.5;
         }
         if (!crashed) {
