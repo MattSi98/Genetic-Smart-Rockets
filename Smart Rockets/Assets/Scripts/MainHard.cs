@@ -5,10 +5,10 @@ using System;
 
 public class MainHard : MonoBehaviour {
     // Start is called before the first frame update
-    private int numRockets = 500;
+    private int numRockets = 400;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[500];
-    private MissileControlHard[] rocketsControl = new MissileControlHard[500];
+    private GameObject[] rockets = new GameObject[400];
+    private MissileControlHard[] rocketsControl = new MissileControlHard[400];
     public float speed;
     public Transform goalTransform;
     private int numGenes = 100;
@@ -17,8 +17,8 @@ public class MainHard : MonoBehaviour {
     public Transform[] mileStones = new Transform[17];
     private bool[] passedMilestone = new bool[17];
     private int currentMilestoneLevel = 0;
-    private int currentGen = 0;
-    private int currentRange = 0;
+    public int currentGen = 0;
+    public int currentRange = 0;
     void Start() {
         foreach (Transform child in transform) {
             if (child.tag == "Goal") {
@@ -107,9 +107,8 @@ public class MainHard : MonoBehaviour {
         }
     }
     void mutationRange() {
-        int startingRange = 0;
         int numPassed = 0;
-        int[] ranges = new int[] { 0, 0, 6, 8, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11 };
+        int[] ranges = new int[] { 0, 0, 6, 8, 9, 10, 13, 14, 16, 18, 20, 22, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25};
         if (!passedMilestone[currentMilestoneLevel]) {
             for (int i = 0; i < rocketsControl.Length; i++) {
                 if (rocketsControl[i].passedMileStones[currentMilestoneLevel]) {
@@ -117,18 +116,21 @@ public class MainHard : MonoBehaviour {
                 }
             }
         }
-        if ((numPassed/rocketsControl.Length) > .8) {
+        if (((float)numPassed/ (float)rocketsControl.Length) > .8) {
             currentMilestoneLevel++;
             currentRange = ranges[currentMilestoneLevel];
         }
+        Debug.Log(numPassed);
+        Debug.Log((float)numPassed / (float)rocketsControl.Length);
+        Debug.Log(currentMilestoneLevel);
     }
     float[] mutate(float[] gene, bool X) {
         if (UnityEngine.Random.Range(0, 20) < 5) {
             for (int i = 0; i < UnityEngine.Random.Range(3, 6); i++) {
                 if (X) {
-                    gene[UnityEngine.Random.Range(0, numGenes - 1)] = UnityEngine.Random.Range(-geneRange, geneRange);
+                    gene[UnityEngine.Random.Range(currentRange, numGenes - 1)] = UnityEngine.Random.Range(-geneRange, geneRange);
                 } else {
-                    gene[UnityEngine.Random.Range(0, numGenes - 1)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
+                    gene[UnityEngine.Random.Range(currentRange, numGenes - 1)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
                 }
             }
         }
