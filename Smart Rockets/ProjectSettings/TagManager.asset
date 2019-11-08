@@ -12,6 +12,7 @@ TagManager:
   - wall
   - thrusters
   - Flame
+  - Main
   layers:
   - Default
   - TransparentFX

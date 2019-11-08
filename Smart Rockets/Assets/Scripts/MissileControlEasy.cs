@@ -73,7 +73,6 @@ public class MissileControlEasy : MonoBehaviour {
             }
         }
         if (collision.gameObject.tag == "Goal" && !crashed) {
-            Debug.Log("hit goal?");
             fitness *= 4;
             reachedGoal = true;
             crashed = true;
