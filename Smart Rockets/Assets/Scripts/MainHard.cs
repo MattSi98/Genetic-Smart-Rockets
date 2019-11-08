@@ -14,8 +14,11 @@ public class MainHard : MonoBehaviour {
     private int numGenes = 100;
     private float geneRange = 25f;
     public Transform startPos;
-    public Transform[] mileStones = new Transform[16];
-
+    public Transform[] mileStones = new Transform[17];
+    private bool[] passedMilestone = new bool[17];
+    private int currentMilestoneLevel = 0;
+    private int currentGen = 0;
+    private int currentRange = 0;
     void Start() {
         foreach (Transform child in transform) {
             if (child.tag == "Goal") {
@@ -66,7 +69,9 @@ public class MainHard : MonoBehaviour {
                     matingpool.Add(rocketsControl[i]);
                 }
             }
+            mutationRange();
             destroyAndCreate(matingpool);
+            currentGen++;
         }
     }
     bool finished(MissileControlHard[] rc) {
@@ -99,6 +104,22 @@ public class MainHard : MonoBehaviour {
         }
         for (int i = 0; i < numRockets; i++) {
             rocketsControl[i].isReady = true;
+        }
+    }
+    void mutationRange() {
+        int startingRange = 0;
+        int numPassed = 0;
+        int[] ranges = new int[] { 0, 0, 6, 8, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11 };
+        if (!passedMilestone[currentMilestoneLevel]) {
+            for (int i = 0; i < rocketsControl.Length; i++) {
+                if (rocketsControl[i].passedMileStones[currentMilestoneLevel]) {
+                    numPassed++;
+                }
+            }
+        }
+        if ((numPassed/rocketsControl.Length) > .8) {
+            currentMilestoneLevel++;
+            currentRange = ranges[currentMilestoneLevel];
         }
     }
     float[] mutate(float[] gene, bool X) {
