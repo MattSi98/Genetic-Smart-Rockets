@@ -102,12 +102,12 @@ public class MainMed : MonoBehaviour {
         }
     }
     float[] mutate(float[] gene, bool X) {
-        if (UnityEngine.Random.Range(0, 20) < 5) {
+        if (UnityEngine.Random.Range(0, 20) < 2) {
             for (int i = 0; i < UnityEngine.Random.Range(0, 5); i++) {
                 if (X) {
-                    gene[UnityEngine.Random.Range(0, 49)] = UnityEngine.Random.Range(-geneRange, geneRange);
+                    gene[UnityEngine.Random.Range(0, numGenes - 1)] = UnityEngine.Random.Range(-geneRange, geneRange);
                 } else {
-                    gene[UnityEngine.Random.Range(0, 49)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
+                    gene[UnityEngine.Random.Range(0, numGenes - 1)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
                 }
             }
         }

@@ -103,11 +103,11 @@ public class MainHard : MonoBehaviour {
     }
     float[] mutate(float[] gene, bool X) {
         if (UnityEngine.Random.Range(0, 20) < 5) {
-            for (int i = 0; i < UnityEngine.Random.Range(5, 10); i++) {
+            for (int i = 0; i < UnityEngine.Random.Range(3, 6); i++) {
                 if (X) {
-                    gene[UnityEngine.Random.Range(0, 99)] = UnityEngine.Random.Range(-geneRange, geneRange);
+                    gene[UnityEngine.Random.Range(0, numGenes - 1)] = UnityEngine.Random.Range(-geneRange, geneRange);
                 } else {
-                    gene[UnityEngine.Random.Range(0, 99)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
+                    gene[UnityEngine.Random.Range(0, numGenes - 1)] = UnityEngine.Random.Range(0f, geneRange * 1.5f);
                 }
             }
         }
@@ -118,22 +118,7 @@ public class MainHard : MonoBehaviour {
         float[] childY = new float[numGenes];
         float[] childThrusterLeft = new float[numGenes];
         float[] childThrusterRight = new float[numGenes];
-        if (UnityEngine.Random.Range(0, 1) == 1) {
-            for (int i = 0; i < numGenes; i++) {
-                if (i % 2 == 0) {
-                    childX[i] = parent1.forcesX[i];
-                    childY[i] = parent1.forcesY[i];
-                    childThrusterLeft[i] = parent1.thrusterLeftForces[i];
-                    childThrusterRight[i] = parent1.thrusterRightForces[i];
-                } else {
-                    childX[i] = parent2.forcesX[i];
-                    childY[i] = parent2.forcesY[i];
-                    childThrusterLeft[i] = parent2.thrusterLeftForces[i];
-                    childThrusterRight[i] = parent2.thrusterRightForces[i];
-                }
-            }
-        } else {
-            float parent1Percentage = (float)parent1.fitness / (float)(parent1.fitness + parent2.fitness);
+        float parent1Percentage = (float)parent1.fitness / (float)(parent1.fitness + parent2.fitness);
             float parent2Percentage = (float)parent2.fitness / (float)(parent1.fitness + parent2.fitness);
             for (int i = 0; i < numGenes; i++) {
                 childX[i] = (parent1.forcesX[i] * parent1Percentage) + (parent2.forcesX[i] * parent2Percentage);
@@ -141,7 +126,6 @@ public class MainHard : MonoBehaviour {
                 childThrusterLeft[i] = (parent1.thrusterLeftForces[i] * parent1Percentage) + (parent2.thrusterLeftForces[i] * parent2Percentage);
                 childThrusterRight[i] = (parent1.thrusterRightForces[i] * parent1Percentage) + (parent2.thrusterRightForces[i] * parent2Percentage);
             }
-        }
         return new float[][] { mutate(childX, true), mutate(childY, false), mutate(childThrusterLeft, false), mutate(childThrusterRight, false) };
     }
 }

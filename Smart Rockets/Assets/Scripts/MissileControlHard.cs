@@ -31,7 +31,7 @@ public class MissileControlHard : MonoBehaviour {
     private int fitnessLevel;
     public GameObject explosion;
     private bool exploded;
-
+    public int numGenes;
     void Awake() {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
     }
@@ -48,11 +48,12 @@ public class MissileControlHard : MonoBehaviour {
         updateFitnessTime1 = false;
         updateFitnessTime2 = false;
         fitnessLevel = 1;
-        passedMileStones = new bool[16];
+        passedMileStones = new bool[17];
         for (int i = 0; i < passedMileStones.Length; i++) {
             passedMileStones[i] = false;
         }
         exploded = false;
+        numGenes = 100;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -79,7 +80,6 @@ public class MissileControlHard : MonoBehaviour {
             }
         }
         if (collision.gameObject.tag == "Goal" && !crashed) {
-            Debug.Log("hit goal?");
             fitness *= 4;
             reachedGoal = true;
             crashed = true;
@@ -101,27 +101,27 @@ public class MissileControlHard : MonoBehaviour {
     void Update() {
         if (isReady && !crashed) {
             rb.velocity = transform.up * speed * 2;
-            if (current < 100 && count % 10 == 0) { //change range of forces applied on rockets || remove count %10? 
+            if (current < numGenes && count % 5 == 0) { //change range of forces applied on rockets || remove count %10? 
 
                 //rb.AddRelativeForce(thrusterRightForces[current] * new Vector2(speed * .5f, -speed));
                 //rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, -speed));
                 //rb.AddRelativeForce(forcesX[current] * new Vector2(speed, speed)); //change scalar perhaps? As we improve, we want to be able to adjust the magnitude of  the vectors4
                 //rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed)); //mating function, incorperate longest lasting rocket by definition of it taking a long time to crash
-                rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, speed * .5f) +
-                                    thrusterRightForces[current] * new Vector2(speed * .5f, speed * .5f));
+            //    rb.AddRelativeForce(thrusterLeftForces[current] * new Vector2(-speed * .5f, speed * .5f) +
+              //                      thrusterRightForces[current] * new Vector2(speed * .5f, speed * .5f));
                 //rb.AddRelativeForce(forcesY[current] * new Vector2(0, speed));
                 current++;  //this runs 50 times in total
             }
             count++;
         }
-        if (current < 100) {
+        if (current < numGenes) {
             float x = thrusterLeftForces[current] * -speed * .5f + thrusterRightForces[current] * speed * .5f;
             float y = thrusterLeftForces[current] * speed * .5f + thrusterRightForces[current] * speed * .5f;
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
         }
-        if (current >= 100) {
+        if (current >= numGenes) {
             current++;
         }
         if (current >= 200 || crashed) {
@@ -321,7 +321,27 @@ public class MissileControlHard : MonoBehaviour {
             && mileStones[15].position.x < transform.position.x) {
             passedMileStones[15] = true;
             fitnessLevel = 24;
-        } 
+        } else if (passedMileStones[0]
+            && passedMileStones[1]
+            && passedMileStones[2]
+            && passedMileStones[3]
+            && passedMileStones[4]
+            && passedMileStones[5]
+            && passedMileStones[6]
+            && passedMileStones[7]
+            && passedMileStones[8]
+            && passedMileStones[9]
+            && passedMileStones[10]
+            && passedMileStones[11]
+            && passedMileStones[12]
+            && passedMileStones[13]
+            && passedMileStones[14]
+            && passedMileStones[15]
+            && !passedMileStones[16]
+            && mileStones[16].position.x < transform.position.x) {
+            passedMileStones[16] = true;
+            fitnessLevel = 27;
+        }
     }
     void calcuteFitness() {
         //instead of taking the distance to the goal, take distance to milestones
@@ -337,6 +357,7 @@ public class MissileControlHard : MonoBehaviour {
             //fitness = currentFitness;
             fitnessTime += .05;
             fitness +=  fitnessLevel;
+            //fitness = Math.Pow(1.1, current);
             //fitness *= fitnessLevel;
         }
 
