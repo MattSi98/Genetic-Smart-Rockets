@@ -8,19 +8,15 @@ public class GenerationDisplay : MonoBehaviour
     public int currentGeneration;
     public Text genText;
     private MainEasy mainEasy;
+    public int currentGen;
     // Start is called before the first frame update
 
     private void Start() {
-        foreach (Transform child in transform) {
-            Debug.Log("tag: " +child.tag);
-            if (child.tag == "Main")
-                mainEasy = child.gameObject.GetComponent<MainEasy>();
-        }
+        currentGen = 0;
 
     }
 
     void Update() {
-        genText.text = "Generation: " + mainEasy.currentGen;
-        
+        genText.text = "Generation: " + currentGen;
     }
 }

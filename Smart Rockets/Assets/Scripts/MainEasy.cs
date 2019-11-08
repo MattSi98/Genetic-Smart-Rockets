@@ -19,9 +19,17 @@ public class MainEasy : MonoBehaviour {
     private int currentMilestoneLevel = 0;
     public int currentGen = 0;
     public int currentRange = 0;
+    private GenerationDisplay generationDisplay;
 
     void Start() {
         foreach (Transform child in transform) {
+            if (child.tag == "Canvas") {
+                foreach (Transform grandChild in child) {
+                    if (grandChild.tag == "Text") {
+                        generationDisplay = grandChild.gameObject.GetComponent<GenerationDisplay>();
+                    }
+                }
+            }
             if (child.tag == "Goal") {
                 goalTransform = child;
             }
@@ -73,6 +81,7 @@ public class MainEasy : MonoBehaviour {
             mutationRange();
             destroyAndCreate(matingpool);
             currentGen++;
+            generationDisplay.currentGen = currentGen;
         }
     }
     bool finished(MissileControlEasy[] rc) {
