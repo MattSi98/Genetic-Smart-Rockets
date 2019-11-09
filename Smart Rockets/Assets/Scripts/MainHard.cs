@@ -5,10 +5,10 @@ using System;
 
 public class MainHard : MonoBehaviour {
     // Start is called before the first frame update
-    private int numRockets = 350;
+    private int numRockets = 500;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[350];
-    private MissileControlHard[] rocketsControl = new MissileControlHard[350];
+    private GameObject[] rockets = new GameObject[500];
+    private MissileControlHard[] rocketsControl = new MissileControlHard[500];
     public float speed;
     public Transform goalTransform;
     private int numGenes = 100;
@@ -109,7 +109,7 @@ public class MainHard : MonoBehaviour {
     }
     void mutationRange() {
         int numPassed = 0;
-        int[] ranges = new int[] { 0, 0, 5, 7, 8, 9, 11, 13, 17, 19, 21, 22, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25};
+        int[] ranges = new int[] { 0, 0, 4, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 16, 16, 16, 16, 16, 16, 10, 12, 16, 18, 20, 21, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24};
         if (currentMilestoneLevel < numMilestones) {
             if (!passedMilestone[currentMilestoneLevel]) {
                 for (int i = 0; i < rocketsControl.Length; i++) {
@@ -141,7 +141,7 @@ public class MainHard : MonoBehaviour {
     }
     float[] mutate(float[] gene, bool X) {
         if (UnityEngine.Random.Range(0, 20) < 5) {
-            for (int i = 0; i < UnityEngine.Random.Range(3, 6); i++) {
+            for (int i = 0; i < UnityEngine.Random.Range(5, 10); i++) {
                 if (X) {
                     gene[UnityEngine.Random.Range(currentRange, numGenes - 1)] = UnityEngine.Random.Range(-geneRange, geneRange);
                 } else {

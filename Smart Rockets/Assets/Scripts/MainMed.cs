@@ -110,7 +110,7 @@ public class MainMed : MonoBehaviour {
     }
     void mutationRange() {
         int numPassed = 0;
-        int[] ranges = new int[] {4, 9, 15, 20};
+        int[] ranges = new int[] {4, 6, 10, 13};
         if(currentMilestoneLevel < numMilestones) {
             if (!passedMilestone[currentMilestoneLevel]) {
                 for (int i = 0; i < rocketsControl.Length; i++) {
