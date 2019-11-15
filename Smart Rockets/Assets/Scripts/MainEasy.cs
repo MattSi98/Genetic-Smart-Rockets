@@ -62,6 +62,7 @@ public class MainEasy : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
+        Debug.Log(DateTime.Now.ToString("hh.mm.ss.ffffff"));
         if (finished(rocketsControl)) {
             double totalFitness = 0;
             //get total fitness of all rockets

@@ -18,14 +18,11 @@ public class MissileControlHard : MonoBehaviour {
     public int current;
     public Transform goalTransform;
     public double fitness;
-    public double fitnessTime;
     public bool finished;
     private bool crashed;
     public bool reachedGoal;
     private double maxDist;
     private int endFrame;
-    private bool updateFitnessTime1;
-    private bool updateFitnessTime2;
     public Transform[] mileStones;
     public bool[] passedMileStones;
     private int fitnessLevel;
@@ -45,8 +42,6 @@ public class MissileControlHard : MonoBehaviour {
             Math.Pow((double)(transform.position.y - goalTransform.position.y), 2));
         maxDist = 200;
         Physics2D.gravity = Vector2.zero;
-        updateFitnessTime1 = false;
-        updateFitnessTime2 = false;
         fitnessLevel = 1;
         passedMileStones = new bool[17];
         for (int i = 0; i < passedMileStones.Length; i++) {
@@ -108,8 +103,8 @@ public class MissileControlHard : MonoBehaviour {
             count++;
         }
         if (current < numGenes) {
-            float x = thrusterLeftForces[current] * -speed * .5f + thrusterRightForces[current] * speed * .5f;
-            float y = thrusterLeftForces[current] * speed * .5f + thrusterRightForces[current] * speed * .5f;
+            float x = -thrusterLeftForces[current] + thrusterRightForces[current];
+            float y = thrusterLeftForces[current] + thrusterRightForces[current];
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
@@ -119,11 +114,6 @@ public class MissileControlHard : MonoBehaviour {
         }
         if (current >= 200 || crashed) {
             finished = true;
-            updateFitnessTime1 = true;
-        }
-        if (updateFitnessTime1 && !updateFitnessTime2) {
-            fitness += fitnessTime;
-            updateFitnessTime2 = true;
         }
         if (!finished) {
             calcuteFitness();
@@ -343,15 +333,10 @@ public class MissileControlHard : MonoBehaviour {
         getFitnessLevel();
         double currentFitness = maxDist - dist;
         if (dist < 1) {
-            Debug.Log("here");
             currentFitness *= 1.5;
         }
         if (!crashed) {
-            //fitness = currentFitness;
-            fitnessTime += .05;
             fitness +=  fitnessLevel;
-            //fitness = Math.Pow(1.1, current);
-            //fitness *= fitnessLevel;
         }
 
     }

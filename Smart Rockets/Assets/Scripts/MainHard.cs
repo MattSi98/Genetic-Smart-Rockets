@@ -5,10 +5,10 @@ using System;
 
 public class MainHard : MonoBehaviour {
     // Start is called before the first frame update
-    private int numRockets = 500;
+    private int numRockets = 320;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[500];
-    private MissileControlHard[] rocketsControl = new MissileControlHard[500];
+    private GameObject[] rockets = new GameObject[320];
+    private MissileControlHard[] rocketsControl = new MissileControlHard[320];
     public float speed;
     public Transform goalTransform;
     private int numGenes = 100;
@@ -70,7 +70,7 @@ public class MainHard : MonoBehaviour {
                     matingpool.Add(rocketsControl[i]);
                 }
             }
-            mutationRange();
+           // mutationRange();
             destroyAndCreate(matingpool);
             currentGen++;
         }

@@ -93,8 +93,8 @@ public class MissileControlEasy : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (isReady && !crashed) {
-            rb.velocity = transform.up * speed * 2;
-            if (current < 50 && count % 10 == 0) { //change range of forces applied on rockets || remove count %10? 
+            rb.velocity = transform.up * speed * 2 * 2;
+            if (current < 50 && count % 5 == 0) { //change range of forces applied on rockets || remove count %10? 
                 current++;  //this runs 50 times in total
             }
             count++;
