@@ -70,7 +70,7 @@ public class MainHard : MonoBehaviour {
                     matingpool.Add(rocketsControl[i]);
                 }
             }
-           // mutationRange();
+            mutationRange();
             destroyAndCreate(matingpool);
             currentGen++;
         }
