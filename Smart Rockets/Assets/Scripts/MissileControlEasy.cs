@@ -100,8 +100,8 @@ public class MissileControlEasy : MonoBehaviour {
             count++;
         }
         if (current < 50) {
-            float x = thrusterLeftForces[current] * -speed * .5f + thrusterRightForces[current] * speed * .5f;
-            float y = thrusterLeftForces[current] * speed * .5f + thrusterRightForces[current] * speed * .5f;
+            float x = -thrusterLeftForces[current] + thrusterRightForces[current];
+            float y = thrusterLeftForces[current] + thrusterRightForces[current];
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
