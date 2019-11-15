@@ -73,6 +73,7 @@ public class MissileControlHard : MonoBehaviour {
                 ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
                 foreach (ParticleSystem child in ps) {
                     child.Stop();
+                    child.Clear();
                 }
                 GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
                 Destroy(expl, 1);
@@ -89,6 +90,7 @@ public class MissileControlHard : MonoBehaviour {
                 ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
                 foreach (ParticleSystem child in ps) {
                     child.Stop();
+                    child.Clear();
                 }
                 GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
                 Destroy(expl, 1);
