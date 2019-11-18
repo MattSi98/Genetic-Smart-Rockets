@@ -65,10 +65,10 @@ public class MainMed : MonoBehaviour {
             for (int i = 0; i < rocketsControl.Length; i++) {
                 rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 500);
             }
-            List<float[][]> matingpool = new List<float[][]>();
+            List<MissileControlMed> matingpool = new List<MissileControlMed>();
             for (int i = 0; i < numRockets; i++) {
                 for (int j = 0; j < rocketsControl[i].fitness; j++) {
-                    matingpool.Add(new float[][] { rocketsControl[i].forcesX, rocketsControl[i].forcesY, rocketsControl[i].thrusterLeftForces, rocketsControl[i].thrusterRightForces });
+                    matingpool.Add(rocketsControl[i]);
                 }
             }
             mutationRange();
@@ -86,7 +86,7 @@ public class MainMed : MonoBehaviour {
         }
         return finished;
     }
-    void destroyAndCreate(List<float[][]> matingpool) {
+    void destroyAndCreate(List<MissileControlMed> matingpool) {
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
         //assign random mass?
         for (int i = 0; i < numRockets; i++) {
@@ -110,7 +110,7 @@ public class MainMed : MonoBehaviour {
     }
     void mutationRange() {
         int numPassed = 0;
-        int[] ranges = new int[] {4, 6, 10, 13};
+        int[] ranges = new int[] {4, 6, 9, 13};
         if(currentMilestoneLevel < numMilestones) {
             if (!passedMilestone[currentMilestoneLevel]) {
                 for (int i = 0; i < rocketsControl.Length; i++) {
@@ -152,32 +152,18 @@ public class MainMed : MonoBehaviour {
         }
         return gene;
     }
-    float[][] mate(float[][] parent1, float[][] parent2) {
+    float[][] mate(MissileControlMed parent1, MissileControlMed parent2) {
         float[] childX = new float[numGenes];
         float[] childY = new float[numGenes];
         float[] childThrusterLeft = new float[numGenes];
         float[] childThrusterRight = new float[numGenes];
-        if (UnityEngine.Random.Range(0, 1) == 1) {
-            for (int i = 0; i < numGenes; i++) {
-                if (i % 2 == 0) {
-                    childX[i] = parent1[0][i];
-                    childY[i] = parent1[1][i];
-                    childThrusterLeft[i] = parent1[2][i];
-                    childThrusterRight[i] = parent1[3][i];
-                } else {
-                    childX[i] = parent2[0][i];
-                    childY[i] = parent2[1][i];
-                    childThrusterLeft[i] = parent2[2][i];
-                    childThrusterRight[i] = parent2[3][i];
-                }
-            }
-        } else {
-            for (int i = 0; i < numGenes; i++) {
-                childX[i] = (parent1[0][i] + parent2[0][i]) / 2;
-                childY[i] = (parent1[1][i] + parent2[1][i]) / 2;
-                childThrusterLeft[i] = (parent1[2][i] + parent2[2][i]) / 2;
-                childThrusterRight[i] = (parent1[3][i] + parent2[3][i]) / 2;
-            }
+        float parent1Percentage = (float)parent1.fitness / (float)(parent1.fitness + parent2.fitness);
+        float parent2Percentage = (float)parent2.fitness / (float)(parent1.fitness + parent2.fitness);
+        for (int i = 0; i < numGenes; i++) {
+            childX[i] = (parent1.forcesX[i] * parent1Percentage) + (parent2.forcesX[i] * parent2Percentage);
+            childY[i] = (parent1.forcesY[i] * parent1Percentage) + (parent2.forcesY[i] * parent2Percentage);
+            childThrusterLeft[i] = (parent1.thrusterLeftForces[i] * parent1Percentage) + (parent2.thrusterLeftForces[i] * parent2Percentage);
+            childThrusterRight[i] = (parent1.thrusterRightForces[i] * parent1Percentage) + (parent2.thrusterRightForces[i] * parent2Percentage);
         }
         return new float[][] { mutate(childX, true), mutate(childY, false), mutate(childThrusterLeft, false), mutate(childThrusterRight, false) };
     }

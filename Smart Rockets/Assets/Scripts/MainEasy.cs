@@ -18,9 +18,10 @@ public class MainEasy : MonoBehaviour {
     public Transform mileStone;
     private bool passedMilestone = false;
     private int currentMilestoneLevel = 0;
-    public int currentGen = 0;
+    public int currentGen = 1;
     public int currentRange = 0;
     private GenerationDisplay generationDisplay;
+    public bool finishedTraining;
 
     void Start() {
         foreach (Transform child in transform) {
@@ -51,6 +52,8 @@ public class MainEasy : MonoBehaviour {
             rocketsControl[i].goalTransform = goalTransform;
             rocketsControl[i].mileStone = mileStone;
         }
+        currentGen = 1;
+        generationDisplay.genText.text = "Generation: " + currentGen;
     }
     float[] createForces(bool X) {
         float[] forces = new float[numGenes];
@@ -68,25 +71,32 @@ public class MainEasy : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (finished(rocketsControl)) {
-            double totalFitness = 0;
-            //get total fitness of all rockets
-            for (int i = 0; i < rocketsControl.Length; i++) {
-                totalFitness += rocketsControl[i].fitness;
+            float percentReachedGoal = percentFinished(rocketsControl);
+            if (percentReachedGoal >= .95) {
+                finishedTraining = true;
+                generationDisplay.genText.text = "Generation: " + currentGen + "\n Finished training in " + currentGen + " generations!";
             }
-            //normalize rocket fitness and get a fraction of 200
-            for (int i = 0; i < rocketsControl.Length; i++) {
-                rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 500);
-            }
-            List<float[][]> matingpool = new List<float[][]>();
-            for (int i = 0; i < numRockets; i++) {
-                for (int j = 0; j < rocketsControl[i].fitness; j++) {
-                    matingpool.Add(new float[][] { rocketsControl[i].forcesX, rocketsControl[i].forcesY, rocketsControl[i].thrusterLeftForces, rocketsControl[i].thrusterRightForces });
+            if (!finishedTraining) {
+                double totalFitness = 0;
+                //get total fitness of all rockets
+                for (int i = 0; i < rocketsControl.Length; i++) {
+                    totalFitness += rocketsControl[i].fitness;
                 }
-            }
-            mutationRange();
-            destroyAndCreate(matingpool);
-            currentGen++;
-            generationDisplay.currentGen = currentGen;
+                //normalize rocket fitness and get a fraction of 200
+                for (int i = 0; i < rocketsControl.Length; i++) {
+                    rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 500);
+                }
+                List<MissileControlEasy> matingpool = new List<MissileControlEasy>();
+                for (int i = 0; i < numRockets; i++) {
+                    for (int j = 0; j < rocketsControl[i].fitness; j++) {
+                        matingpool.Add(rocketsControl[i]);
+                    }
+                }
+                mutationRange();
+                destroyAndCreate(matingpool);
+                currentGen++;
+                generationDisplay.genText.text = "Generation: " + currentGen;
+            }   
         }
     }
     bool finished(MissileControlEasy[] rc) {
@@ -99,7 +109,7 @@ public class MainEasy : MonoBehaviour {
         }
         return finished;
     }
-    void destroyAndCreate(List<float[][]> matingpool) {
+    void destroyAndCreate(List<MissileControlEasy> matingpool) {
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
         //assign random mass?
         for (int i = 0; i < numRockets; i++) {
@@ -120,6 +130,16 @@ public class MainEasy : MonoBehaviour {
         for (int i = 0; i < numRockets; i++) {
             rocketsControl[i].isReady = true;
         }
+    }
+
+    float percentFinished(MissileControlEasy[] mce) {
+        int numReachedGoal = 0;
+        for (int i = 0; i < mce.Length; i++) {
+            if(mce[i].reachedGoal) {
+                numReachedGoal++;
+            }
+        }
+        return (float)numReachedGoal/(float)numRockets;
     }
 
     void mutationRange() {
@@ -157,16 +177,18 @@ public class MainEasy : MonoBehaviour {
         }
         return gene;
     }
-    float[][] mate(float[][] parent1, float[][] parent2) {
+    float[][] mate(MissileControlEasy parent1, MissileControlEasy parent2) {
         float[] childX = new float[numGenes];
         float[] childY = new float[numGenes];
         float[] childThrusterLeft = new float[numGenes];
         float[] childThrusterRight = new float[numGenes];
+        float parent1Percentage = (float)parent1.fitness / (float)(parent1.fitness + parent2.fitness);
+        float parent2Percentage = (float)parent2.fitness / (float)(parent1.fitness + parent2.fitness);
         for (int i = 0; i < numGenes; i++) {
-            childX[i] = (parent1[0][i] + parent2[0][i]) / 2;
-            childY[i] = (parent1[1][i] + parent2[1][i]) / 2;
-            childThrusterLeft[i] = (parent1[2][i] + parent2[2][i]) / 2;
-            childThrusterRight[i] = (parent1[3][i] + parent2[3][i]) / 2;
+            childX[i] = (parent1.forcesX[i] * parent1Percentage) + (parent2.forcesX[i] * parent2Percentage);
+            childY[i] = (parent1.forcesY[i] * parent1Percentage) + (parent2.forcesY[i] * parent2Percentage);
+            childThrusterLeft[i] = (parent1.thrusterLeftForces[i] * parent1Percentage) + (parent2.thrusterLeftForces[i] * parent2Percentage);
+            childThrusterRight[i] = (parent1.thrusterRightForces[i] * parent1Percentage) + (parent2.thrusterRightForces[i] * parent2Percentage);
         }
         return new float[][] { mutate(childX, true), mutate(childY, false), mutate(childThrusterLeft, false), mutate(childThrusterRight, false) };
     }

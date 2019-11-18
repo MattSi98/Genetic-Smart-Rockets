@@ -156,7 +156,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.6433339, g: 0.745283, b: 0.7309643, a: 0}
+  m_BackGroundColor: {r: 0.6433339, g: 0.745283, b: 0.7294118, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -4976,7 +4976,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 83, y: -31}
+  m_AnchoredPosition: {x: 24.6, y: -72}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1745259656
@@ -4991,9 +4991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f307ca01b4865ef48805eba82bc7bf95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGeneration: 0
   genText: {fileID: 1745259657}
-  currentGen: 0
 --- !u!114 &1745259657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5013,17 +5011,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_Font: {fileID: 12800000, guid: 01cd679a1b9ee48bf9c546f6ce2cb97e, type: 3}
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Generation
 --- !u!222 &1745259658
@@ -5117,6 +5115,7 @@ MonoBehaviour:
   mileStone: {fileID: 918907677}
   currentGen: 0
   currentRange: 0
+  finishedTraining: 0
 --- !u!4 &2030492936
 Transform:
   m_ObjectHideFlags: 0
