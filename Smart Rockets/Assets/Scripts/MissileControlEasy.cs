@@ -24,8 +24,6 @@ public class MissileControlEasy : MonoBehaviour {
     public bool reachedGoal;
     private double maxDist;
     private int endFrame;
-    private bool updateFitnessTime1;
-    private bool updateFitnessTime2;
     public Transform mileStone;
     public bool passedMileStone;
     public GameObject explosion;
@@ -43,8 +41,6 @@ public class MissileControlEasy : MonoBehaviour {
         maxDist = Math.Sqrt(Math.Pow((double)(transform.position.x - goalTransform.position.x), 2) +
             Math.Pow((double)(transform.position.y - goalTransform.position.y), 2));
         Physics2D.gravity = Vector2.zero;
-        updateFitnessTime1 = false;
-        updateFitnessTime2 = false;
         exploded = false;
         passedMileStone = false;
     }
@@ -93,7 +89,7 @@ public class MissileControlEasy : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (isReady && !crashed) {
-            rb.velocity = transform.up * speed * 2 * 2;
+            rb.velocity = transform.up * speed * 2;
             if (current < 50 && count % 5 == 0) { //change range of forces applied on rockets || remove count %10? 
                 current++;  //this runs 50 times in total
             }
@@ -111,20 +107,11 @@ public class MissileControlEasy : MonoBehaviour {
         }
         if (current >= 200 || crashed) {
             finished = true;
-            updateFitnessTime1 = true;
-        }
-        if (updateFitnessTime1 && !updateFitnessTime2) {
-            fitness += fitnessTime;
-            updateFitnessTime2 = true;
         }
         if (!finished) {
             calcuteFitness();
-            // fitness += fitness * (1 + (endFrame) / 200) * (.5);
-            // Debug.Log(fitness);
-            //Debug.Log(maxDist);
         }
     }
-    // fitness +=  fitness*(1 + (200-current)/200)*(.75)
     void calcuteFitness() {
         double dist = Math.Sqrt(Math.Pow((double)(transform.position.x - goalTransform.position.x), 2) +
             Math.Pow((double)(transform.position.y - goalTransform.position.y), 2));
@@ -139,7 +126,6 @@ public class MissileControlEasy : MonoBehaviour {
         }
         if (!crashed) {
             fitness = currentFitness;
-           // fitnessTime += .05;
         }
 
     }

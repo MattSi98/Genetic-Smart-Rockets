@@ -7,6 +7,7 @@ public class MainEasy : MonoBehaviour {
     // Start is called before the first frame update
     private int numRockets = 250;
     public GameObject rocketPrefab;
+    public GameObject qrocketPrefab;
     private GameObject[] rockets = new GameObject[250];
     private MissileControlEasy[] rocketsControl = new MissileControlEasy[250];
     public float speed;
@@ -35,6 +36,10 @@ public class MainEasy : MonoBehaviour {
             }
         }
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
+        //GameObject go = Instantiate(qrocketPrefab, startPos.position, rotation) as GameObject;
+        //qLearnerRocketControl q = go.GetComponentInChildren<qLearnerRocketControl>();
+        //q.goalTransform = goalTransform;
+        //q.startPos = startPos;
         for (int i = 0; i < numRockets; i++) {
             rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
             rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlEasy>();
@@ -62,7 +67,6 @@ public class MainEasy : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
-        Debug.Log(DateTime.Now.ToString("hh.mm.ss.ffffff"));
         if (finished(rocketsControl)) {
             double totalFitness = 0;
             //get total fitness of all rockets
