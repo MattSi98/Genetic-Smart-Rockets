@@ -14398,11 +14398,13 @@ MonoBehaviour:
   thrusterLeftForces: []
   thrusterRightForces: []
   forcesY: []
+  current: 0
   goalTransform: {fileID: 0}
   fitness: 0
   fitnessTime: 0
   finished: 0
   reachedGoal: 0
   mileStone: {fileID: 0}
+  passedMileStone: 0
   explosion: {fileID: 891618502446105816, guid: 1e58b7268623025468540c68d8f1fcf8,
     type: 3}
