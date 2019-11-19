@@ -5,10 +5,10 @@ using System;
 
 public class MainHard : MonoBehaviour {
     // Start is called before the first frame update
-    private int numRockets = 320;
+    private int numRockets = 500;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[320];
-    private MissileControlHard[] rocketsControl = new MissileControlHard[320];
+    private GameObject[] rockets = new GameObject[500];
+    private MissileControlHard[] rocketsControl = new MissileControlHard[500];
     public float speed;
     public Transform goalTransform;
     private int numGenes = 100;
