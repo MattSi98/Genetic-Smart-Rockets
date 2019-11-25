@@ -12,13 +12,19 @@ public class SceneSwitcher : MonoBehaviour
 
     public void GotoMediumMapScene()
     {
-        SceneManager.LoadScene("Medium Map");
+        SceneManager.LoadScene("Med Map");
     }
 
     public void GotoHardMapScene() 
     {
         SceneManager.LoadScene("Hard Map");
     
+    }
+
+    public void GotoMainMenuScene()
+    {
+        SceneManager.LoadScene("Start Menu");
+
     }
 
 }
