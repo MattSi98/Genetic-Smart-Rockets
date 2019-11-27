@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class MainMed : MonoBehaviour {
+public class MainSpiral : MonoBehaviour {
     // Start is called before the first frame update
-    private int numRockets = 150;
+    private int numRockets = 300;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[150];
-    private MissileControlMed[] rocketsControl = new MissileControlMed[150];
+    private GameObject[] rockets = new GameObject[300];
+    private MissileControlSpiral[] rocketsControl = new MissileControlSpiral[300];
     public float speed;
     public Transform goalTransform;
-    private int numGenes = 100;
+    private int numGenes = 400;
     private float geneRange = 40f;
     public Transform startPos;
-    public Transform[] mileStones = new Transform[13];
-    private bool[] passedMilestone = new bool[13];
-    private int currentMilestoneLevel = 0;
+    public Transform[] mileStones = new Transform[70];
+    private bool[] passedMilestone = new bool[70];
+    public int currentMilestoneLevel = 0;
     public int currentGen = 0;
     public int currentRange = 0;
-    private int numMilestones = 13;
+    private int numMilestones = 70;
 
     void Start() {
         foreach (Transform child in transform) {
@@ -30,7 +30,7 @@ public class MainMed : MonoBehaviour {
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
         for (int i = 0; i < numRockets; i++) {
             rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
-            rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlMed>();
+            rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlSpiral>();
             rocketsControl[i].isReady = true;
             rocketsControl[i].thrusterLeftForces = createForces();
             rocketsControl[i].thrusterRightForces = createForces();
@@ -61,9 +61,9 @@ public class MainMed : MonoBehaviour {
             }
             //normalize rocket fitness and get a fraction of 200
             for (int i = 0; i < rocketsControl.Length; i++) {
-                rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 500);
+                rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 1000);
             }
-            List<MissileControlMed> matingpool = new List<MissileControlMed>();
+            List<MissileControlSpiral> matingpool = new List<MissileControlSpiral>();
             for (int i = 0; i < numRockets; i++) {
                 for (int j = 0; j < rocketsControl[i].fitness; j++) {
                     matingpool.Add(rocketsControl[i]);
@@ -74,7 +74,7 @@ public class MainMed : MonoBehaviour {
             currentGen++;
         }
     }
-    bool finished(MissileControlMed[] rc) {
+    bool finished(MissileControlSpiral[] rc) {
         bool finished = true;
         for (int i = 0; i < numRockets; i++) {
             finished = finished && rc[i].finished;
@@ -84,7 +84,7 @@ public class MainMed : MonoBehaviour {
         }
         return finished;
     }
-    void destroyAndCreate(List<MissileControlMed> matingpool, MissileControlMed mostFit) {
+    void destroyAndCreate(List<MissileControlSpiral> matingpool, MissileControlSpiral mostFit) {
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
         //assign random mass?
         for (int i = 0; i < numRockets; i++) {
@@ -93,7 +93,7 @@ public class MainMed : MonoBehaviour {
             float[][] forces = mate(matingpool[parent1], matingpool[parent2], mostFit);
             Destroy(rockets[i]);
             rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
-            rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlMed>();
+            rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlSpiral>();
             rocketsControl[i].thrusterLeftForces = forces[0];
             rocketsControl[i].thrusterRightForces = forces[1];
             rocketsControl[i].goalTransform = goalTransform;
@@ -121,27 +121,30 @@ public class MainMed : MonoBehaviour {
                 }
             }
         }
-        if (((float)numPassed / (float)rocketsControl.Length) > .8) {
+        if (((float)numPassed / (float)rocketsControl.Length) > .1) {
             currentMilestoneLevel++;
-            currentRange = (currentAvg / (numPassed + 3)) - 5;
-            if (currentRange < 0) {
-                currentRange = 0;
+            if (!((currentAvg / (numPassed + 3)) - 5 < 0)) {
+                currentRange = (currentAvg / (numPassed + 3)) - 5;
             }
         }
-        if (((float)numHitTarget / (float)rocketsControl.Length) > .8) {
+        if (((float)numHitTarget / (float)rocketsControl.Length) > .1) {
             currentRange = numGenes - 1;
         }
     }
     float[] mutate(float[] gene) {
-        if (UnityEngine.Random.Range(0, 20) < 1) {
-            int r = UnityEngine.Random.Range(5, 8);
+        if (UnityEngine.Random.Range(0, 20) < 5 && currentMilestoneLevel < 70) {
+            int r = UnityEngine.Random.Range(5, 10);
+            int end = currentRange + 50;
+            if (end > numGenes - 1) {
+                end = numGenes - 1;
+            }
             for (int i = 0; i < r; i++) {
-                gene[UnityEngine.Random.Range(currentRange, numGenes - 1)] = UnityEngine.Random.Range(0f, geneRange);
+                gene[UnityEngine.Random.Range(currentRange, end)] = UnityEngine.Random.Range(0f, geneRange);
             }
         }
         return gene;
     }
-    float[][] mate(MissileControlMed parent1, MissileControlMed parent2, MissileControlMed mostFit) {
+    float[][] mate(MissileControlSpiral parent1, MissileControlSpiral parent2, MissileControlSpiral mostFit) {
         float[] childThrusterLeft = new float[numGenes];
         float[] childThrusterRight = new float[numGenes];
         float parent1Percentage = (float)parent1.fitness / (float)(parent1.fitness + parent2.fitness);
@@ -154,6 +157,6 @@ public class MainMed : MonoBehaviour {
             childThrusterLeft[i] = (parent1.thrusterLeftForces[i] * parent1Percentage) + (parent2.thrusterLeftForces[i] * parent2Percentage);
             childThrusterRight[i] = (parent1.thrusterRightForces[i] * parent1Percentage) + (parent2.thrusterRightForces[i] * parent2Percentage);
         }
-        return new float[][] {mutate(childThrusterLeft), mutate(childThrusterRight)};
+        return new float[][] { mutate(childThrusterLeft), mutate(childThrusterRight) };
     }
 }

@@ -11,10 +11,8 @@ public class MissileControlMed : MonoBehaviour {
     private Vector2 vel;
     Rigidbody2D rb;
     public bool isReady;
-    public float[] forcesX;
     public float[] thrusterLeftForces;
     public float[] thrusterRightForces;
-    public float[] forcesY;
     public int current;
     public Transform goalTransform;
     public double fitness;
@@ -23,11 +21,11 @@ public class MissileControlMed : MonoBehaviour {
     private bool crashed;
     public bool reachedGoal;
     private double maxDist;
-    private int endFrame;
     private bool updateFitnessTime1;
     private bool updateFitnessTime2;
     public Transform[] mileStones;
     public bool[] passedMileStones;
+    public int[] currentAtMilestone;
     private int fitnessLevel;
     public GameObject explosion;
     private bool exploded;
@@ -47,7 +45,8 @@ public class MissileControlMed : MonoBehaviour {
         updateFitnessTime1 = false;
         updateFitnessTime2 = false;
         fitnessLevel = 1;
-        passedMileStones = new bool[4];
+        passedMileStones = new bool[13];
+        currentAtMilestone = new int[13];
         for(int i = 0; i < passedMileStones.Length; i++) {
             passedMileStones[i] = false;
         }
@@ -63,9 +62,7 @@ public class MissileControlMed : MonoBehaviour {
         if (collision.gameObject.tag == "wall" && !reachedGoal) { //prevents it from updating fitness after it has finished the stage
             fitness *= .50;
             crashed = true;
-            endFrame = current;
             rb.freezeRotation = true;
-            Physics2D.gravity = new Vector2(0, -9.8f);
             GetComponent<MeshRenderer>().enabled = false;
             if (!exploded) {
                 exploded = true;
@@ -81,7 +78,6 @@ public class MissileControlMed : MonoBehaviour {
             fitness *= 4;
             reachedGoal = true;
             crashed = true;
-            endFrame = current;
             GetComponent<MeshRenderer>().enabled = false;
             if (!exploded) {
                 exploded = true;
@@ -125,18 +121,162 @@ public class MissileControlMed : MonoBehaviour {
         if (!finished) {
             calcuteFitness();
         }
-        if (!passedMileStones[0] && mileStones[0].position.x > transform.position.x) {
+        if (!passedMileStones[0] 
+         && mileStones[0].position.x > transform.position.x
+         && mileStones[0].position.y < transform.position.y) {
             passedMileStones[0] = true;
             fitnessLevel = 2;
-        } else if (passedMileStones[0] && !passedMileStones[1] && mileStones[1].position.y < transform.position.y) {
+            currentAtMilestone[0] = current;
+        } else if (passedMileStones[0] 
+                && !passedMileStones[1]
+                && mileStones[1].position.x > transform.position.x
+                && mileStones[1].position.y < transform.position.y) {
             passedMileStones[1] = true;
             fitnessLevel = 3;
-        } else if (passedMileStones[0] && passedMileStones[1] && !passedMileStones[2] && mileStones[2].position.y < transform.position.y) {
+            currentAtMilestone[1] = current;
+        } else if (passedMileStones[0] 
+                && passedMileStones[1] 
+                && !passedMileStones[2]
+                && mileStones[2].position.x > transform.position.x
+                && mileStones[2].position.y < transform.position.y) {
             passedMileStones[2] = true;
             fitnessLevel = 4;
-        } else if (passedMileStones[0] && passedMileStones[1] && passedMileStones[2] && !passedMileStones[3] && mileStones[3].position.x < transform.position.x) {
+            currentAtMilestone[2] = current;
+        } else if (passedMileStones[0]
+                && passedMileStones[1]
+                && passedMileStones[2]
+                && !passedMileStones[3]
+                && mileStones[3].position.x > transform.position.x
+                && mileStones[3].position.y < transform.position.y) {
             passedMileStones[3] = true;
             fitnessLevel = 5;
+            currentAtMilestone[3] = current;
+        } else if (passedMileStones[0]
+                && passedMileStones[1]
+                && passedMileStones[2]
+                && passedMileStones[3]
+                && !passedMileStones[4]
+                && mileStones[4].position.x > transform.position.x
+                && mileStones[4].position.y < transform.position.y) {
+            passedMileStones[4] = true;
+            fitnessLevel = 7;
+            currentAtMilestone[4] = current;
+        } else if (passedMileStones[0]
+                && passedMileStones[1]
+                && passedMileStones[2]
+                && passedMileStones[3]
+                && passedMileStones[4]
+                && !passedMileStones[5]
+                && mileStones[5].position.x < transform.position.x
+                && mileStones[5].position.y < transform.position.y) {
+            passedMileStones[5] = true;
+            fitnessLevel = 10;
+            currentAtMilestone[5] = current;
+        } else if (passedMileStones[0]
+                && passedMileStones[1]
+                && passedMileStones[2]
+                && passedMileStones[3]
+                && passedMileStones[4]
+                && passedMileStones[5]
+                && !passedMileStones[6]
+                && mileStones[6].position.x < transform.position.x
+                && mileStones[6].position.y < transform.position.y) {
+            passedMileStones[6] = true;
+            fitnessLevel = 13;
+            currentAtMilestone[6] = current;
+        } else if (passedMileStones[0]
+                && passedMileStones[1]
+                && passedMileStones[2]
+                && passedMileStones[3]
+                && passedMileStones[4]
+                && passedMileStones[5]
+                && passedMileStones[6]
+                && !passedMileStones[7]
+                && mileStones[7].position.x < transform.position.x
+                && mileStones[7].position.y < transform.position.y) {
+            passedMileStones[7] = true;
+            fitnessLevel = 16;
+            currentAtMilestone[7] = current;
+        } else if (passedMileStones[0]
+                && passedMileStones[1]
+                && passedMileStones[2]
+                && passedMileStones[3]
+                && passedMileStones[4]
+                && passedMileStones[5]
+                && passedMileStones[6]
+                && passedMileStones[7]
+                && !passedMileStones[8]
+                && mileStones[8].position.x < transform.position.x
+                && mileStones[8].position.y < transform.position.y) {
+            passedMileStones[8] = true;
+            fitnessLevel = 16;
+            currentAtMilestone[8] = current;
+        } else if (passedMileStones[0]
+                 && passedMileStones[1]
+                 && passedMileStones[2]
+                 && passedMileStones[3]
+                 && passedMileStones[4]
+                 && passedMileStones[5]
+                 && passedMileStones[6]
+                 && passedMileStones[7]
+                 && passedMileStones[8]
+                 && !passedMileStones[9]
+                 && mileStones[9].position.x < transform.position.x
+                 && mileStones[9].position.y < transform.position.y) {
+            passedMileStones[9] = true;
+            fitnessLevel = 19;
+            currentAtMilestone[9] = current;
+        } else if (passedMileStones[0]
+                 && passedMileStones[1]
+                 && passedMileStones[2]
+                 && passedMileStones[3]
+                 && passedMileStones[4]
+                 && passedMileStones[5]
+                 && passedMileStones[6]
+                 && passedMileStones[7]
+                 && passedMileStones[8]
+                 && passedMileStones[9]
+                 && !passedMileStones[10]
+                 && mileStones[10].position.x < transform.position.x
+                 && mileStones[10].position.y < transform.position.y) {
+            passedMileStones[10] = true;
+            fitnessLevel = 24;
+            currentAtMilestone[10] = current;
+        } else if (passedMileStones[0]
+                 && passedMileStones[1]
+                 && passedMileStones[2]
+                 && passedMileStones[3]
+                 && passedMileStones[4]
+                 && passedMileStones[5]
+                 && passedMileStones[6]
+                 && passedMileStones[7]
+                 && passedMileStones[8]
+                 && passedMileStones[9]
+                 && passedMileStones[10]
+                 && !passedMileStones[11]
+                 && mileStones[11].position.x < transform.position.x
+                 && mileStones[11].position.y < transform.position.y) {
+            passedMileStones[11] = true;
+            fitnessLevel = 30;
+            currentAtMilestone[11] = current;
+        } else if (passedMileStones[0]
+                 && passedMileStones[1]
+                 && passedMileStones[2]
+                 && passedMileStones[3]
+                 && passedMileStones[4]
+                 && passedMileStones[5]
+                 && passedMileStones[6]
+                 && passedMileStones[7]
+                 && passedMileStones[8]
+                 && passedMileStones[9]
+                 && passedMileStones[10]
+                 && passedMileStones[11]
+                 && !passedMileStones[12]
+                 && mileStones[12].position.x < transform.position.x
+                 && mileStones[12].position.y < transform.position.y) {
+            passedMileStones[12] = true;
+            fitnessLevel = 40;
+            currentAtMilestone[12] = current;
         }
     }
     void calcuteFitness() {
@@ -155,17 +295,3 @@ public class MissileControlMed : MonoBehaviour {
 
     }
 }
-
-
-
-/* Fitness function
- * How will we determine if something is a good fitness?
- * Combine multiple ways to compute fitness:
- * 1) time alive
- * 2) distance from goal
- * 3) ???
- * Add them all up can multiple by some scalar to determine whcich aspects are more important
- * 
- * 
- * 
- */
