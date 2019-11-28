@@ -116,7 +116,7 @@ public class MissileControlHard : MonoBehaviour {
         }
     }
     void getFitnessLevel() {
-        Debug.Log(&& mileStones[10].position.y > transform.position.y);
+        Debug.Log(mileStones[10].position.y > transform.position.y);
         if (!passedMileStones[0]
             && mileStones[0].position.y < transform.position.y
             && mileStones[0].position.x < transform.position.x
