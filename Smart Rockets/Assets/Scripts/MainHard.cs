@@ -5,18 +5,18 @@ using System;
 
 public class MainHard : MonoBehaviour {
     // Start is called before the first frame update
-    private int numRockets = 100;
+    private int numRockets = 200;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[100];
-    private MissileControlHard[] rocketsControl = new MissileControlHard[100];
+    private GameObject[] rockets = new GameObject[200];
+    private MissileControlHard[] rocketsControl = new MissileControlHard[200];
     public float speed;
     public Transform goalTransform;
     private int numGenes = 200;
-    private float geneRange = 40f;
+    private float geneRange = 100f;
     public Transform startPos;
     public Transform[] mileStones = new Transform[34];
     private bool[] passedMilestone = new bool[34];
-    private int currentMilestoneLevel = 0;
+    public int currentMilestoneLevel = 0;
     public int currentGen = 0;
     public int currentRange = 0;
     private int numMilestones = 34;
@@ -121,19 +121,19 @@ public class MainHard : MonoBehaviour {
                 }
             }
         }
-        if (((float)numPassed / (float)rocketsControl.Length) > .5) {
+        if (((float)numPassed / (float)rocketsControl.Length) > .1) {
             currentMilestoneLevel++;
-            if (!((currentAvg / (numPassed + 3)) - 5 < 0)) {
-                currentRange = (currentAvg / (numPassed + 3)) - 5;
+            if (!((currentAvg / (numPassed)) - 5 < 0)) {
+                currentRange = (currentAvg / (numPassed)) - 5;
             }
         }
-        if (((float)numHitTarget / (float)rocketsControl.Length) > .5) {
+        if (((float)numHitTarget / (float)rocketsControl.Length) > .1) {
             currentRange = numGenes - 1;
         }
     }
     float[] mutate(float[] gene) {
         if (UnityEngine.Random.Range(0, 20) < 5 && currentMilestoneLevel < 32) {
-            int r = UnityEngine.Random.Range(5, 10);
+            int r = UnityEngine.Random.Range(5, 15);
             int end = currentRange + 50;
             if (end > numGenes - 1) {
                 end = numGenes - 1;

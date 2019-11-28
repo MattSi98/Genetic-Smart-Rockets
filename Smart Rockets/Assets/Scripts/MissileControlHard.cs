@@ -103,7 +103,7 @@ public class MissileControlHard : MonoBehaviour {
             float y = thrusterLeftForces[current] + thrusterRightForces[current];
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
         }
         if (current >= numGenes) {
             current++;
@@ -112,25 +112,32 @@ public class MissileControlHard : MonoBehaviour {
             finished = true;
         }
         if (!finished) {
-            calcuteFitness();
+            calculateFitness();
         }
     }
     void getFitnessLevel() {
+        Debug.Log(&& mileStones[10].position.y > transform.position.y);
         if (!passedMileStones[0]
-            && mileStones[0].position.y < transform.position.y) {
+            && mileStones[0].position.y < transform.position.y
+            && mileStones[0].position.x < transform.position.x
+            && (mileStones[0].position.x + 1) > transform.position.x) {
             passedMileStones[0] = true;
             fitnessLevel = 2;
             currentAtMilestone[0] = current;
         } else if (passedMileStones[0]
             && !passedMileStones[1]
-            && mileStones[1].position.y < transform.position.y) {
+            && mileStones[1].position.y < transform.position.y
+            && mileStones[1].position.x < transform.position.x
+            && (mileStones[1].position.x + 1) > transform.position.x) {
             passedMileStones[1] = true;
             fitnessLevel = 3;
             currentAtMilestone[1] = current;
         } else if (passedMileStones[0]
             && passedMileStones[1]
             && !passedMileStones[2]
-            && mileStones[2].position.y < transform.position.y) {
+            && mileStones[2].position.y < transform.position.y
+            && mileStones[2].position.x < transform.position.x
+            && (mileStones[2].position.x + 1) > transform.position.x) {
             passedMileStones[2] = true;
             fitnessLevel = 4;
             currentAtMilestone[2] = current;
@@ -138,7 +145,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[1]
             && passedMileStones[2]
             && !passedMileStones[3]
-            && mileStones[3].position.y < transform.position.y) {
+            && mileStones[3].position.y < transform.position.y
+            && mileStones[3].position.x < transform.position.x
+            && (mileStones[3].position.x + 1) > transform.position.x) {
             passedMileStones[3] = true;
             fitnessLevel = 5;
             currentAtMilestone[3] = current;
@@ -147,7 +156,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[2]
             && passedMileStones[3]
             && !passedMileStones[4]
-            && mileStones[4].position.y < transform.position.y) {
+            && mileStones[4].position.y < transform.position.y
+            && mileStones[4].position.x < transform.position.x
+            && (mileStones[4].position.x + 1) > transform.position.x) {
             passedMileStones[4] = true;
             fitnessLevel = 6;
             currentAtMilestone[4] = current;
@@ -157,7 +168,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[3]
             && passedMileStones[4]
             && !passedMileStones[5]
-            && mileStones[5].position.y < transform.position.y) {
+            && mileStones[5].position.y < transform.position.y
+            && mileStones[5].position.x < transform.position.x
+            && (mileStones[5].position.x + 1) > transform.position.x) {
             passedMileStones[5] = true;
             fitnessLevel = 7;
             currentAtMilestone[5] = current;
@@ -168,7 +181,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[4]
             && passedMileStones[5]
             && !passedMileStones[6]
-            && mileStones[6].position.x > transform.position.x) {
+            && mileStones[6].position.x > transform.position.x
+            && mileStones[6].position.y < transform.position.y
+            && (mileStones[6].position.y + 1.25) > transform.position.y) {
             passedMileStones[6] = true;
             fitnessLevel = 8;
             currentAtMilestone[6] = current;
@@ -180,7 +195,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[5]
             && passedMileStones[6]
             && !passedMileStones[7]
-            && mileStones[7].position.x > transform.position.x) {
+            && mileStones[7].position.x > transform.position.x
+            && mileStones[7].position.y < transform.position.y
+            && (mileStones[7].position.y + 1.15) > transform.position.y) {
             passedMileStones[7] = true;
             fitnessLevel = 9;
             currentAtMilestone[7] = current;
@@ -193,7 +210,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[6]
             && passedMileStones[7]
             && !passedMileStones[8]
-            && mileStones[8].position.x > transform.position.x) {
+            && mileStones[8].position.x > transform.position.x
+            && mileStones[8].position.y < transform.position.y
+            && (mileStones[8].position.y + 1.05) > transform.position.y) {
             passedMileStones[8] = true;
             fitnessLevel = 10;
             currentAtMilestone[8] = current;
@@ -207,7 +226,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[7]
             && passedMileStones[8]
             && !passedMileStones[9]
-            && mileStones[9].position.x > transform.position.x) {
+            && (mileStones[9].position.x + 1) > transform.position.x
+            && mileStones[9].position.y > transform.position.y
+            && (mileStones[9].position.y + 1) < transform.position.y) {
             passedMileStones[9] = true;
             fitnessLevel = 11;
             currentAtMilestone[9] = current;
@@ -222,7 +243,10 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[8]
             && passedMileStones[9]
             && !passedMileStones[10]
-            && mileStones[10].position.y > transform.position.y) {
+            && mileStones[10].position.y > transform.position.y
+            //&& mileStones[10].position.x < transform.position.x
+            //&& (mileStones[10].position.x + 2) > transform.position.x
+            ) {
             passedMileStones[10] = true;
             fitnessLevel = 15;
             currentAtMilestone[10] = current;
@@ -238,7 +262,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[9]
             && passedMileStones[10]
             && !passedMileStones[11]
-            && mileStones[11].position.y > transform.position.y) {
+            && mileStones[11].position.y > transform.position.y
+            && mileStones[11].position.x < transform.position.x
+            && (mileStones[11].position.x + 1) > transform.position.x) {
             passedMileStones[11] = true;
             fitnessLevel = 18;
             currentAtMilestone[11] = current;
@@ -255,7 +281,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[10]
             && passedMileStones[11]
             && !passedMileStones[12]
-            && mileStones[12].position.y > transform.position.y) {
+            && mileStones[12].position.y > transform.position.y
+            && mileStones[12].position.x < transform.position.x
+            && (mileStones[12].position.x + 1) > transform.position.x) {
             passedMileStones[12] = true;
             fitnessLevel = 19;
             currentAtMilestone[12] = current;
@@ -273,7 +301,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[11]
             && passedMileStones[12]
             && !passedMileStones[13]
-            && mileStones[13].position.y > transform.position.y) {
+            && mileStones[13].position.y > transform.position.y
+            && mileStones[13].position.x < transform.position.x
+            && (mileStones[13].position.x + 1) > transform.position.x) {
             passedMileStones[13] = true;
             fitnessLevel = 22;
             currentAtMilestone[13] = current;
@@ -292,7 +322,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[12]
             && passedMileStones[13]
             && !passedMileStones[14]
-            && mileStones[14].position.y > transform.position.y) {
+            && mileStones[14].position.y > transform.position.y
+            && mileStones[14].position.x < transform.position.x
+            && (mileStones[14].position.x + 1) > transform.position.x) {
             passedMileStones[14] = true;
             fitnessLevel = 23;
             currentAtMilestone[14] = current;
@@ -312,7 +344,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[13]
             && passedMileStones[14]
             && !passedMileStones[15]
-            && mileStones[15].position.y > transform.position.y) {
+            && mileStones[15].position.y > transform.position.y
+            && mileStones[15].position.x < transform.position.x
+            && (mileStones[15].position.x + 1) > transform.position.x) {
             passedMileStones[15] = true;
             fitnessLevel = 24;
             currentAtMilestone[15] = current;
@@ -333,7 +367,9 @@ public class MissileControlHard : MonoBehaviour {
             && passedMileStones[14]
             && passedMileStones[15]
             && !passedMileStones[16]
-            && mileStones[16].position.y > transform.position.y) {
+            && mileStones[16].position.y > transform.position.y
+            && mileStones[16].position.x < transform.position.x
+            && (mileStones[16].position.x + 1) > transform.position.x) {
             passedMileStones[16] = true;
             fitnessLevel = 27;
             currentAtMilestone[16] = current;
@@ -355,7 +391,9 @@ public class MissileControlHard : MonoBehaviour {
              && passedMileStones[15]
              && passedMileStones[16]
              && !passedMileStones[17]
-             && mileStones[17].position.y > transform.position.y) {
+             && mileStones[17].position.y > transform.position.y
+            && mileStones[17].position.x < transform.position.x
+            && (mileStones[17].position.x + 1) > transform.position.x) {
             passedMileStones[17] = true;
             fitnessLevel = 35;
             currentAtMilestone[17] = current;
@@ -378,7 +416,9 @@ public class MissileControlHard : MonoBehaviour {
               && passedMileStones[16]
               && passedMileStones[17]
               && !passedMileStones[18]
-              && mileStones[18].position.y > transform.position.y) {
+              && mileStones[18].position.y > transform.position.y
+              && mileStones[18].position.x < transform.position.x
+              && (mileStones[18].position.x + 1) > transform.position.x) {
             passedMileStones[18] = true;
             fitnessLevel = 40;
             currentAtMilestone[18] = current;
@@ -402,7 +442,9 @@ public class MissileControlHard : MonoBehaviour {
                && passedMileStones[17]
                && passedMileStones[18]
                && !passedMileStones[19]
-               && mileStones[19].position.x > transform.position.x) {
+               && mileStones[19].position.x > transform.position.x
+              && mileStones[19].position.y < transform.position.y
+              && (mileStones[19].position.y + 2) > transform.position.y) {
             passedMileStones[19] = true;
             fitnessLevel = 50;
             currentAtMilestone[19] = current;
@@ -427,7 +469,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[18]
                 && passedMileStones[19]
                 && !passedMileStones[20]
-                && mileStones[20].position.x > transform.position.x) {
+                && mileStones[20].position.x > transform.position.x
+              && mileStones[20].position.y < transform.position.y
+              && (mileStones[20].position.y + 2) > transform.position.y) {
             passedMileStones[20] = true;
             fitnessLevel = 60;
             currentAtMilestone[20] = current;
@@ -453,7 +497,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[19]
                 && passedMileStones[20]
                 && !passedMileStones[21]
-                && mileStones[21].position.y < transform.position.y) {
+                && mileStones[21].position.y < transform.position.y
+              && mileStones[21].position.x < transform.position.x
+              && (mileStones[21].position.x + 2) > transform.position.x) {
             passedMileStones[21] = true;
             fitnessLevel = 70;
             currentAtMilestone[21] = current;
@@ -480,7 +526,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[20]
                 && passedMileStones[21]
                 && !passedMileStones[22]
-                && mileStones[22].position.y < transform.position.y) {
+                && mileStones[22].position.y < transform.position.y
+              && mileStones[22].position.x < transform.position.x
+              && (mileStones[22].position.x + 1) > transform.position.x) {
             passedMileStones[22] = true;
             fitnessLevel = 75;
             currentAtMilestone[22] = current;
@@ -508,7 +556,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[21]
                 && passedMileStones[22]
                 && !passedMileStones[23]
-                && mileStones[23].position.y < transform.position.y) {
+                && mileStones[23].position.y < transform.position.y
+              && mileStones[23].position.x < transform.position.x
+              && (mileStones[23].position.x + 1) > transform.position.x) {
             passedMileStones[23] = true;
             fitnessLevel = 80;
             currentAtMilestone[23] = current;
@@ -537,7 +587,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[22]
                 && passedMileStones[23]
                 && !passedMileStones[24]
-                && mileStones[24].position.y < transform.position.y) {
+                && mileStones[24].position.y < transform.position.y
+              && mileStones[24].position.x < transform.position.x
+              && (mileStones[24].position.x + 1) > transform.position.x) {
             passedMileStones[24] = true;
             fitnessLevel = 85;
             currentAtMilestone[24] = current;
@@ -567,7 +619,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[23]
                 && passedMileStones[24]
                 && !passedMileStones[25]
-                && mileStones[25].position.y < transform.position.y) {
+                && mileStones[25].position.y < transform.position.y
+              && mileStones[25].position.x < transform.position.x
+              && (mileStones[25].position.x + 1) > transform.position.x) {
             passedMileStones[25] = true;
             fitnessLevel = 90;
             currentAtMilestone[25] = current;
@@ -598,7 +652,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[24]
                 && passedMileStones[25]
                 && !passedMileStones[26]
-                && mileStones[26].position.y < transform.position.y) {
+                && mileStones[26].position.y < transform.position.y
+              && mileStones[26].position.x < transform.position.x
+              && (mileStones[26].position.x + 1) > transform.position.x) {
             passedMileStones[26] = true;
             fitnessLevel = 95;
             currentAtMilestone[26] = current;
@@ -630,7 +686,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[25]
                 && passedMileStones[26]
                 && !passedMileStones[27]
-                && mileStones[27].position.y < transform.position.y) {
+                && mileStones[27].position.y < transform.position.y
+              && mileStones[27].position.x < transform.position.x
+              && (mileStones[27].position.x + 1) > transform.position.x) {
             passedMileStones[27] = true;
             fitnessLevel = 100;
             currentAtMilestone[27] = current;
@@ -663,7 +721,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[26]
                 && passedMileStones[27]
                 && !passedMileStones[28]
-                && mileStones[28].position.x < transform.position.x) {
+                && mileStones[28].position.x < transform.position.x
+              && mileStones[28].position.y < transform.position.y
+              && (mileStones[28].position.y + 1) > transform.position.y) {
             passedMileStones[28] = true;
             fitnessLevel = 105;
             currentAtMilestone[28] = current;
@@ -697,7 +757,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[27]
                 && passedMileStones[28]
                 && !passedMileStones[29]
-                && mileStones[29].position.x < transform.position.x) {
+                && mileStones[29].position.x < transform.position.x
+              && mileStones[29].position.y < transform.position.y
+              && (mileStones[29].position.y + 1) > transform.position.y) {
             passedMileStones[29] = true;
             fitnessLevel = 110;
             currentAtMilestone[29] = current;
@@ -732,7 +794,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[28]
                 && passedMileStones[29]
                 && !passedMileStones[30]
-                && mileStones[30].position.x < transform.position.x) {
+                && mileStones[30].position.x < transform.position.x
+              && mileStones[30].position.y < transform.position.y
+              && (mileStones[30].position.y + 1) > transform.position.y) {
             passedMileStones[30] = true;
             fitnessLevel = 130;
             currentAtMilestone[30] = current;
@@ -768,7 +832,9 @@ public class MissileControlHard : MonoBehaviour {
                 && passedMileStones[29]
                 && passedMileStones[30]
                 && !passedMileStones[31]
-                && mileStones[31].position.x < transform.position.x) {
+                && mileStones[31].position.x < transform.position.x
+              && mileStones[31].position.y < transform.position.y
+              && (mileStones[31].position.y + 1) > transform.position.y) {
             passedMileStones[31] = true;
             fitnessLevel = 145;
             currentAtMilestone[31] = current;
@@ -805,7 +871,9 @@ public class MissileControlHard : MonoBehaviour {
                  && passedMileStones[30]
                  && passedMileStones[31]
                  && !passedMileStones[32]
-                 && mileStones[32].position.x < transform.position.x) {
+                 && mileStones[32].position.x < transform.position.x
+              && mileStones[32].position.y < transform.position.y
+              && (mileStones[32].position.y + 1) > transform.position.y) {
             passedMileStones[32] = true;
             fitnessLevel = 160;
             currentAtMilestone[32] = current;
@@ -843,13 +911,15 @@ public class MissileControlHard : MonoBehaviour {
                  && passedMileStones[31]
                  && passedMileStones[32]
                  && !passedMileStones[33]
-                 && mileStones[33].position.x < transform.position.x) {
+                 && mileStones[33].position.x < transform.position.x
+              && mileStones[33].position.y < transform.position.y
+              && (mileStones[33].position.y + 1) > transform.position.y) {
             passedMileStones[33] = true;
             fitnessLevel = 170;
             currentAtMilestone[33] = current;
         }
     }
-    void calcuteFitness() {
+    void calculateFitness() {
         //instead of taking the distance to the goal, take distance to milestones
         double dist = Math.Sqrt(Math.Pow((double)(transform.position.x - goalTransform.position.x), 2) +
             Math.Pow((double)(transform.position.y - goalTransform.position.y), 2));

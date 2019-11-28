@@ -5,10 +5,10 @@ using System;
 
 public class MainMed : MonoBehaviour {
     // Start is called before the first frame update
-    private int numRockets = 150;
+    private int numRockets = 200;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[150];
-    private MissileControlMed[] rocketsControl = new MissileControlMed[150];
+    private GameObject[] rockets = new GameObject[200];
+    private MissileControlMed[] rocketsControl = new MissileControlMed[200];
     public float speed;
     public Transform goalTransform;
     private int numGenes = 100;
@@ -16,7 +16,7 @@ public class MainMed : MonoBehaviour {
     public Transform startPos;
     public Transform[] mileStones = new Transform[13];
     private bool[] passedMilestone = new bool[13];
-    private int currentMilestoneLevel = 0;
+    public int currentMilestoneLevel = 0;
     public int currentGen = 0;
     public int currentRange = 0;
     private int numMilestones = 13;
@@ -121,14 +121,14 @@ public class MainMed : MonoBehaviour {
                 }
             }
         }
-        if (((float)numPassed / (float)rocketsControl.Length) > .8) {
+        if (((float)numPassed / (float)rocketsControl.Length) > .3) {
             currentMilestoneLevel++;
-            currentRange = (currentAvg / (numPassed + 3)) - 5;
+            currentRange = (currentAvg / (numPassed)) - 1;
             if (currentRange < 0) {
                 currentRange = 0;
             }
         }
-        if (((float)numHitTarget / (float)rocketsControl.Length) > .8) {
+        if (((float)numHitTarget / (float)rocketsControl.Length) > .3) {
             currentRange = numGenes - 1;
         }
     }

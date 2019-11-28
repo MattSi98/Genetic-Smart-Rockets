@@ -123,8 +123,8 @@ public class MainSpiral : MonoBehaviour {
         }
         if (((float)numPassed / (float)rocketsControl.Length) > .1) {
             currentMilestoneLevel++;
-            if (!((currentAvg / (numPassed + 3)) - 5 < 0)) {
-                currentRange = (currentAvg / (numPassed + 3)) - 5;
+            if (!((currentAvg / (numPassed)) - 5 < 0)) {
+                currentRange = (currentAvg / (numPassed)) - 5;
             }
         }
         if (((float)numHitTarget / (float)rocketsControl.Length) > .1) {

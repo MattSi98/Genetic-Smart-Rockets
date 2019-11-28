@@ -121,24 +121,30 @@ public class MissileControlMed : MonoBehaviour {
         if (!finished) {
             calcuteFitness();
         }
-        if (!passedMileStones[0] 
-         && mileStones[0].position.x > transform.position.x
-         && mileStones[0].position.y < transform.position.y) {
+        if (!passedMileStones[0]
+            && mileStones[0].position.x < transform.position.x
+            && mileStones[0].position.y < transform.position.y
+            && (mileStones[0].position.x + 1) > transform.position.x
+            && (mileStones[0].position.y + 1) > transform.position.y) {
             passedMileStones[0] = true;
             fitnessLevel = 2;
             currentAtMilestone[0] = current;
         } else if (passedMileStones[0] 
                 && !passedMileStones[1]
-                && mileStones[1].position.x > transform.position.x
-                && mileStones[1].position.y < transform.position.y) {
+                && mileStones[1].position.x < transform.position.x
+                && mileStones[1].position.y < transform.position.y
+                && (mileStones[1].position.x + 1) > transform.position.x
+                && (mileStones[1].position.y + 1) > transform.position.y) {
             passedMileStones[1] = true;
             fitnessLevel = 3;
             currentAtMilestone[1] = current;
         } else if (passedMileStones[0] 
                 && passedMileStones[1] 
                 && !passedMileStones[2]
-                && mileStones[2].position.x > transform.position.x
-                && mileStones[2].position.y < transform.position.y) {
+                && mileStones[2].position.x < transform.position.x
+                && mileStones[2].position.y < transform.position.y
+                && (mileStones[2].position.x + 1) > transform.position.x
+                && (mileStones[2].position.y + 1) > transform.position.y) {
             passedMileStones[2] = true;
             fitnessLevel = 4;
             currentAtMilestone[2] = current;
@@ -146,8 +152,10 @@ public class MissileControlMed : MonoBehaviour {
                 && passedMileStones[1]
                 && passedMileStones[2]
                 && !passedMileStones[3]
-                && mileStones[3].position.x > transform.position.x
-                && mileStones[3].position.y < transform.position.y) {
+                && mileStones[3].position.x < transform.position.x
+                && mileStones[3].position.y < transform.position.y
+                && (mileStones[3].position.x + 1) > transform.position.x
+                && (mileStones[3].position.y + 1) > transform.position.y) {
             passedMileStones[3] = true;
             fitnessLevel = 5;
             currentAtMilestone[3] = current;
@@ -156,8 +164,10 @@ public class MissileControlMed : MonoBehaviour {
                 && passedMileStones[2]
                 && passedMileStones[3]
                 && !passedMileStones[4]
-                && mileStones[4].position.x > transform.position.x
-                && mileStones[4].position.y < transform.position.y) {
+                && mileStones[4].position.x < transform.position.x
+                && mileStones[4].position.y < transform.position.y
+                && (mileStones[4].position.x + 1) > transform.position.x
+                && (mileStones[4].position.y + 1) > transform.position.y) {
             passedMileStones[4] = true;
             fitnessLevel = 7;
             currentAtMilestone[4] = current;
@@ -167,8 +177,9 @@ public class MissileControlMed : MonoBehaviour {
                 && passedMileStones[3]
                 && passedMileStones[4]
                 && !passedMileStones[5]
+                && mileStones[5].position.y < transform.position.y
                 && mileStones[5].position.x < transform.position.x
-                && mileStones[5].position.y < transform.position.y) {
+                && (mileStones[5].position.x + 1) > transform.position.x) {
             passedMileStones[5] = true;
             fitnessLevel = 10;
             currentAtMilestone[5] = current;
@@ -179,8 +190,9 @@ public class MissileControlMed : MonoBehaviour {
                 && passedMileStones[4]
                 && passedMileStones[5]
                 && !passedMileStones[6]
+                && mileStones[6].position.y < transform.position.y
                 && mileStones[6].position.x < transform.position.x
-                && mileStones[6].position.y < transform.position.y) {
+                && (mileStones[6].position.x + 1) > transform.position.x) {
             passedMileStones[6] = true;
             fitnessLevel = 13;
             currentAtMilestone[6] = current;
@@ -192,8 +204,9 @@ public class MissileControlMed : MonoBehaviour {
                 && passedMileStones[5]
                 && passedMileStones[6]
                 && !passedMileStones[7]
+                && mileStones[7].position.y < transform.position.y
                 && mileStones[7].position.x < transform.position.x
-                && mileStones[7].position.y < transform.position.y) {
+                && (mileStones[7].position.x + 1) > transform.position.x) {
             passedMileStones[7] = true;
             fitnessLevel = 16;
             currentAtMilestone[7] = current;
@@ -207,7 +220,9 @@ public class MissileControlMed : MonoBehaviour {
                 && passedMileStones[7]
                 && !passedMileStones[8]
                 && mileStones[8].position.x < transform.position.x
-                && mileStones[8].position.y < transform.position.y) {
+                && mileStones[8].position.y < transform.position.y
+                && (mileStones[8].position.x + 1) > transform.position.x
+                && (mileStones[8].position.y + 1) > transform.position.y) {
             passedMileStones[8] = true;
             fitnessLevel = 16;
             currentAtMilestone[8] = current;
@@ -222,7 +237,8 @@ public class MissileControlMed : MonoBehaviour {
                  && passedMileStones[8]
                  && !passedMileStones[9]
                  && mileStones[9].position.x < transform.position.x
-                 && mileStones[9].position.y < transform.position.y) {
+                 && mileStones[9].position.y < transform.position.y
+                 && (mileStones[9].position.y + 1) > transform.position.y) {
             passedMileStones[9] = true;
             fitnessLevel = 19;
             currentAtMilestone[9] = current;
@@ -238,7 +254,8 @@ public class MissileControlMed : MonoBehaviour {
                  && passedMileStones[9]
                  && !passedMileStones[10]
                  && mileStones[10].position.x < transform.position.x
-                 && mileStones[10].position.y < transform.position.y) {
+                 && mileStones[10].position.y < transform.position.y
+                 && (mileStones[10].position.y + 1) > transform.position.y) {
             passedMileStones[10] = true;
             fitnessLevel = 24;
             currentAtMilestone[10] = current;
@@ -255,7 +272,8 @@ public class MissileControlMed : MonoBehaviour {
                  && passedMileStones[10]
                  && !passedMileStones[11]
                  && mileStones[11].position.x < transform.position.x
-                 && mileStones[11].position.y < transform.position.y) {
+                 && mileStones[11].position.y < transform.position.y
+                 && (mileStones[11].position.y + 1) > transform.position.y) {
             passedMileStones[11] = true;
             fitnessLevel = 30;
             currentAtMilestone[11] = current;
@@ -273,7 +291,8 @@ public class MissileControlMed : MonoBehaviour {
                  && passedMileStones[11]
                  && !passedMileStones[12]
                  && mileStones[12].position.x < transform.position.x
-                 && mileStones[12].position.y < transform.position.y) {
+                 && mileStones[12].position.y < transform.position.y
+                 && (mileStones[12].position.y + 1) > transform.position.y) {
             passedMileStones[12] = true;
             fitnessLevel = 40;
             currentAtMilestone[12] = current;
