@@ -5,10 +5,10 @@ using System;
 
 public class MainSpiral : MonoBehaviour {
     // Start is called before the first frame update
-    private int numRockets = 300;
+    private int numRockets = 250;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[300];
-    private MissileControlSpiral[] rocketsControl = new MissileControlSpiral[300];
+    private GameObject[] rockets = new GameObject[250];
+    private MissileControlSpiral[] rocketsControl = new MissileControlSpiral[250];
     public float speed;
     public Transform goalTransform;
     private int numGenes = 400;
@@ -19,6 +19,7 @@ public class MainSpiral : MonoBehaviour {
     public int currentMilestoneLevel = 0;
     public int currentGen = 0;
     public int currentRange = 0;
+    private int prevRange = 0;
     private int numMilestones = 70;
 
     void Start() {
@@ -48,29 +49,50 @@ public class MainSpiral : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (finished(rocketsControl)) {
-            double totalFitness = 0;
-            //get total fitness of all rockets
-            double maxFitness = 0;
-            int mostFit = 0;
-            for (int i = 0; i < rocketsControl.Length; i++) {
-                if (rocketsControl[i].fitness > maxFitness) {
-                    maxFitness = rocketsControl[i].fitness;
-                    mostFit = i;
-                }
-                totalFitness += rocketsControl[i].fitness;
-            }
-            //normalize rocket fitness and get a fraction of 200
-            for (int i = 0; i < rocketsControl.Length; i++) {
-                rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 1000);
-            }
-            List<MissileControlSpiral> matingpool = new List<MissileControlSpiral>();
+            float[] crashPos = rocketsControl[0].crashPos;
+            bool samePos = true;
             for (int i = 0; i < numRockets; i++) {
-                for (int j = 0; j < rocketsControl[i].fitness; j++) {
-                    matingpool.Add(rocketsControl[i]);
-                }
+                samePos = samePos && ((Math.Abs(rocketsControl[i].crashPos[0] - crashPos[0]) <= .02) && (Math.Abs(rocketsControl[i].crashPos[1] - crashPos[1]) <= .02));
             }
-            mutationRange();
-            destroyAndCreate(matingpool, rocketsControl[mostFit]);
+            if (samePos) {
+                Quaternion rotation = new Quaternion(0, 0, 0, 1);
+                for (int i = 0; i < numRockets; i++) {
+                    float[][] forces = new float[][] { rocketsControl[i].thrusterLeftForces, rocketsControl[i].thrusterRightForces };
+                    Destroy(rockets[i]);
+                    rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
+                    rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlSpiral>();
+                    rocketsControl[i].thrusterLeftForces = forces[0];
+                    rocketsControl[i].thrusterRightForces = forces[1];
+                    rocketsControl[i].goalTransform = goalTransform;
+                    rocketsControl[i].speed = speed;
+                    rocketsControl[i].mileStones = mileStones;
+                }
+                for (int i = 0; i < numRockets; i++) {
+                    rocketsControl[i].isReady = true;
+                }
+            } else {
+                double totalFitness = 0;
+                //get total fitness of all rockets
+                double maxFitness = 0;
+                for (int i = 0; i < rocketsControl.Length; i++) {
+                    if (rocketsControl[i].fitness > maxFitness) {
+                        maxFitness = rocketsControl[i].fitness;
+                    }
+                    totalFitness += rocketsControl[i].fitness;
+                }
+                //normalize rocket fitness and get a fraction of 200
+                for (int i = 0; i < rocketsControl.Length; i++) {
+                    rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 1000);
+                }
+                List<MissileControlSpiral> matingpool = new List<MissileControlSpiral>();
+                for (int i = 0; i < numRockets; i++) {
+                    for (int j = 0; j < rocketsControl[i].fitness; j++) {
+                        matingpool.Add(rocketsControl[i]);
+                    }
+                }
+                mutationRange();
+                destroyAndCreate(matingpool);
+            }
             currentGen++;
         }
     }
@@ -84,13 +106,13 @@ public class MainSpiral : MonoBehaviour {
         }
         return finished;
     }
-    void destroyAndCreate(List<MissileControlSpiral> matingpool, MissileControlSpiral mostFit) {
+    void destroyAndCreate(List<MissileControlSpiral> matingpool) {
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
         //assign random mass?
         for (int i = 0; i < numRockets; i++) {
             int parent1 = UnityEngine.Random.Range(0, matingpool.Count);
             int parent2 = UnityEngine.Random.Range(0, matingpool.Count);
-            float[][] forces = mate(matingpool[parent1], matingpool[parent2], mostFit);
+            float[][] forces = mate(matingpool[parent1], matingpool[parent2]);
             Destroy(rockets[i]);
             rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
             rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlSpiral>();
@@ -121,19 +143,24 @@ public class MainSpiral : MonoBehaviour {
                 }
             }
         }
-        if (((float)numPassed / (float)rocketsControl.Length) > .1) {
+        if (((float)numPassed / (float)rocketsControl.Length) > .2) {
             currentMilestoneLevel++;
-            if (!((currentAvg / (numPassed)) - 5 < 0)) {
-                currentRange = (currentAvg / (numPassed)) - 5;
+            if (currentRange != numGenes - 1) {
+                prevRange = currentRange;
+            }
+            if (!((currentAvg / (numPassed)) - 10 < 0)) {
+                currentRange = (currentAvg / (numPassed)) - 10;
             }
         }
-        if (((float)numHitTarget / (float)rocketsControl.Length) > .1) {
+        if (((float)numHitTarget / (float)rocketsControl.Length) > .2) {
             currentRange = numGenes - 1;
+        } else if (currentRange == numGenes - 1) {
+            currentRange = prevRange;
         }
     }
     float[] mutate(float[] gene) {
         if (UnityEngine.Random.Range(0, 20) < 5 && currentMilestoneLevel < 70) {
-            int r = UnityEngine.Random.Range(5, 10);
+            int r = UnityEngine.Random.Range(5, 15);
             int end = currentRange + 50;
             if (end > numGenes - 1) {
                 end = numGenes - 1;
@@ -144,16 +171,12 @@ public class MainSpiral : MonoBehaviour {
         }
         return gene;
     }
-    float[][] mate(MissileControlSpiral parent1, MissileControlSpiral parent2, MissileControlSpiral mostFit) {
+    float[][] mate(MissileControlSpiral parent1, MissileControlSpiral parent2) {
         float[] childThrusterLeft = new float[numGenes];
         float[] childThrusterRight = new float[numGenes];
         float parent1Percentage = (float)parent1.fitness / (float)(parent1.fitness + parent2.fitness);
         float parent2Percentage = (float)parent2.fitness / (float)(parent1.fitness + parent2.fitness);
-        for (int i = 0; i < currentRange; i++) {
-            childThrusterLeft[i] = mostFit.thrusterLeftForces[i];
-            childThrusterRight[i] = mostFit.thrusterRightForces[i];
-        }
-        for (int i = currentRange; i < numGenes; i++) {
+        for (int i = 0; i < numGenes; i++) {
             childThrusterLeft[i] = (parent1.thrusterLeftForces[i] * parent1Percentage) + (parent2.thrusterLeftForces[i] * parent2Percentage);
             childThrusterRight[i] = (parent1.thrusterRightForces[i] * parent1Percentage) + (parent2.thrusterRightForces[i] * parent2Percentage);
         }
