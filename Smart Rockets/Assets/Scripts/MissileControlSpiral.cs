@@ -1026,10 +1026,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[34]
             && mileStones[34].position.x < transform.position.x) {
             passedMileStones[34] = true;
-            fitnessLevel = 200;
+            fitnessLevel = 300;
             if (mileStones[34].position.y > transform.position.y
              && mileStones[34].position.y + 1 < transform.position.y) {
-                fitnessLevel += 100;
+                fitnessLevel += 200;
             }
             currentAtMilestone[34] = current;
         } else if (passedMileStones[0] //35
@@ -1070,10 +1070,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[35]
             && mileStones[35].position.x < transform.position.x) {
             passedMileStones[35] = true;
-            fitnessLevel = 210;
+            fitnessLevel = 310;
             if (mileStones[35].position.y > transform.position.y
              && mileStones[35].position.y + 1 < transform.position.y) {
-                fitnessLevel += 105;
+                fitnessLevel += 205;
             }
             currentAtMilestone[35] = current;
         } else if (passedMileStones[0] //36
@@ -1116,10 +1116,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && mileStones[36].position.x < transform.position.x
             && mileStones[36].position.y < transform.position.y) {
             passedMileStones[36] = true;
-            fitnessLevel = 220;
+            fitnessLevel = 320;
             if (mileStones[36].position.x + 1 > transform.position.x
              && mileStones[36].position.y + 1 > transform.position.y) {
-                fitnessLevel += 110;
+                fitnessLevel += 210;
             }
             currentAtMilestone[36] = current;
         } else if (passedMileStones[0] //37
@@ -1163,10 +1163,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && mileStones[37].position.x < transform.position.x
             && mileStones[37].position.y < transform.position.y) {
             passedMileStones[37] = true;
-            fitnessLevel = 235;
+            fitnessLevel = 335;
             if (mileStones[37].position.x + 1 > transform.position.x
              && mileStones[37].position.y + 1 > transform.position.y) {
-                fitnessLevel += 117;
+                fitnessLevel += 217;
             }
             currentAtMilestone[37] = current;
         } else if (passedMileStones[0] //38
@@ -1210,10 +1210,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[38]
             && mileStones[38].position.y < transform.position.y) {
             passedMileStones[38] = true;
-            fitnessLevel = 250;
+            fitnessLevel = 350;
             if (mileStones[38].position.x + 1 > transform.position.x
              && mileStones[38].position.y + 1 > transform.position.y) {
-                fitnessLevel += 125;
+                fitnessLevel += 225;
             }
             currentAtMilestone[38] = current;
         } else if (passedMileStones[0] //39
@@ -1258,10 +1258,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[39]
             && mileStones[39].position.y < transform.position.y) {
             passedMileStones[39] = true;
-            fitnessLevel = 265;
+            fitnessLevel = 365;
             if (mileStones[39].position.x < transform.position.x
              && mileStones[39].position.x + 1 > transform.position.x) {
-                fitnessLevel += 132;
+                fitnessLevel += 232;
             }
             currentAtMilestone[39] = current;
         } else if (passedMileStones[0] //40
@@ -1307,10 +1307,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[40]
             && mileStones[40].position.y < transform.position.y) {
             passedMileStones[40] = true;
-            fitnessLevel = 280;
+            fitnessLevel = 380;
             if (mileStones[40].position.x < transform.position.x
              && mileStones[40].position.x + 1 > transform.position.x) {
-                fitnessLevel += 140;
+                fitnessLevel += 240;
             }
             currentAtMilestone[40] = current;
         } else if (passedMileStones[0] //41
@@ -1357,10 +1357,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[41]
             && mileStones[41].position.y < transform.position.y) {
             passedMileStones[41] = true;
-            fitnessLevel = 295;
+            fitnessLevel = 395;
             if (mileStones[41].position.x < transform.position.x
              && mileStones[41].position.x + 1 > transform.position.x) {
-                fitnessLevel += 150;
+                fitnessLevel += 250;
             }
             currentAtMilestone[41] = current;
         } else if (passedMileStones[0] //42
@@ -1408,10 +1408,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[42]
             && mileStones[42].position.y < transform.position.y) {
             passedMileStones[42] = true;
-            fitnessLevel = 310;
+            fitnessLevel = 410;
             if (mileStones[42].position.x < transform.position.x
              && mileStones[42].position.x + 1 > transform.position.x) {
-                fitnessLevel += 160;
+                fitnessLevel += 260;
             }
             currentAtMilestone[42] = current;
         } else if (passedMileStones[0] //43
@@ -1460,10 +1460,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[43]
             && mileStones[43].position.y < transform.position.y) {
             passedMileStones[43] = true;
-            fitnessLevel = 325;
+            fitnessLevel = 425;
             if (mileStones[43].position.x < transform.position.x
              && mileStones[43].position.x + 1 > transform.position.x) {
-                fitnessLevel += 162;
+                fitnessLevel += 262;
             }
             currentAtMilestone[43] = current;
         } else if (passedMileStones[0] //44
@@ -1513,10 +1513,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[44]
             && mileStones[44].position.y < transform.position.y) {
             passedMileStones[44] = true;
-            fitnessLevel = 340;
+            fitnessLevel = 440;
             if (mileStones[44].position.x < transform.position.x
              && mileStones[44].position.x + 1 > transform.position.x) {
-                fitnessLevel += 170;
+                fitnessLevel += 270;
             }
             currentAtMilestone[44] = current;
         } else if (passedMileStones[0] //45
@@ -1567,10 +1567,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[45]
             && mileStones[45].position.y < transform.position.y) {
             passedMileStones[45] = true;
-            fitnessLevel = 355;
+            fitnessLevel = 455;
             if (mileStones[45].position.x < transform.position.x
              && mileStones[45].position.x + 1 > transform.position.x) {
-                fitnessLevel += 177;
+                fitnessLevel += 277;
             }
             currentAtMilestone[45] = current;
         } else if (passedMileStones[0] //46
@@ -1622,10 +1622,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[46]
             && mileStones[46].position.y < transform.position.y) {
             passedMileStones[46] = true;
-            fitnessLevel = 370;
+            fitnessLevel = 470;
             if (mileStones[46].position.x < transform.position.x
              && mileStones[46].position.x + 1 > transform.position.x) {
-                fitnessLevel += 185;
+                fitnessLevel += 285;
             }
             currentAtMilestone[46] = current;
         } else if (passedMileStones[0] //47
@@ -1679,10 +1679,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && mileStones[47].position.y < transform.position.y
             && mileStones[47].position.x + 1 > transform.position.x) {
             passedMileStones[47] = true;
-            fitnessLevel = 390;
+            fitnessLevel = 490;
             if (mileStones[47].position.x < transform.position.x
              && mileStones[47].position.y + 1 > transform.position.y) {
-                fitnessLevel += 177;
+                fitnessLevel += 277;
             }
             currentAtMilestone[47] = current;
         } else if (passedMileStones[0] //48
@@ -1736,10 +1736,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[48]
             && mileStones[48].position.x > transform.position.x) {
             passedMileStones[48] = true;
-            fitnessLevel = 400;
+            fitnessLevel = 500;
             if (mileStones[48].position.y < transform.position.y
              && mileStones[48].position.y + 1 > transform.position.y) {
-                fitnessLevel += 200;
+                fitnessLevel += 300;
             }
             currentAtMilestone[48] = current;
         } else if (passedMileStones[0] //49
@@ -1794,10 +1794,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[49]
             && mileStones[49].position.x > transform.position.x) {
             passedMileStones[49] = true;
-            fitnessLevel = 415;
+            fitnessLevel = 515;
             if (mileStones[49].position.y < transform.position.y
              && mileStones[49].position.y + 1 > transform.position.y) {
-                fitnessLevel += 208;
+                fitnessLevel += 308;
             }
             currentAtMilestone[49] = current;
         } else if (passedMileStones[0] //50
@@ -1853,10 +1853,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[50]
             && mileStones[50].position.x > transform.position.x) {
             passedMileStones[50] = true;
-            fitnessLevel = 440;
+            fitnessLevel = 540;
             if (mileStones[50].position.y < transform.position.y
              && mileStones[50].position.y + 1 > transform.position.y) {
-                fitnessLevel += 220;
+                fitnessLevel += 320;
             }
             currentAtMilestone[50] = current;
         } else if (passedMileStones[0] //51
@@ -1914,10 +1914,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && mileStones[51].position.x + 1 > transform.position.x
             && mileStones[51].position.y + 1 > transform.position.y) {
             passedMileStones[51] = true;
-            fitnessLevel = 465;
+            fitnessLevel = 565;
             if (mileStones[51].position.x < transform.position.x
              && mileStones[51].position.y < transform.position.y) {
-                fitnessLevel += 232;
+                fitnessLevel += 332;
             }
             currentAtMilestone[51] = current;
         } else if (passedMileStones[0] //52
@@ -1976,10 +1976,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && mileStones[52].position.y + 1 > transform.position.y
             && mileStones[52].position.x + 1 > transform.position.x) {
             passedMileStones[52] = true;
-            fitnessLevel = 495;
+            fitnessLevel = 595;
             if (mileStones[52].position.x < transform.position.x
              && mileStones[52].position.y < transform.position.y) {
-                fitnessLevel += 232;
+                fitnessLevel += 332;
             }
             currentAtMilestone[52] = current;
         } else if (passedMileStones[0] //53
@@ -2038,10 +2038,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[53]
             && mileStones[53].position.y > transform.position.y) {
             passedMileStones[53] = true;
-            fitnessLevel = 530;
+            fitnessLevel = 630;
             if (mileStones[53].position.x < transform.position.x
              && mileStones[53].position.x + 1 > transform.position.x) {
-                fitnessLevel += 265;
+                fitnessLevel += 365;
             }
             currentAtMilestone[53] = current;
         } else if (passedMileStones[0] //54
@@ -2101,10 +2101,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[54]
             && mileStones[54].position.y > transform.position.y) {
             passedMileStones[54] = true;
-            fitnessLevel = 560;
+            fitnessLevel = 660;
             if (mileStones[54].position.x < transform.position.x
              && mileStones[54].position.x + 1 > transform.position.x) {
-                fitnessLevel += 280;
+                fitnessLevel += 380;
             }
             currentAtMilestone[54] = current;
         } else if (passedMileStones[0] //55
@@ -2165,10 +2165,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[55]
             && mileStones[55].position.y > transform.position.y) {
             passedMileStones[55] = true;
-            fitnessLevel = 590;
+            fitnessLevel = 690;
             if (mileStones[55].position.x < transform.position.x
              && mileStones[55].position.x + 1 > transform.position.x) {
-                fitnessLevel += 295;
+                fitnessLevel += 395;
             }
             currentAtMilestone[55] = current;
         } else if (passedMileStones[0] //56
@@ -2230,10 +2230,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[56]
             && mileStones[56].position.y > transform.position.y) {
             passedMileStones[56] = true;
-            fitnessLevel = 620;
+            fitnessLevel = 720;
             if (mileStones[56].position.x < transform.position.x
              && mileStones[56].position.x + 1 > transform.position.x) {
-                fitnessLevel += 310;
+                fitnessLevel += 410;
             }
             currentAtMilestone[56] = current;
         } else if (passedMileStones[0] //57
@@ -2296,10 +2296,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[57]
             && mileStones[57].position.y > transform.position.y) {
             passedMileStones[57] = true;
-            fitnessLevel = 650;
+            fitnessLevel = 750;
             if (mileStones[57].position.x < transform.position.x
              && mileStones[57].position.x + 1 > transform.position.x) {
-                fitnessLevel += 325;
+                fitnessLevel += 425;
             }
             currentAtMilestone[57] = current;
         } else if (passedMileStones[0] //58
@@ -2363,10 +2363,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[58]
             && mileStones[58].position.y > transform.position.y) {
             passedMileStones[58] = true;
-            fitnessLevel = 680;
+            fitnessLevel = 780;
             if (mileStones[58].position.x < transform.position.x
              && mileStones[58].position.x + 1 > transform.position.x) {
-                fitnessLevel += 340;
+                fitnessLevel += 440;
             }
             currentAtMilestone[58] = current;
         } else if (passedMileStones[0] //59
@@ -2432,10 +2432,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && mileStones[59].position.y + 1 > transform.position.y
             && mileStones[59].position.x < transform.position.x) {
             passedMileStones[59] = true;
-            fitnessLevel = 720;
+            fitnessLevel = 820;
             if (mileStones[59].position.y < transform.position.y
              && mileStones[59].position.x + 1 > transform.position.x) {
-                fitnessLevel += 360;
+                fitnessLevel += 460;
             }
             currentAtMilestone[59] = current;
         } else if (passedMileStones[0] //60
@@ -2501,10 +2501,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[60]
             && mileStones[60].position.x < transform.position.x) {
             passedMileStones[60] = true;
-            fitnessLevel = 760;
+            fitnessLevel = 860;
             if (mileStones[60].position.y < transform.position.y
              && mileStones[60].position.y + 1 > transform.position.y) {
-                fitnessLevel += 370;
+                fitnessLevel += 470;
             }
             currentAtMilestone[60] = current;
         } else if (passedMileStones[0] //61
@@ -2571,10 +2571,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[61]
             && mileStones[61].position.x < transform.position.x) {
             passedMileStones[61] = true;
-            fitnessLevel = 800;
+            fitnessLevel = 900;
             if (mileStones[61].position.y < transform.position.y
              && mileStones[61].position.y + 1 > transform.position.y) {
-                fitnessLevel += 400;
+                fitnessLevel += 500;
             }
             currentAtMilestone[61] = current;
         } else if (passedMileStones[0] //62
@@ -2643,10 +2643,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && mileStones[62].position.x < transform.position.x
             && mileStones[62].position.y < transform.position.y) {
             passedMileStones[62] = true;
-            fitnessLevel = 840;
+            fitnessLevel = 940;
             if (mileStones[62].position.y + 1 > transform.position.y
              && mileStones[62].position.x + 1 > transform.position.x) {
-                fitnessLevel += 420;
+                fitnessLevel += 520;
             }
             currentAtMilestone[62] = current;
         } else if (passedMileStones[0] //63
@@ -2715,10 +2715,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[63]
             && mileStones[63].position.y < transform.position.y) {
             passedMileStones[63] = true;
-            fitnessLevel = 880;
+            fitnessLevel = 980;
             if (mileStones[63].position.x < transform.position.x
              && mileStones[63].position.x + 1 > transform.position.x) {
-                fitnessLevel += 440;
+                fitnessLevel += 540;
             }
             currentAtMilestone[63] = current;
         } else if (passedMileStones[0] //64
@@ -2788,10 +2788,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[64]
             && mileStones[64].position.y < transform.position.y) {
             passedMileStones[64] = true;
-            fitnessLevel = 920;
+            fitnessLevel = 1020;
             if (mileStones[64].position.x < transform.position.x
              && mileStones[64].position.x + 1 > transform.position.x) {
-                fitnessLevel += 470;
+                fitnessLevel += 570;
             }
             currentAtMilestone[64] = current;
         } else if (passedMileStones[0] //65
@@ -2862,10 +2862,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[65]
             && mileStones[65].position.y < transform.position.y) {
             passedMileStones[65] = true;
-            fitnessLevel = 960;
+            fitnessLevel = 1060;
             if (mileStones[65].position.x < transform.position.x
              && mileStones[65].position.x + 1 > transform.position.x) {
-                fitnessLevel += 480;
+                fitnessLevel += 580;
             }
             currentAtMilestone[65] = current;
         } else if (passedMileStones[0] //66
@@ -2937,10 +2937,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[66]
             && mileStones[66].position.y < transform.position.y) {
             passedMileStones[66] = true;
-            fitnessLevel = 1000;
+            fitnessLevel = 1100;
             if (mileStones[66].position.x < transform.position.x
              && mileStones[66].position.x + 1 > transform.position.x) {
-                fitnessLevel += 500;
+                fitnessLevel += 600;
             }
             currentAtMilestone[66] = current;
         } else if (passedMileStones[0] //67
@@ -3013,10 +3013,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[67]
             && mileStones[67].position.y < transform.position.y) {
             passedMileStones[67] = true;
-            fitnessLevel = 1040;
+            fitnessLevel = 1140;
             if (mileStones[67].position.x < transform.position.x
              && mileStones[67].position.x + 1 > transform.position.x) {
-                fitnessLevel += 520;
+                fitnessLevel += 620;
             }
             currentAtMilestone[67] = current;
         } else if (passedMileStones[0] //68
@@ -3090,10 +3090,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[68]
             && mileStones[68].position.y < transform.position.y) {
             passedMileStones[68] = true;
-            fitnessLevel = 1080;
+            fitnessLevel = 1180;
             if (mileStones[68].position.x < transform.position.x
              && mileStones[68].position.x + 1 > transform.position.x) {
-                fitnessLevel += 540;
+                fitnessLevel += 640;
             }
             currentAtMilestone[68] = current;
         } else if (passedMileStones[0] //69
@@ -3168,10 +3168,10 @@ public class MissileControlSpiral : MonoBehaviour {
             && !passedMileStones[69]
             && mileStones[69].position.y < transform.position.y) {
             passedMileStones[69] = true;
-            fitnessLevel = 1120;
+            fitnessLevel = 1220;
             if (mileStones[69].position.x < transform.position.x
              && mileStones[69].position.x + 1 > transform.position.x) {
-                fitnessLevel += 600;
+                fitnessLevel += 700;
             }
             currentAtMilestone[69] = current;
         }

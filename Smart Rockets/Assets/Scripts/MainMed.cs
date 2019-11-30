@@ -52,7 +52,7 @@ public class MainMed : MonoBehaviour {
             float[] crashPos = rocketsControl[0].crashPos;
             bool samePos = true;
             for (int i = 0; i < numRockets; i++) {
-                samePos = samePos && ((Math.Abs(rocketsControl[i].crashPos[0] - crashPos[0]) <= .02) && (Math.Abs(rocketsControl[i].crashPos[1] - crashPos[1]) <= .02));
+                samePos = samePos && ((Math.Abs(rocketsControl[i].crashPos[0] - crashPos[0]) <= .1) && (Math.Abs(rocketsControl[i].crashPos[1] - crashPos[1]) <= .1));
             }
             if (samePos) {
                 Quaternion rotation = new Quaternion(0, 0, 0, 1);
