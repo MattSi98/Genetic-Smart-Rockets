@@ -74,9 +74,11 @@ public class MainHard : MonoBehaviour {
                 double totalFitness = 0;
                 //get total fitness of all rockets
                 double maxFitness = 0;
+                int mostFit = 0;
                 for (int i = 0; i < rocketsControl.Length; i++) {
                     if (rocketsControl[i].fitness > maxFitness) {
                         maxFitness = rocketsControl[i].fitness;
+                        mostFit = i;
                     }
                     totalFitness += rocketsControl[i].fitness;
                 }
@@ -91,7 +93,7 @@ public class MainHard : MonoBehaviour {
                     }
                 }
                 mutationRange();
-                destroyAndCreate(matingpool);
+                destroyAndCreate(matingpool, rocketsControl[mostFit]);
             }
             currentGen++;
         }
@@ -106,9 +108,17 @@ public class MainHard : MonoBehaviour {
         }
         return finished;
     }
-    void destroyAndCreate(List<MissileControlHard> matingpool) {
+    void destroyAndCreate(List<MissileControlHard> matingpool, MissileControlHard mostFit) {
         Quaternion rotation = new Quaternion(0, 0, 0, 1);
-        for (int i = 0; i < numRockets; i++) {
+        Destroy(rockets[0]);
+        rockets[0] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
+        rocketsControl[0] = rockets[0].GetComponentInChildren<MissileControlHard>();
+        rocketsControl[0].thrusterLeftForces = mostFit.thrusterLeftForces;
+        rocketsControl[0].thrusterRightForces = mostFit.thrusterRightForces;
+        rocketsControl[0].goalTransform = goalTransform;
+        rocketsControl[0].speed = speed;
+        rocketsControl[0].mileStones = mileStones;
+        for (int i = 1; i < numRockets; i++) {
             int parent1 = UnityEngine.Random.Range(0, matingpool.Count);
             int parent2 = UnityEngine.Random.Range(0, matingpool.Count);
             float[][] forces = mate(matingpool[parent1], matingpool[parent2]);
