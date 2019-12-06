@@ -191,4 +191,9 @@ public class MainHard : MonoBehaviour {
         }
         return new float[][] { mutate(childThrusterLeft), mutate(childThrusterRight) };
     }
+
+    public void AdjustSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
 }
