@@ -11,10 +11,8 @@ public class MissileControlEasy : MonoBehaviour {
     private Vector2 vel;
     Rigidbody2D rb;
     public bool isReady;
-    public float[] forcesX;
     public float[] thrusterLeftForces;
     public float[] thrusterRightForces;
-    public float[] forcesY;
     public int current;
     public Transform goalTransform;
     public double fitness;
@@ -23,11 +21,13 @@ public class MissileControlEasy : MonoBehaviour {
     private bool crashed;
     public bool reachedGoal;
     private double maxDist;
-    private int endFrame;
     public Transform mileStone;
     public bool passedMileStone;
     public GameObject explosion;
     private bool exploded;
+    private int numGenes;
+    public float[] crashPos;
+
 
     void Awake() {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -43,6 +43,8 @@ public class MissileControlEasy : MonoBehaviour {
         Physics2D.gravity = Vector2.zero;
         exploded = false;
         passedMileStone = false;
+        numGenes = 100;
+        crashPos = new float[2];
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -52,9 +54,10 @@ public class MissileControlEasy : MonoBehaviour {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<CapsuleCollider2D>(), GetComponent<CapsuleCollider2D>());
         }
         if (collision.gameObject.tag == "wall" && !reachedGoal) { //prevents it from updating fitness after it has finished the stage
+            crashPos[0] = transform.position.x;
+            crashPos[1] = transform.position.y;
             fitness *= .50;
             crashed = true;
-            endFrame = current;
             rb.freezeRotation = true;
             Physics2D.gravity = new Vector2(0, -9.8f);
             GetComponent<MeshRenderer>().enabled = false;
@@ -72,7 +75,6 @@ public class MissileControlEasy : MonoBehaviour {
             fitness *= 4;
             reachedGoal = true;
             crashed = true;
-            endFrame = current;
             GetComponent<MeshRenderer>().enabled = false;
             if (!exploded) {
                 exploded = true;
@@ -90,22 +92,22 @@ public class MissileControlEasy : MonoBehaviour {
     void Update() {
         if (isReady && !crashed) {
             rb.velocity = transform.up * speed * 2;
-            if (current < 50 && count % 5 == 0) { //change range of forces applied on rockets || remove count %10? 
+            if (current < numGenes && count % 5 == 0) { //change range of forces applied on rockets || remove count %10? 
                 current++;  //this runs 50 times in total
             }
             count++;
         }
-        if (current < 50) {
+        if (current < numGenes) {
             float x = -thrusterLeftForces[current] + thrusterRightForces[current];
             float y = thrusterLeftForces[current] + thrusterRightForces[current];
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
         }
-        if (current >= 50) {
+        if (current >= numGenes) {
             current++;
         }
-        if (current >= 200 || crashed) {
+        if (crashed || current >= numGenes) {
             finished = true;
         }
         if (!finished) {
@@ -118,11 +120,11 @@ public class MissileControlEasy : MonoBehaviour {
 
         double currentFitness = maxDist - dist;
         if (dist < 1) {
-            currentFitness *= 1.5;
+            currentFitness *= 2;
         }
         if (mileStone.position.y < transform.position.y) {
             passedMileStone = true;
-            currentFitness *= 1.5;
+            currentFitness *= 2;
         }
         if (!crashed) {
             fitness = currentFitness;

@@ -17,7 +17,7 @@ public class MainMed : MonoBehaviour {
     public Transform[] mileStones = new Transform[13];
     private bool[] passedMilestone = new bool[13];
     public int currentMilestoneLevel = 0;
-    public int currentGen = 0;
+    public int currentGen = 1;
     private int currentRange = 0;
     private int prevRange = 0;
     private int numMilestones = 13;

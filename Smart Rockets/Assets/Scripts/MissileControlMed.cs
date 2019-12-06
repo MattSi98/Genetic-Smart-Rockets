@@ -110,12 +110,14 @@ public class MissileControlMed : MonoBehaviour {
         if (current >= 50 && current <= 200) {
             current++;
         }
-        if (current >= numGenes || crashed) {
+        if (crashed || current >= numGenes) {
             finished = true;
         }
         if (!finished) {
             calcuteFitness();
         }
+    }
+    void getFitnessLevel() {
         if (!passedMileStones[0]
             && mileStones[0].position.y < transform.position.y
             && mileStones[0].position.x < transform.position.x) {
@@ -126,7 +128,7 @@ public class MissileControlMed : MonoBehaviour {
                 fitnessLevel *= 2;
             }
             currentAtMilestone[0] = current;
-        } else if (passedMileStones[0] 
+        } else if (passedMileStones[0]
                 && !passedMileStones[1]
                 && mileStones[1].position.x < transform.position.x
                 && mileStones[1].position.y < transform.position.y) {
@@ -137,8 +139,8 @@ public class MissileControlMed : MonoBehaviour {
                 fitnessLevel *= 2;
             }
             currentAtMilestone[1] = current;
-        } else if (passedMileStones[0] 
-                && passedMileStones[1] 
+        } else if (passedMileStones[0]
+                && passedMileStones[1]
                 && !passedMileStones[2]
                 && mileStones[2].position.x < transform.position.x
                 && mileStones[2].position.y < transform.position.y) {
@@ -322,7 +324,7 @@ public class MissileControlMed : MonoBehaviour {
     void calcuteFitness() {
         double dist = Math.Sqrt(Math.Pow((double)(transform.position.x - goalTransform.position.x), 2) +
             Math.Pow((double)(transform.position.y - goalTransform.position.y), 2));
-
+        getFitnessLevel();
         double currentFitness = maxDist - dist;
         if (dist < 1) {
             currentFitness *= 1.5;

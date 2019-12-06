@@ -119,7 +119,7 @@ public class MainSpiral : MonoBehaviour {
         rocketsControl[0].goalTransform = goalTransform;
         rocketsControl[0].speed = speed;
         rocketsControl[0].mileStones = mileStones;
-        for (int i = 1; i < numRockets; i++) {
+        for (int i = 2; i < numRockets; i++) {
             int parent1 = UnityEngine.Random.Range(0, matingpool.Count);
             int parent2 = UnityEngine.Random.Range(0, matingpool.Count);
             float[][] forces = mate(matingpool[parent1], matingpool[parent2]);

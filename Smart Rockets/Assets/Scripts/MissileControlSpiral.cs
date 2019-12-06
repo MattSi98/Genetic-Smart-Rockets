@@ -109,7 +109,7 @@ public class MissileControlSpiral : MonoBehaviour {
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
         }
-        if (crashed) {
+        if (crashed || current >= numGenes) {
             finished = true;
         }
         if (!finished) {
