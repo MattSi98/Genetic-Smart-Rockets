@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rocketPrefab: {fileID: 1978084769375805196, guid: 5db121932e35c5a48ad56e1ce0136061,
     type: 3}
-  speed: 3
+  speed: 6
   goalTransform: {fileID: 861880366}
   startPos: {fileID: 1434839509}
   mileStones:
@@ -6036,7 +6036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

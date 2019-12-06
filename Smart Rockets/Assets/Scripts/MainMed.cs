@@ -11,13 +11,13 @@ public class MainMed : MonoBehaviour {
     private MissileControlMed[] rocketsControl = new MissileControlMed[200];
     public float speed;
     public Transform goalTransform;
-    private int numGenes = 100;
+    private int numGenes = 200;
     private float geneRange = 40f;
     public Transform startPos;
     public Transform[] mileStones = new Transform[13];
     private bool[] passedMilestone = new bool[13];
     public int currentMilestoneLevel = 0;
-    public int currentGen = 0;
+    public int currentGen = 1;
     private int currentRange = 0;
     private int prevRange = 0;
     private int numMilestones = 13;
