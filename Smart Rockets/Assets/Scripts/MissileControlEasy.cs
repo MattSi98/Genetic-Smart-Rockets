@@ -26,7 +26,7 @@ public class MissileControlEasy : MonoBehaviour {
     public bool passedMileStone;
     public GameObject explosion;
     private bool exploded;
-    private int numGenes;
+    public int numGenes;
     public float[] crashPos;
 
 
@@ -44,7 +44,6 @@ public class MissileControlEasy : MonoBehaviour {
         Physics2D.gravity = Vector2.zero;
         exploded = false;
         passedMileStone = false;
-        numGenes = 100;
         crashPos = new float[2];
     }
 
@@ -104,9 +103,6 @@ public class MissileControlEasy : MonoBehaviour {
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * slerpRate);
-        }
-        if (current >= numGenes) {
-            current++;
         }
         if (crashed || current >= numGenes) {
             finished = true;

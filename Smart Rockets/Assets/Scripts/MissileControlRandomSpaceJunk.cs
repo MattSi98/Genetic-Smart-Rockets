@@ -48,7 +48,6 @@ public class MissileControlRandomSpaceJunk : MonoBehaviour {
             passedMileStones[i] = false;
         }
         exploded = false;
-        numGenes = 400;
         crashPos = new float[2];
     }
 
@@ -107,9 +106,6 @@ public class MissileControlRandomSpaceJunk : MonoBehaviour {
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * slerpRate);
-        }
-        if (current >= numGenes) {
-            current++;
         }
         if (crashed || current >= numGenes) {
             finished = true;

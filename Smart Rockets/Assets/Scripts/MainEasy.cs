@@ -11,7 +11,7 @@ public class MainEasy : MonoBehaviour {
     private MissileControlEasy[] rocketsControl = new MissileControlEasy[200];
     public float speed;
     public Transform goalTransform;
-    private int numGenes = 100;
+    private int numGenes = 1000;
     private float geneRange = 40f;
     public Transform startPos;
     public Transform mileStone;
@@ -22,6 +22,7 @@ public class MainEasy : MonoBehaviour {
     private int prevRange = 0;
     private GenerationDisplay generationDisplay;
     public bool finishedTraining;
+    public float slerpRate;
 
     void Start() {
         foreach (Transform child in transform) {
@@ -45,6 +46,9 @@ public class MainEasy : MonoBehaviour {
             rocketsControl[i].thrusterRightForces = createForces();
             rocketsControl[i].goalTransform = goalTransform;
             rocketsControl[i].mileStone = mileStone;
+            rocketsControl[i].numGenes = numGenes;
+            rocketsControl[i].speed = speed;
+            rocketsControl[i].slerpRate = slerpRate;
         }
         currentGen = 1;
         generationDisplay.genText.text = "Generation: " + currentGen;
@@ -82,6 +86,8 @@ public class MainEasy : MonoBehaviour {
                         rocketsControl[i].goalTransform = goalTransform;
                         rocketsControl[i].speed = speed;
                         rocketsControl[i].mileStone = mileStone;
+                        rocketsControl[i].numGenes = numGenes;
+                        rocketsControl[i].slerpRate = slerpRate;
                     }
                     for (int i = 0; i < numRockets; i++) {
                         rocketsControl[i].isReady = true;
@@ -137,6 +143,18 @@ public class MainEasy : MonoBehaviour {
         rocketsControl[0].goalTransform = goalTransform;
         rocketsControl[0].speed = speed;
         rocketsControl[0].mileStone = mileStone;
+        rocketsControl[0].numGenes = numGenes;
+        rocketsControl[0].slerpRate = slerpRate;
+        Destroy(rockets[1]);
+        rockets[1] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
+        rocketsControl[1] = rockets[1].GetComponentInChildren<MissileControlEasy>();
+        rocketsControl[1].thrusterLeftForces = mostFit.thrusterLeftForces;
+        rocketsControl[1].thrusterRightForces = mostFit.thrusterRightForces;
+        rocketsControl[1].goalTransform = goalTransform;
+        rocketsControl[1].speed = speed;
+        rocketsControl[1].mileStone = mileStone;
+        rocketsControl[1].numGenes = numGenes;
+        rocketsControl[1].slerpRate = slerpRate;
         for (int i = 2; i < numRockets; i++) {
             int parent1 = UnityEngine.Random.Range(0, matingpool.Count);
             int parent2 = UnityEngine.Random.Range(0, matingpool.Count);
@@ -149,6 +167,8 @@ public class MainEasy : MonoBehaviour {
             rocketsControl[i].goalTransform = goalTransform;
             rocketsControl[i].speed = speed;
             rocketsControl[i].mileStone = mileStone;
+            rocketsControl[i].numGenes = numGenes;
+            rocketsControl[i].slerpRate = slerpRate;
         }
         for (int i = 0; i < numRockets; i++) {
             rocketsControl[i].isReady = true;
@@ -190,8 +210,13 @@ public class MainEasy : MonoBehaviour {
     }
     float[] mutate(float[] gene) {
         if (UnityEngine.Random.Range(0, 20) < 1) {
-            for (int i = 0; i < UnityEngine.Random.Range(0, 5); i++) {
-                gene[UnityEngine.Random.Range(currentRange, numGenes - 1)] = UnityEngine.Random.Range(0f, geneRange);
+            int r = UnityEngine.Random.Range(5, 15);
+            int end = currentRange + 50;
+            if (end > numGenes - 1) {
+                end = numGenes - 1;
+            }
+            for (int i = 0; i < r; i++) {
+                gene[UnityEngine.Random.Range(currentRange, end)] = UnityEngine.Random.Range(0f, geneRange);
             }
         }
         return gene;

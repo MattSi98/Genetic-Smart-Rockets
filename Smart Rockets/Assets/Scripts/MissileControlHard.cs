@@ -50,7 +50,6 @@ public class MissileControlHard : MonoBehaviour {
             passedMileStones[i] = false;
         }
         exploded = false;
-        numGenes = 200;
         crashPos = new float[2];
     }
 

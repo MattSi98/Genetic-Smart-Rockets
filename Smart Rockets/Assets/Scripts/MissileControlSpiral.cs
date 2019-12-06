@@ -48,7 +48,6 @@ public class MissileControlSpiral : MonoBehaviour {
             passedMileStones[i] = false;
         }
         exploded = false;
-        numGenes = 400;
         crashPos = new float[2];
     }
 

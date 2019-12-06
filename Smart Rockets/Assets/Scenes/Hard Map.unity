@@ -191,6 +191,8 @@ MonoBehaviour:
   - {fileID: 1140648851}
   currentMilestoneLevel: 0
   currentGen: 0
+  finishedTraining: 0
+  slerpRate: 0
 --- !u!4 &29457517
 Transform:
   m_ObjectHideFlags: 0
@@ -4775,6 +4777,8 @@ MonoBehaviour:
   - {fileID: 0}
   currentMilestoneLevel: 0
   currentGen: 0
+  finishedTraining: 0
+  slerpRate: 0
 --- !u!4 &792965657
 Transform:
   m_ObjectHideFlags: 0
