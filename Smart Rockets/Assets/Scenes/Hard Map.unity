@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rocketPrefab: {fileID: 1978084769375805196, guid: 5db121932e35c5a48ad56e1ce0136061,
     type: 3}
-  speed: 3
+  speed: 6
   goalTransform: {fileID: 861880366}
   startPos: {fileID: 1434839509}
   mileStones:
