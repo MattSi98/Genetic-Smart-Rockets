@@ -7,6 +7,7 @@ public class MissileControlSpiral : MonoBehaviour {
     // Start is called before the first frame update
     [SerializeField]
     public float speed;
+    public float slerpRate;
     private int count;
     Rigidbody2D rb;
     public bool isReady;
@@ -96,7 +97,7 @@ public class MissileControlSpiral : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (isReady && !crashed) {
-            rb.velocity = transform.up * speed * 2;
+            rb.velocity = transform.up * speed;
             if (current < numGenes && count % 5 == 0) {
                 current++;  //this runs 50 times in total
             }
@@ -107,7 +108,7 @@ public class MissileControlSpiral : MonoBehaviour {
             float y = thrusterLeftForces[current] + thrusterRightForces[current];
             double angle = Math.Atan2(y, x) * (180 / Math.PI) - 90;
             Quaternion target = Quaternion.Euler(0, 0, transform.eulerAngles.z + (float)angle);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * slerpRate);
         }
         if (crashed || current >= numGenes) {
             finished = true;
