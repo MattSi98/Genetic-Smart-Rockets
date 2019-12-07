@@ -23,6 +23,7 @@ public class MainMed : MonoBehaviour {
     private int numMilestones = 13;
     public bool finishedTraining;
     public float slerpRate;
+    private bool SetUpRockets = true;
 
     public bool startSimulationBool = false;
     private GameObject slider1;
@@ -36,20 +37,6 @@ public class MainMed : MonoBehaviour {
                 goalTransform = child;
             }
         }
-        Quaternion rotation = new Quaternion(0, 0, 0, 1);
-        for (int i = 0; i < numRockets; i++) {
-            rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
-            rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlMed>();
-            rocketsControl[i].isReady = true;
-            rocketsControl[i].thrusterLeftForces = createForces();
-            rocketsControl[i].thrusterRightForces = createForces();
-            rocketsControl[i].goalTransform = goalTransform;
-            rocketsControl[i].mileStones = mileStones;
-            rocketsControl[i].numGenes = numGenes;
-            rocketsControl[i].speed = speed;
-            rocketsControl[i].slerpRate = slerpRate;
-        }
-
         slider1 = GameObject.Find("Slider-speed");
         slider2 = GameObject.Find("Slider-mutate");
         slider3 = GameObject.Find("Slider-population");
@@ -65,83 +52,84 @@ public class MainMed : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (startSimulationBool == true)
-        {
+        if (startSimulationBool == true) {
 
             slider1.SetActive(false);
             slider2.SetActive(false);
             slider3.SetActive(false);
             button1.SetActive(false);
-
-            if (finished(rocketsControl))
-            {
-                float percentReachedGoal = percentFinished(rocketsControl);
-                if (percentReachedGoal >= .9)
-                {
-                    finishedTraining = true;
+            if (SetUpRockets) {
+                Quaternion rotation = new Quaternion(0, 0, 0, 1);
+                for (int i = 0; i < numRockets; i++) {
+                    rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
+                    rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlMed>();
+                    rocketsControl[i].isReady = true;
+                    rocketsControl[i].thrusterLeftForces = createForces();
+                    rocketsControl[i].thrusterRightForces = createForces();
+                    rocketsControl[i].goalTransform = goalTransform;
+                    rocketsControl[i].mileStones = mileStones;
+                    rocketsControl[i].numGenes = numGenes;
+                    rocketsControl[i].speed = speed;
+                    rocketsControl[i].slerpRate = slerpRate;
                 }
-                if (!finishedTraining)
-                {
-                    float[] crashPos = rocketsControl[0].crashPos;
-                    bool samePos = true;
-                    for (int i = 0; i < numRockets; i++)
-                    {
-                        samePos = samePos && ((Math.Abs(rocketsControl[i].crashPos[0] - crashPos[0]) <= .1) && (Math.Abs(rocketsControl[i].crashPos[1] - crashPos[1]) <= .1));
+                SetUpRockets = false;
+            } else {
+                if (finished(rocketsControl)) {
+                    float percentReachedGoal = percentFinished(rocketsControl);
+                    if (percentReachedGoal >= .9) {
+                        finishedTraining = true;
                     }
-                    if (samePos)
-                    {
-                        Quaternion rotation = new Quaternion(0, 0, 0, 1);
-                        for (int i = 0; i < numRockets; i++)
-                        {
-                            float[][] forces = new float[][] { rocketsControl[i].thrusterLeftForces, rocketsControl[i].thrusterRightForces };
-                            Destroy(rockets[i]);
-                            rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
-                            rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlMed>();
-                            rocketsControl[i].thrusterLeftForces = forces[0];
-                            rocketsControl[i].thrusterRightForces = forces[1];
-                            rocketsControl[i].goalTransform = goalTransform;
-                            rocketsControl[i].speed = speed;
-                            rocketsControl[i].mileStones = mileStones;
-                            rocketsControl[i].numGenes = numGenes;
-                            rocketsControl[i].slerpRate = slerpRate;
+                    if (!finishedTraining) {
+                        float[] crashPos = rocketsControl[0].crashPos;
+                        bool samePos = true;
+                        for (int i = 0; i < numRockets; i++) {
+                            samePos = samePos && ((Math.Abs(rocketsControl[i].crashPos[0] - crashPos[0]) <= .1) && (Math.Abs(rocketsControl[i].crashPos[1] - crashPos[1]) <= .1));
                         }
-                        for (int i = 0; i < numRockets; i++)
-                        {
-                            rocketsControl[i].isReady = true;
-                        }
-                    }
-                    else
-                    {
-                        double totalFitness = 0;
-                        //get total fitness of all rockets
-                        double maxFitness = 0;
-                        int mostFit = 0;
-                        for (int i = 0; i < rocketsControl.Length; i++)
-                        {
-                            if (rocketsControl[i].fitness > maxFitness)
-                            {
-                                maxFitness = rocketsControl[i].fitness;
-                                mostFit = i;
+                        if (samePos) {
+                            Quaternion rotation = new Quaternion(0, 0, 0, 1);
+                            for (int i = 0; i < numRockets; i++) {
+                                float[][] forces = new float[][] { rocketsControl[i].thrusterLeftForces, rocketsControl[i].thrusterRightForces };
+                                Destroy(rockets[i]);
+                                rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
+                                rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlMed>();
+                                rocketsControl[i].thrusterLeftForces = forces[0];
+                                rocketsControl[i].thrusterRightForces = forces[1];
+                                rocketsControl[i].goalTransform = goalTransform;
+                                rocketsControl[i].speed = speed;
+                                rocketsControl[i].mileStones = mileStones;
+                                rocketsControl[i].numGenes = numGenes;
+                                rocketsControl[i].slerpRate = slerpRate;
                             }
-                            totalFitness += rocketsControl[i].fitness;
-                        }
-                        //normalize rocket fitness and get a fraction of 200
-                        for (int i = 0; i < rocketsControl.Length; i++)
-                        {
-                            rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 1000);
-                        }
-                        List<MissileControlMed> matingpool = new List<MissileControlMed>();
-                        for (int i = 0; i < numRockets; i++)
-                        {
-                            for (int j = 0; j < rocketsControl[i].fitness; j++)
-                            {
-                                matingpool.Add(rocketsControl[i]);
+                            for (int i = 0; i < numRockets; i++) {
+                                rocketsControl[i].isReady = true;
                             }
+                        } else {
+                            double totalFitness = 0;
+                            //get total fitness of all rockets
+                            double maxFitness = 0;
+                            int mostFit = 0;
+                            for (int i = 0; i < rocketsControl.Length; i++) {
+                                if (rocketsControl[i].fitness > maxFitness) {
+                                    maxFitness = rocketsControl[i].fitness;
+                                    mostFit = i;
+                                }
+                                totalFitness += rocketsControl[i].fitness;
+                            }
+                            //normalize rocket fitness and get a fraction of 200
+                            for (int i = 0; i < rocketsControl.Length; i++) {
+                                rocketsControl[i].fitness = Math.Floor((rocketsControl[i].fitness / totalFitness) * 1000);
+                            }
+                            List<MissileControlMed> matingpool = new List<MissileControlMed>();
+                            for (int i = 0; i < numRockets; i++) {
+                                for (int j = 0; j < rocketsControl[i].fitness; j++) {
+                                    matingpool.Add(rocketsControl[i]);
+                                }
+                            }
+                            mutationRange();
+                            destroyAndCreate(matingpool, rocketsControl[mostFit]);
                         }
-                        mutationRange();
-                        destroyAndCreate(matingpool, rocketsControl[mostFit]);
+                        currentGen++;
                     }
-                    currentGen++;
                 }
             }
         }
@@ -262,24 +250,20 @@ public class MainMed : MonoBehaviour {
             childThrusterLeft[i] = (parent1.thrusterLeftForces[i] * parent1Percentage) + (parent2.thrusterLeftForces[i] * parent2Percentage);
             childThrusterRight[i] = (parent1.thrusterRightForces[i] * parent1Percentage) + (parent2.thrusterRightForces[i] * parent2Percentage);
         }
-        return new float[][] {mutate(childThrusterLeft), mutate(childThrusterRight)};
+        return new float[][] { mutate(childThrusterLeft), mutate(childThrusterRight) };
     }
 
-    public void AdjustSpeed(float newSpeed)
-    {
+    public void AdjustSpeed(float newSpeed) {
         speed = newSpeed;
     }
-    public void AdjustMutations(float newMut)
-    {
+    public void AdjustMutations(float newMut) {
         slerpRate = newMut;
     }
-    public void AdjustPop(float newPop)
-    {
+    public void AdjustPop(float newPop) {
         numRockets = (int)newPop;
     }
 
-    public void toggleStartSim()
-    {
+    public void toggleStartSim() {
         startSimulationBool = true;
     }
 }
