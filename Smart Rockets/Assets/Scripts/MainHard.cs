@@ -7,8 +7,8 @@ public class MainHard : MonoBehaviour {
     // Start is called before the first frame update
     public int numRockets;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[200];
-    private MissileControlHard[] rocketsControl = new MissileControlHard[200];
+    private GameObject[] rockets;
+    private MissileControlHard[] rocketsControl;
     public float speed;
     public Transform goalTransform;
     private int numGenes = 1000;
@@ -23,12 +23,14 @@ public class MainHard : MonoBehaviour {
     private int numMilestones = 34;
     public bool finishedTraining;
     public float slerpRate;
+    public int mutationRate;
     private bool SetUpRockets = true;
 
     public bool startSimulationBool = false;
     private GameObject slider1;
     private GameObject slider2;
     private GameObject slider3;
+    private GameObject slider4;
     private GameObject button1;
 
     void Start() {
@@ -41,6 +43,7 @@ public class MainHard : MonoBehaviour {
         slider1 = GameObject.Find("Slider-speed");
         slider2 = GameObject.Find("Slider-mutate");
         slider3 = GameObject.Find("Slider-population");
+        slider4 = GameObject.Find("Slider-slerp");
         button1 = GameObject.Find("Button - start sim");
     }
     float[] createForces() {
@@ -52,15 +55,15 @@ public class MainHard : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
-
-
         if (startSimulationBool == true) {
-
             slider1.SetActive(false);
             slider2.SetActive(false);
             slider3.SetActive(false);
+            slider4.SetActive(false);
             button1.SetActive(false);
             if (SetUpRockets) {
+                rockets = new GameObject[numRockets];
+                rocketsControl = new MissileControlHard[numRockets];
                 Quaternion rotation = new Quaternion(0, 0, 0, 1);
                 for (int i = 0; i < numRockets; i++) {
                     rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
@@ -229,7 +232,7 @@ public class MainHard : MonoBehaviour {
         }
     }
     float[] mutate(float[] gene) {
-        if (UnityEngine.Random.Range(0, 20) < 5 && currentMilestoneLevel < 34) {
+        if (UnityEngine.Random.Range(0, 20) < mutationRate && currentMilestoneLevel < 34) {
             int r = UnityEngine.Random.Range(5, 15);
             int end = currentRange + 30;
             if (end > numGenes - 1) {
@@ -257,16 +260,15 @@ public class MainHard : MonoBehaviour {
         speed = newSpeed;
     }
     public void AdjustMutations(float newMut) {
-        slerpRate = newMut;
+        mutationRate = (int)newMut;
     }
     public void AdjustPop(float newPop) {
         numRockets = (int)newPop;
     }
-
-
+    public void AdjustSlerp(float newSlerp) {
+        slerpRate = (int)newSlerp;
+    }
     public void toggleStartSim() {
         startSimulationBool = true;
     }
-
-
 }
