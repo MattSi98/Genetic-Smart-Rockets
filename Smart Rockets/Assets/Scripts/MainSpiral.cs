@@ -235,7 +235,7 @@ public class MainSpiral : MonoBehaviour {
         }
     }
     float[] mutate(float[] gene) {
-        if (UnityEngine.Random.Range(0, 20) < mutationRate && currentMilestoneLevel < 70) {
+        if (UnityEngine.Random.Range(0, 20) < mutationRate   && currentMilestoneLevel < 70) {
             int r = UnityEngine.Random.Range(5, 15);
             int end = currentRange + 50;
             if (end > numGenes - 1) {

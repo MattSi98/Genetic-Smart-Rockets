@@ -322,8 +322,8 @@ MonoBehaviour:
   currentMilestoneLevel: 0
   currentGen: 0
   finishedTraining: 0
-  slerpRate: 4
-  mutationRate: 0
+  slerpRate: 5
+  mutationRate: 5
   startSimulationBool: 0
 --- !u!4 &29457517
 Transform:

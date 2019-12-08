@@ -1343,8 +1343,8 @@ MonoBehaviour:
   currentGen: 0
   currentRange: 0
   finishedTraining: 0
-  slerpRate: 4
-  mutationRate: 0
+  slerpRate: 5
+  mutationRate: 5
   startSimulationBool: 0
 --- !u!4 &681871484
 Transform:
