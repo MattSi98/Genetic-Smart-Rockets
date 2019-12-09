@@ -7,8 +7,8 @@ public class MainSpiral : MonoBehaviour {
     // Start is called before the first frame update
     public int numRockets;
     public GameObject rocketPrefab;
-    private GameObject[] rockets = new GameObject[250];
-    private MissileControlSpiral[] rocketsControl = new MissileControlSpiral[250];
+    private GameObject[] rockets;
+    private MissileControlSpiral[] rocketsControl;
     public float speed;
     public Transform goalTransform;
     private int numGenes = 1000;
@@ -62,7 +62,6 @@ public class MainSpiral : MonoBehaviour {
             slider3.SetActive(false);
             slider4.SetActive(false);
             button1.SetActive(false);
-
             if (SetUpRockets) {
                 rockets = new GameObject[numRockets];
                 rocketsControl = new MissileControlSpiral[numRockets];

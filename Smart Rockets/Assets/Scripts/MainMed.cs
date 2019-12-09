@@ -63,9 +63,9 @@ public class MainMed : MonoBehaviour {
             button1.SetActive(false);
             if (SetUpRockets) {
                 Quaternion rotation = new Quaternion(0, 0, 0, 1);
+                rockets = new GameObject[numRockets];
+                rocketsControl = new MissileControlMed[numRockets];
                 for (int i = 0; i < numRockets; i++) {
-                    rockets = new GameObject[numRockets];
-                    rocketsControl = new MissileControlMed[numRockets];
                     rockets[i] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
                     rocketsControl[i] = rockets[i].GetComponentInChildren<MissileControlMed>();
                     rocketsControl[i].isReady = true;

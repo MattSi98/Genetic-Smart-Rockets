@@ -34,7 +34,6 @@ public class MainHard : MonoBehaviour {
     private GameObject button1;
 
     void Start() {
-
         foreach (Transform child in transform) {
             if (child.tag == "Goal") {
                 goalTransform = child;
