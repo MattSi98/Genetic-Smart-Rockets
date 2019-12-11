@@ -34,6 +34,8 @@ public class MainSpaceJunk : MonoBehaviour {
     private GameObject button1;
 
     void Start() {
+        slerpRate = 5f;
+        mutationRate = 5;
         foreach (Transform child in transform) {
             if (child.tag == "Goal") {
                 goalTransform = child;

@@ -35,6 +35,8 @@ public class MainSpiral : MonoBehaviour {
 
 
     void Start() {
+        slerpRate = 5f;
+        mutationRate = 5;
         foreach (Transform child in transform) {
             if (child.tag == "Goal") {
                 goalTransform = child;

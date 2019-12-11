@@ -34,6 +34,8 @@ public class MainMed : MonoBehaviour {
     private GameObject button1;
 
     void Start() {
+        slerpRate = 5f;
+        mutationRate = 4;
         foreach (Transform child in transform) {
             if (child.tag == "Goal") {
                 goalTransform = child;

@@ -34,6 +34,8 @@ public class MainEasy : MonoBehaviour {
     private GameObject button1;
 
     void Start() {
+        slerpRate = 5f;
+        mutationRate = 1;
         foreach (Transform child in transform) {
             if (child.tag == "Canvas") {
                 foreach (Transform grandChild in child) {

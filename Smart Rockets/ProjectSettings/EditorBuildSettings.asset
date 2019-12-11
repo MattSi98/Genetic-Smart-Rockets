@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Spiral Map.unity
     guid: 104e81bda54216b4a851fd18509de330
+  - enabled: 1
+    path: Assets/Scenes/Random Space Junk.unity
+    guid: b88701bed78a13b438dd82ab0c0496b4
   m_configObjects: {}

@@ -14287,7 +14287,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4236801941267676981}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.08}
   m_Children:
@@ -14393,11 +14393,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  slerpRate: 0
   isReady: 0
-  forcesX: []
   thrusterLeftForces: []
   thrusterRightForces: []
-  forcesY: []
   current: 0
   goalTransform: {fileID: 0}
   fitness: 0
@@ -14408,3 +14407,5 @@ MonoBehaviour:
   passedMileStone: 0
   explosion: {fileID: 891618502446105816, guid: 1e58b7268623025468540c68d8f1fcf8,
     type: 3}
+  numGenes: 0
+  crashPos: []
