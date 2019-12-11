@@ -27,4 +27,12 @@ public class SceneSwitcher : MonoBehaviour
 
     }
 
+    public void GotoSpiralMap(){
+        SceneManager.LoadScene("Spiral Map");
+        }
+
+    public void GotoRandomSpaceJunk()
+    {
+        SceneManager.LoadScene("Random Space Junk");
+    }
 }
