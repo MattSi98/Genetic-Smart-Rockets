@@ -955,8 +955,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 342.81, y: 134.62}
-  m_SizeDelta: {x: 62.39, y: 33.52}
+  m_AnchoredPosition: {x: 330.93994, y: 134.62}
+  m_SizeDelta: {x: 86.13, y: 33.52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &656787403
 MonoBehaviour:
@@ -983,13 +983,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Speed
+  m_Text: 'Rocket Speed
 
 '
 --- !u!222 &656787404
@@ -1206,8 +1206,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 380.7, y: 7.8}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 337, y: 11.4}
+  m_SizeDelta: {x: 74, y: 37.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &858189062
 MonoBehaviour:
@@ -1234,13 +1234,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Slerp Speed
+  m_Text: Turning rate
 --- !u!222 &858189063
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5835,8 +5835,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 339.25, y: 57.22}
-  m_SizeDelta: {x: 69.495, y: 25.56}
+  m_AnchoredPosition: {x: 318.05, y: 57.22}
+  m_SizeDelta: {x: 111.9, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &899831880
 MonoBehaviour:
@@ -5863,13 +5863,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Population
+  m_Text: 'Population size
 
 '
 --- !u!222 &899831881
@@ -6360,8 +6360,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 342.81006, y: 98.10497}
-  m_SizeDelta: {x: 45.73, y: 23.79}
+  m_AnchoredPosition: {x: 330.94, y: 98.10497}
+  m_SizeDelta: {x: 86.13, y: 23.79}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1437914985
 MonoBehaviour:
@@ -6388,13 +6388,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Mutate
+  m_Text: Mutation Rate
 --- !u!222 &1437914986
 CanvasRenderer:
   m_ObjectHideFlags: 0
