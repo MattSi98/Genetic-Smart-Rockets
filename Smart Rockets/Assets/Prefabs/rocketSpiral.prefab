@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  slerpRate: 0
   isReady: 0
-  forcesX: []
   thrusterLeftForces: []
   thrusterRightForces: []
-  forcesY: []
   current: 0
   goalTransform: {fileID: 0}
   fitness: 0
@@ -25,9 +24,11 @@ MonoBehaviour:
   reachedGoal: 0
   mileStones: []
   passedMileStones: 
+  currentAtMilestone: 
   explosion: {fileID: 891618502446105816, guid: 1e58b7268623025468540c68d8f1fcf8,
     type: 3}
   numGenes: 0
+  crashPos: []
 --- !u!1001 &4538610692403880805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58,22 +59,22 @@ PrefabInstance:
     - target: {fileID: 3254070937537457439, guid: 5db121932e35c5a48ad56e1ce0136061,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
-      objectReference: {fileID: 0}
-    - target: {fileID: 3254070937537457439, guid: 5db121932e35c5a48ad56e1ce0136061,
-        type: 3}
-      propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3254070937537457439, guid: 5db121932e35c5a48ad56e1ce0136061,
         type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.13052624
+      objectReference: {fileID: 0}
+    - target: {fileID: 3254070937537457439, guid: 5db121932e35c5a48ad56e1ce0136061,
+        type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3254070937537457439, guid: 5db121932e35c5a48ad56e1ce0136061,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9914449
       objectReference: {fileID: 0}
     - target: {fileID: 3254070937537457439, guid: 5db121932e35c5a48ad56e1ce0136061,
         type: 3}
@@ -88,7 +89,7 @@ PrefabInstance:
     - target: {fileID: 3254070937537457439, guid: 5db121932e35c5a48ad56e1ce0136061,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 3254070937537457439, guid: 5db121932e35c5a48ad56e1ce0136061,
         type: 3}
