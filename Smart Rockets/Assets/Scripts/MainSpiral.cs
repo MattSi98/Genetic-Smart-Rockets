@@ -25,6 +25,7 @@ public class MainSpiral : MonoBehaviour {
     public float slerpRate;
     public int mutationRate;
     private bool SetUpRockets = true;
+    public bool m48 = false;
 
     public bool startSimulationBool = false;
     private GameObject slider1;
@@ -57,7 +58,9 @@ public class MainSpiral : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
-
+        if (currentMilestoneLevel >= 48) {
+            m48 = true;
+        }
         if (startSimulationBool == true) {
             slider1.SetActive(false);
             slider2.SetActive(false);
@@ -79,6 +82,7 @@ public class MainSpiral : MonoBehaviour {
                     rocketsControl[i].speed = speed;
                     rocketsControl[i].numGenes = numGenes;
                     rocketsControl[i].slerpRate = slerpRate;
+                    rocketsControl[i].m48 = m48;
                 }
                 SetUpRockets = false;
             } else {
@@ -107,6 +111,7 @@ public class MainSpiral : MonoBehaviour {
                                 rocketsControl[i].mileStones = mileStones;
                                 rocketsControl[i].numGenes = numGenes;
                                 rocketsControl[i].slerpRate = slerpRate;
+                                rocketsControl[i].m48 = m48;
                             }
                             for (int i = 0; i < numRockets; i++) {
                                 rocketsControl[i].isReady = true;
@@ -174,6 +179,7 @@ public class MainSpiral : MonoBehaviour {
         rocketsControl[0].mileStones = mileStones;
         rocketsControl[0].numGenes = numGenes;
         rocketsControl[0].slerpRate = slerpRate;
+        rocketsControl[0].m48 = m48;
         Destroy(rockets[1]);
         rockets[1] = Instantiate(rocketPrefab, startPos.position, rotation) as GameObject;
         rocketsControl[1] = rockets[1].GetComponentInChildren<MissileControlSpiral>();
@@ -184,6 +190,7 @@ public class MainSpiral : MonoBehaviour {
         rocketsControl[1].mileStones = mileStones;
         rocketsControl[1].numGenes = numGenes;
         rocketsControl[1].slerpRate = slerpRate;
+        rocketsControl[1].m48 = m48;
         for (int i = 2; i < numRockets; i++) {
             int parent1 = UnityEngine.Random.Range(0, matingpool.Count);
             int parent2 = UnityEngine.Random.Range(0, matingpool.Count);
@@ -198,6 +205,7 @@ public class MainSpiral : MonoBehaviour {
             rocketsControl[i].mileStones = mileStones;
             rocketsControl[i].numGenes = numGenes;
             rocketsControl[i].slerpRate = slerpRate;
+            rocketsControl[i].m48 = m48;
         }
         for (int i = 0; i < numRockets; i++) {
             rocketsControl[i].isReady = true;
