@@ -25,6 +25,7 @@ public class MainMed : MonoBehaviour {
     public float slerpRate;
     public int mutationRate;
     private bool SetUpRockets = true;
+    private GenerationDisplayMed generationDisplay; 
 
     public bool startSimulationBool = false;
     private GameObject slider1;
@@ -37,10 +38,27 @@ public class MainMed : MonoBehaviour {
         slerpRate = 5f;
         mutationRate = 4;
         foreach (Transform child in transform) {
+            if (child.tag == "Canvas")
+            {
+                Debug.Log("yerr");
+                foreach (Transform grandChild in child)
+                {
+                    if (grandChild.tag == "Text")
+                    {
+                        Debug.Log("Found");
+                        generationDisplay = grandChild.gameObject.GetComponent<GenerationDisplayMed>();
+                    }
+                }
+                
+            }
+            
             if (child.tag == "Goal") {
                 goalTransform = child;
             }
+            
         }
+        currentGen = 1;
+        generationDisplay.genText.text = "Generation: " + currentGen;
         slider1 = GameObject.Find("Slider-speed");
         slider2 = GameObject.Find("Slider-mutate");
         slider3 = GameObject.Find("Slider-population");
@@ -85,6 +103,7 @@ public class MainMed : MonoBehaviour {
                     float percentReachedGoal = percentFinished(rocketsControl);
                     if (percentReachedGoal >= .9) {
                         finishedTraining = true;
+                        generationDisplay.genText.text = "Generation: " + currentGen + "\n Finished training in " + currentGen + " generations!";
                     }
                     if (!finishedTraining) {
                         float[] crashPos = rocketsControl[0].crashPos;
@@ -136,6 +155,7 @@ public class MainMed : MonoBehaviour {
                             destroyAndCreate(matingpool, rocketsControl[mostFit]);
                         }
                         currentGen++;
+                        generationDisplay.genText.text = "Generation: " + currentGen;
                     }
                 }
             }
