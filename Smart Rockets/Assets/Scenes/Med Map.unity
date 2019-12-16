@@ -704,7 +704,7 @@ GameObject:
   - component: {fileID: 362184384}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7574,7 +7574,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1359839425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f307ca01b4865ef48805eba82bc7bf95, type: 3}
+  m_Script: {fileID: 11500000, guid: d4e0c571ee7a29f43b095f230a949ae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   genText: {fileID: 1359839428}
