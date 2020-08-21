@@ -15,7 +15,7 @@ This was the final project for AI Practicum
 
 # Installation
 
-First: Install Unity
+First: Install Unity - must be on Windows computer.
 
 Then download this repositories Zip file and un-zip.
 
